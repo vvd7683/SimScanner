@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>icons/SimScanner.png</file>
+    </qresource>
+</RCC>
