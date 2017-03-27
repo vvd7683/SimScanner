@@ -3,12 +3,16 @@
 
 #include <QObject>
 
+#include "sqlite/sqlite3.h"
+
 class QDbProfile : public QObject
 {
     Q_OBJECT
 public:
-    explicit QDbProfile(QObject *parent = 0);
-
+    typedef unsigned int PROFILE_ID;
+    explicit QDbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
+protected:
+    PROFILE_ID profile_id;
 signals:
 
 public slots:

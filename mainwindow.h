@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "scanmodel.h"
 #include "pe_parser/peParser.h"
+#include "chartdialog.h"
 
 namespace Ui {
 class MainWindow;
