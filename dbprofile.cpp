@@ -1,8 +1,8 @@
-#include "qdbprofile.h"
+#include "dbprofile.h"
 
 const char *cDefaultDbName = "profiles.vdb";
 
-QDbProfile::QDbProfile(PROFILE_ID ProfileId,
+DbProfile::DbProfile(PROFILE_ID ProfileId,
                        QObject *parent) : QObject(parent),
     profile_id(ProfileId)
 {

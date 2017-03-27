@@ -5,12 +5,12 @@
 
 #include "sqlite/sqlite3.h"
 
-class QDbProfile : public QObject
+class DbProfile : public QObject
 {
     Q_OBJECT
 public:
     typedef unsigned int PROFILE_ID;
-    explicit QDbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
+    explicit DbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
 protected:
     PROFILE_ID profile_id;
 signals:

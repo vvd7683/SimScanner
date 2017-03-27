@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ChartDialog</class>
- <widget class="QDialog" name="ChartDialog">
+ <class>FilePropertiesDialog</class>
+ <widget class="QDialog" name="FilePropertiesDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,14 +15,30 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QGroupBox" name="groupBox">
-     <property name="title">
-      <string>GroupBox</string>
-     </property>
+    <widget class="QTabWidget" name="tabFileProperties">
+     <widget class="QWidget" name="tabFileInfo">
+      <attribute name="title">
+       <string>Tab 1</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="layoutFileInfo">
+       <item>
+        <widget class="QGroupBox" name="gboxFileInfo">
+         <property name="title">
+          <string>File information</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabEntropyChart">
+      <attribute name="title">
+       <string>Tab 2</string>
+      </attribute>
+     </widget>
     </widget>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
+    <widget class="QDialogButtonBox" name="bboxFileProperties">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -36,9 +52,9 @@
  <resources/>
  <connections>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>bboxFileProperties</sender>
    <signal>accepted()</signal>
-   <receiver>ChartDialog</receiver>
+   <receiver>FilePropertiesDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -52,9 +68,9 @@
    </hints>
   </connection>
   <connection>
-   <sender>buttonBox</sender>
+   <sender>bboxFileProperties</sender>
    <signal>rejected()</signal>
-   <receiver>ChartDialog</receiver>
+   <receiver>FilePropertiesDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

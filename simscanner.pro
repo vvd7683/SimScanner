@@ -20,8 +20,8 @@ SOURCES += main.cpp\
     pe_parser/peParser.cpp \
     sqlite/sqlite3.c \
     sqlite/sqlite3.c \
-    qdbprofile.cpp \
-    chartdialog.cpp
+    fpropsdialog.cpp \
+    dbprofile.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -29,11 +29,11 @@ HEADERS  += mainwindow.h \
     pe_parser/pe32.h \
     pe_parser/peParser.h \
     sqlite/sqlite3.h \
-    qdbprofile.h \
-    chartdialog.h
+    fpropsdialog.h \
+    dbprofile.h
 
 FORMS    += mainwindow.ui \
-    chartdialog.ui
+    fpropsdialog.ui
 
 RESOURCES += \
     simscanner.qrc
