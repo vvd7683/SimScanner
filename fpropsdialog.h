@@ -3,7 +3,8 @@
 
 #include <QDialog>
 #include <QFileInfo>
-#include <QtCharts/QChart>
+#include <QtCharts/QChartView>
+#include <QLayout>
 
 #include "pe_parser/peParser.h"
 
@@ -20,6 +21,8 @@ public:
     ~FilePropertiesDialog();
 protected:
     QFileInfo &info;
+    QtCharts::QChartView *chartEntropy;
+    QtCharts::QChartView *chartEntropyDerivative;
 private:
     Ui::FilePropertiesDialog *ui;
 };
