@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QFileInfo>
+#include <QtCharts/QChart>
 
 #include "pe_parser/peParser.h"
 

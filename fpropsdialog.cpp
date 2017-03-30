@@ -1,5 +1,5 @@
 #include "fpropsdialog.h"
-#include "ui_chartdialog.h"
+#include "ui_fpropsdialog.h"
 
 FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     QDialog(parent),
@@ -8,6 +8,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     ui(new Ui::FilePropertiesDialog)
 {
     ui->setupUi(this);
+
+    //TODO: make charts here
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
