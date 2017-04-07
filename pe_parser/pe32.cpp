@@ -56,6 +56,23 @@ PIMAGE_NT_HEADERS32 getPE32(HANDLE hImage, ULONG ImageSz) {
 	return NULL;
 }
 
+PIMAGE_NT_HEADERS64 getPE64(HANDLE hImage, ULONG ImageSz) {
+    PE_TARGET pet;
+    PE_SYSTEM pes;
+    PIMAGE_NT pNT = getPE(hImage, pet, pes, ImageSz);
+    if (pNT._is) {
+        switch (pet)
+        {
+        case pet_x64:
+        case pet_x64_DLL:
+            return pNT.nt64;
+        default:
+            break;
+        }
+    }
+    return NULL;
+}
+
 PVOID getModuleBase(HANDLE hFileImage,ULONG FileImageSz) {
 	PVOID _result = NULL;
 	if(PIMAGE_NT_HEADERS32 hPE = 

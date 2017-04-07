@@ -58,8 +58,21 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
         if(file_info.isDir())
             menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
         else {
-            //TODO: check format
-            menu_Other->popup(ui->treeView->viewport()->mapToGlobal(pos));
+            QFile _file(file_info.absoluteFilePath());
+            if(_file.exists() &&
+                    _file.open(QIODevice::Unbuffered |
+                               QIODevice::ReadOnly))
+            {
+                if(PBYTE pHeader = _file.map(0, 0x00010000)) {
+                    if(PIMAGE_NT_HEADERS32 pPE = getPE32(pHeader)) {
+                        menu_PE->popup(ui->treeView->viewport()->mapToGlobal(pos));
+                    } else {
+                        menu_Other->popup(ui->treeView->viewport()->mapToGlobal(pos));
+                    }
+                    _file.unmap(pHeader);
+                }
+                _file.close();
+            }
         }
     }
 }

@@ -31,6 +31,7 @@ union PIMAGE_NT {
 };
 
 PIMAGE_NT_HEADERS32 getPE32(HANDLE hFileImage, ULONG FileImageSz = 0);
+PIMAGE_NT_HEADERS64 getPE64(HANDLE hFileImage, ULONG FileImageSz = 0);
 PVOID getModuleBase(HANDLE hFileImage,ULONG FileImageSz);
 
 ULONG RVA2Offset32(HANDLE hFileImage,ULONG FileImageSz,__RVA32 RVA);
