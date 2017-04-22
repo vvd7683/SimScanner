@@ -26,6 +26,18 @@ public:
 		get = _get_section_entropy))
 		double
 		SectionEntropy[];
+    const WORD _get_machine() {
+        return hPE->FileHeader.Machine;
+    }
+    __declspec(property(
+                   get = _get_machine))
+    const WORD cMachine;
+    const WORD _get_flags() {
+        return hPE->FileHeader.Characteristics;
+    }
+    __declspec(property(
+                   get = _get_flags))
+    const WORD cFlags;
 protected:
 	union {
 		HANDLE hFileImage;

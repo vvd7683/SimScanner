@@ -3,37 +3,38 @@
 
 FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     QDialog(parent),
-    info(Info),
-    file(Info.absoluteFilePath()),
+    file(Info),
 
-    ui(new Ui::FilePropertiesDialog)
+    ui(new Ui::FilePropertiesDialog),
+
+    chartEntropy(new QtCharts::QChartView),
+    chartEntropyDerivative(new QtCharts::QChartView)
 {
     ui->setupUi(this);
+    setModal(true);
+
+    ui->tabFileProperties->setTabText(0, tr("File properties"));
+    ui->tabFileProperties->setTabText(1, tr("PE header"));
+    ui->tabFileProperties->setTabText(2, tr("Entropy chart"));
+
+    ui->tabPeProperties->setTabText(0, tr("Common headers"));
+    ui->tabPeProperties->setTabText(1, tr("Sections"));
+    ui->tabPeProperties->setTabText(2, tr("Directories"));
+
+    ui->tblFileHeader;
+    ui->tblOptionalHeader;
 
     QVBoxLayout *l = new QVBoxLayout;
-    l->addWidget(chartEntropy = new QtCharts::QChartView);
-    l->addWidget(chartEntropyDerivative = new QtCharts::QChartView);
+
+    l->addWidget(chartEntropy);
+    l->addWidget(chartEntropyDerivative);
+
     ui->gboxEntropy->setLayout(l);
+
+    ui->leFilePathVal->setText(Info.absoluteFilePath());
+    ui->lFileSizeVal->setText(QString().sprintf("%llu bytes", Info.size()));
+    ui->lDateTimeVal->setText(Info.created().toString());
     //TODO: make charts here
-    if(file.exists()) {
-        ui->leFilePathVal->setText(Info.absoluteFilePath());
-        if(file.open(QIODevice::Unbuffered | QIODevice::ReadOnly)) {
-            file.size();
-            if(PBYTE pHeader = file.map(0, 0x00010000)) {
-                if(PIMAGE_NT_HEADERS32 pPE = getPE32(pHeader)) {
-                    //
-                } else {
-                    //
-                }
-                file.unmap(pHeader);
-            }
-            file.close();
-        } else {
-            //
-        }
-    } else {
-        throw;
-    }
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()

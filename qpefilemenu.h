@@ -4,6 +4,8 @@
 #include <QMenu>
 #include <QFileInfo>
 
+#include "qpefile.h"
+
 class QPeFileMenu : public QMenu
 {
     Q_OBJECT

@@ -6,8 +6,10 @@
 #include <QtCharts/QChartView>
 #include <QLayout>
 #include <QFile>
+#include <QDateTime>
 
-#include "pe_parser/peParser.h"
+#include "qpefile.h"
+//#include "pe_parser/peParser.h"
 
 namespace Ui {
 class FilePropertiesDialog;
@@ -21,12 +23,11 @@ public:
     explicit FilePropertiesDialog(QFileInfo &Info, QWidget *parent = 0);
     ~FilePropertiesDialog();
 protected:
-    QFileInfo &info;
     QtCharts::QChartView *chartEntropy;
     QtCharts::QChartView *chartEntropyDerivative;
 private:
     Ui::FilePropertiesDialog *ui;
-    QFile file;
+    QPeFile file;
 };
 
 #endif // CHARTDIALOG_H

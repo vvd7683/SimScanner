@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &MainWindow::tvContextMenuRequested);
 //Temporary
     QAction *fileInfoAction = new QAction("File information", this);
-    connect(fileInfoAction, &QAction::triggered, this, &MainWindow::fileInfoExecute);
+    connect(fileInfoAction, &QAction::triggered, this, &MainWindow::peInfoExecute);
     menu_PE->addAction(fileInfoAction);
     menu_PE->addAction(new QAction("View PE", this));
 
@@ -35,9 +35,11 @@ MainWindow::MainWindow(QWidget *parent) :
     menu_Other->addAction(new QAction("Action 3", this));
 }
 
-void MainWindow::fileInfoExecute(bool checked) {
-    //FilePropertiesDialog dlg(*(QFileInfo *)NULL);
-    QMessageBox().exec();
+void MainWindow::peInfoExecute(bool checked) {
+    if(menu_PE->PeFileInfo) {
+        FilePropertiesDialog(*menu_PE->PeFileInfo).exec();
+        menu_PE->PeFileInfo = Q_NULLPTR;
+    }
 }
 
 void MainWindow::tvContextMenuRequested(const QPoint &pos) {
@@ -65,6 +67,16 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
         if(file_info.isDir())
             menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
         else {
+            try {
+                {
+                    QPeFile file(file_info);
+                }
+                menu_PE->PeFileInfo = &file_info;
+                menu_PE->popup(ui->treeView->viewport()->mapToGlobal(pos));
+            } catch(...) {
+                menu_Other->popup(ui->treeView->viewport()->mapToGlobal(pos));
+            }
+/*
             QFile _file(file_info.absoluteFilePath());
             if(_file.exists() &&
                     _file.open(QIODevice::Unbuffered |
@@ -81,6 +93,7 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
                 }
                 _file.close();
             }
+*/
         }
     }
 }

@@ -22,7 +22,8 @@ SOURCES += main.cpp\
     sqlite/sqlite3.c \
     fpropsdialog.cpp \
     dbprofile.cpp \
-    qpefilemenu.cpp
+    qpefilemenu.cpp \
+    qpefile.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     sqlite/sqlite3.h \
     fpropsdialog.h \
     dbprofile.h \
-    qpefilemenu.h
+    qpefilemenu.h \
+    qpefile.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui

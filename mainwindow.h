@@ -34,7 +34,7 @@ protected:
     QMenu *menu_Dir, *menu_Other;
 public slots:
     void tvContextMenuRequested(const QPoint &pos);
-    void fileInfoExecute(bool checked);
+    void peInfoExecute(bool checked);
 private slots:
     void on_pushButton_clicked();
 
