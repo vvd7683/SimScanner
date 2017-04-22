@@ -14,6 +14,13 @@ public:
     QPeFile(QFileInfo &info);
     ~QPeFile();
     const WORD getFlags() {return parser->cFlags;}
+    const QString getFlagsString();
+    const WORD getMachine() {return parser->cMachine;}
+    const QString getMachineString();
+    const unsigned int getOptHeaderSz() {return parser->cOptHeaderSize;}
+    const DWORD getImageBase() {return parser->cImageBase;}
+    const DWORD getImageSize() {return parser->cImageSize;}
+    const DWORD getEntry() {return parser->cEntry;}
 private:
     void init();
     QFileInfo &Info;

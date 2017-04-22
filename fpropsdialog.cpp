@@ -21,8 +21,25 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     ui->tabPeProperties->setTabText(1, tr("Sections"));
     ui->tabPeProperties->setTabText(2, tr("Directories"));
 
-    ui->tblFileHeader;
-    ui->tblOptionalHeader;
+    ui->tblFileHeader->setItem(0, 0, new QTableWidgetItem(QString().sprintf("0x%04X", file.getMachine())));
+    ui->tblFileHeader->setItem(0, 1, new QTableWidgetItem(file.getMachineString()));
+    ui->tblFileHeader->setItem(1, 0, new QTableWidgetItem(QString().sprintf("0x%04X", file.getFlags())));
+    ui->tblFileHeader->setItem(1, 1, new QTableWidgetItem(file.getFlagsString()));
+    ui->tblFileHeader->setItem(2, 0, new QTableWidgetItem(QString().sprintf("%d bytes", file.getOptHeaderSz())));
+
+    ui->tblOptionalHeader->setItem(0, 0,
+                                   new QTableWidgetItem(QString().sprintf(
+                                                            "0x%08X", file.getImageBase())));
+    ui->tblOptionalHeader->setItem(1, 0,
+                                   new QTableWidgetItem(QString().sprintf(
+                                                            "0x%08X", file.getImageSize())));
+    const DWORD cEntry = file.getEntry();
+    ui->tblOptionalHeader->setItem(2, 0,
+                                   new QTableWidgetItem(QString().sprintf(
+                                                            "0x%08X", cEntry)));
+    if(!cEntry)
+    ui->tblOptionalHeader->setItem(2, 1,
+                                   new QTableWidgetItem(tr("No entry point")));
 
     QVBoxLayout *l = new QVBoxLayout;
 

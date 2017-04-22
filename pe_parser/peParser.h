@@ -38,6 +38,30 @@ public:
     __declspec(property(
                    get = _get_flags))
     const WORD cFlags;
+    const unsigned int _get_opt_sz() {
+        return hPE->FileHeader.SizeOfOptionalHeader;
+    }
+    __declspec(property(
+                   get = _get_opt_sz))
+    const unsigned int cOptHeaderSize;
+    const DWORD _get_base() {
+        return hPE->OptionalHeader.ImageBase;
+    }
+    __declspec(property(
+                   get = _get_base))
+    const DWORD cImageBase;
+    const DWORD _get_size() {
+        return hPE->OptionalHeader.SizeOfImage;
+    }
+    __declspec(property(
+                   get = _get_size))
+    const DWORD cImageSize;
+    const DWORD _get_entry() {
+        return hPE->OptionalHeader.AddressOfEntryPoint;
+    }
+    __declspec(property(
+                   get = _get_entry))
+    const DWORD cEntry;
 protected:
 	union {
 		HANDLE hFileImage;
