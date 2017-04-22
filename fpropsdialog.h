@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QtCharts/QChartView>
 #include <QLayout>
+#include <QFile>
 
 #include "pe_parser/peParser.h"
 
@@ -25,6 +26,7 @@ protected:
     QtCharts::QChartView *chartEntropyDerivative;
 private:
     Ui::FilePropertiesDialog *ui;
+    QFile file;
 };
 
 #endif // CHARTDIALOG_H

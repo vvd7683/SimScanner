@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
 
-    menu_PE(new QMenu(this)),
+    menu_PE(new QPeFileMenu(this)),
     menu_Dir(new QMenu(this)),
     menu_Other(new QMenu(this)),
 
@@ -22,7 +22,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &MainWindow::tvContextMenuRequested);
 //Temporary
-    menu_PE->addAction(new QAction("File information", this));
+    QAction *fileInfoAction = new QAction("File information", this);
+    connect(fileInfoAction, &QAction::triggered, this, &MainWindow::fileInfoExecute);
+    menu_PE->addAction(fileInfoAction);
     menu_PE->addAction(new QAction("View PE", this));
 
     menu_Dir->addAction(new QAction("Scan immediately", this));
@@ -31,6 +33,11 @@ MainWindow::MainWindow(QWidget *parent) :
     menu_Other->addAction(new QAction("Action 1", this));
     menu_Other->addAction(new QAction("Action 2", this));
     menu_Other->addAction(new QAction("Action 3", this));
+}
+
+void MainWindow::fileInfoExecute(bool checked) {
+    //FilePropertiesDialog dlg(*(QFileInfo *)NULL);
+    QMessageBox().exec();
 }
 
 void MainWindow::tvContextMenuRequested(const QPoint &pos) {
@@ -65,6 +72,7 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
             {
                 if(PBYTE pHeader = _file.map(0, 0x00010000)) {
                     if(PIMAGE_NT_HEADERS32 pPE = getPE32(pHeader)) {
+                        menu_PE->PeFileInfo = &file_info;
                         menu_PE->popup(ui->treeView->viewport()->mapToGlobal(pos));
                     } else {
                         menu_Other->popup(ui->treeView->viewport()->mapToGlobal(pos));

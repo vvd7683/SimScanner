@@ -11,6 +11,7 @@
 #include "pe_parser/peParser.h"
 #include "fpropsdialog.h"
 #include "dbprofile.h"
+#include "qpefilemenu.h"
 
 #define PRED(x)     ((x) - 1)
 #define SUCC(x)     ((x) + 1)
@@ -29,9 +30,11 @@ public:
 protected:
     QVector<DbProfile> Profiles;
 
-    QMenu *menu_PE, *menu_Dir, *menu_Other;
+    QPeFileMenu *menu_PE;
+    QMenu *menu_Dir, *menu_Other;
 public slots:
     void tvContextMenuRequested(const QPoint &pos);
+    void fileInfoExecute(bool checked);
 private slots:
     void on_pushButton_clicked();
 
