@@ -4,13 +4,14 @@
 #include <QObject>
 
 #include "sqlite/sqlite3.h"
+#include "qssnn.h"
 
 class DbProfile : public QObject
 {
     Q_OBJECT
 public:
     typedef unsigned int PROFILE_ID;
-    explicit DbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
+    DbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
 protected:
     PROFILE_ID profile_id;
 signals:

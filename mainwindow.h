@@ -8,13 +8,13 @@
 #include <QMessageBox>
 
 #include <opennn.h>
+#include <tinyxml2.h>
 
 #include "scanmodel.h"
 #include "pe_parser/peParser.h"
 #include "fpropsdialog.h"
 #include "dbprofile.h"
 #include "qpefilemenu.h"
-#include "qnnwrapper.h"
 
 #define PRED(x)     ((x) - 1)
 #define SUCC(x)     ((x) + 1)
@@ -31,7 +31,7 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 protected:
-    QVector<DbProfile> Profiles;
+    QVector<SimScanNN *> ssnnProfiles;
 
     QPeFileMenu *menu_PE;
     QMenu *menu_Dir, *menu_Other;

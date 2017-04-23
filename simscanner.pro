@@ -24,7 +24,7 @@ SOURCES += main.cpp\
     dbprofile.cpp \
     qpefilemenu.cpp \
     qpefile.cpp \
-    qnnwrapper.cpp
+    qssnn.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -36,7 +36,7 @@ HEADERS  += mainwindow.h \
     dbprofile.h \
     qpefilemenu.h \
     qpefile.h \
-    qnnwrapper.h
+    qssnn.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui
@@ -44,15 +44,29 @@ FORMS    += mainwindow.ui \
 RESOURCES += \
     simscanner.qrc
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/libs/release/ -lopennn
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/libs/debug/ -lopennn
-else:unix: LIBS += -L$$PWD/libs/ -lopennn
+SUBDIRS += \
+    opennn/opennn.pro
+
+DISTFILES += \
+    opennn/utilities.cu \
+    opennn/CMakeLists.txt
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Release/tinyxml2/release/ -ltinyxml2
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/tinyxml2/debug/ -ltinyxml2
+else:unix: LIBS += -L$$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/tinyxml2/ -ltinyxml2
+
+INCLUDEPATH += $$PWD/../OpenNN/tinyxml2
+DEPENDPATH += $$PWD/../OpenNN/tinyxml2
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Release/tinyxml2/release/libtinyxml2.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/tinyxml2/debug/libtinyxml2.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Release/tinyxml2/release/tinyxml2.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/tinyxml2/debug/tinyxml2.lib
+else:unix: PRE_TARGETDEPS += $$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/tinyxml2/libtinyxml2.a
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Release/opennn/release/ -lopennn
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/opennn/debug/ -lopennn
+else:unix: LIBS += -L$$PWD/../build-opennn-Desktop_Qt_5_7_0_MSVC2013_32bit-Debug/opennn/ -lopennn
 
 INCLUDEPATH += $$PWD/../OpenNN/opennn
 DEPENDPATH += $$PWD/../OpenNN/opennn
-
-win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/libs/release/libopennn.a
-else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/libs/debug/libopennn.a
-else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/libs/release/opennn.lib
-else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/libs/debug/opennn.lib
-else:unix: PRE_TARGETDEPS += $$PWD/libs/libopennn.a

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QMessageBox>
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
@@ -14,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    //tinyxml2::XMLDocument test;
+    //OpenNN::NeuralNetwork nn;
 
     setWindowIcon(QIcon(tr(":/icons/icons/SimScanner.png")));
 
