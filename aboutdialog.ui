@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../Users/jack/SimScanner/icons/about.png</normaloff>../../../Users/jack/SimScanner/icons/about.png</iconset>
+    <normaloff>../../../Users/jack/SimScanner/icons/Info.png</normaloff>../../../Users/jack/SimScanner/icons/Info.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
