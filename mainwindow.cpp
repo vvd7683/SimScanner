@@ -214,6 +214,7 @@ MainWindow::ScanState MainWindow::set_ss(ScanState _ss) {
 void MainWindow::on_actionScan_triggered()
 {
     SS = ScanState::ssScan;
+    //TODO: scan ui->treeView for checked elements; try checked directories and PE
 }
 
 void MainWindow::on_actionStop_triggered()

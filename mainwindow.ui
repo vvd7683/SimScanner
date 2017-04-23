@@ -25,6 +25,10 @@
   <property name="windowTitle">
    <string>SimScanner</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icons/SimScanner.png</normaloff>icons/SimScanner.png</iconset>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>

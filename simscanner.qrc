@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/icons">
+        <file>icons/File.png</file>
+        <file>icons/3d_bar_chart.png</file>
+        <file>icons/Grid.png</file>
         <file>icons/SimScanner.png</file>
+        <file>icons/Target.png</file>
     </qresource>
 </RCC>
