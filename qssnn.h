@@ -4,33 +4,52 @@
 #include <QObject>
 #include <opennn.h>
 
+#include "macro.h"
+
 class SimScanNN : public QObject
 {
     Q_OBJECT
 public:
-    explicit SimScanNN(QObject *parent = 0);
-    enum ssNNType {
-        ssnnFullFileImage = 0,
-        ssnnAnySection,
-        ssnnCodeSection,
-        ssnnResource,
-        ssnnData,
-        ssnnOverlay,
+    typedef unsigned int PROFILE_ID;
+    enum class ssNNType {
+        nntFullFileImage = 0,
+        nntAnySection,
+        nntCodeSection,
+        nntResource,
+        nntData,
+        nntOverlay,
 
-        nnCount
+        nntCount
     };
 
-    const ssNNType get_nn_type() {
-        return nn_type;
+    enum class ssNNKind {
+        nnkFixed = 0,
+        nnkExtremum,
+        nnkRelative,
+        //derivative curves
+        nnkDerivedFixed,
+        nnkDerivedExtremum,
+        nnkDerivedRelative,
+
+        nnkCount
+    };
+
+    SimScanNN(const ssNNType c_type,
+              const ssNNKind c_kind,
+              QString &from,
+              QObject *parent = 0);
+
+    static QString Empty() {
+        return QString();
     }
 
-    __declspec( property( get=get_nn_type ) ) const ssNNType cType;
+    const ssNNType cType;
+    const ssNNKind cKind;
 signals:
 
 public slots:
     //
 private:
-    ssNNType nn_type;
     OpenNN::NeuralNetwork nn;
 };
 

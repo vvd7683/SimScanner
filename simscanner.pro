@@ -24,7 +24,9 @@ SOURCES += main.cpp\
     dbprofile.cpp \
     qpefilemenu.cpp \
     qpefile.cpp \
-    qssnn.cpp
+    qssnn.cpp \
+    aboutdialog.cpp \
+    addnewdialog.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -36,10 +38,15 @@ HEADERS  += mainwindow.h \
     dbprofile.h \
     qpefilemenu.h \
     qpefile.h \
-    qssnn.h
+    qssnn.h \
+    aboutdialog.h \
+    addnewdialog.h \
+    macro.h
 
 FORMS    += mainwindow.ui \
-    fpropsdialog.ui
+    fpropsdialog.ui \
+    aboutdialog.ui \
+    addnewdialog.ui
 
 RESOURCES += \
     simscanner.qrc
