@@ -17,6 +17,7 @@ public:
     const QString getFlagsString();
     const WORD getMachine() {return parser->cMachine;}
     const QString getMachineString();
+    const QString getSubsystemString();
     const unsigned int getOptHeaderSz() {return parser->cOptHeaderSize;}
     const DWORD getImageBase() {return parser->cImageBase;}
     const DWORD getImageSize() {return parser->cImageSize;}

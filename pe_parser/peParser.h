@@ -62,6 +62,12 @@ public:
     __declspec(property(
                    get = _get_entry))
     const DWORD cEntry;
+    const WORD _get_subsystem() {
+        return hPE->OptionalHeader.Subsystem;
+    }
+    __declspec(property(
+                   get = _get_subsystem))
+    const WORD cSubsystem;
 protected:
 	union {
 		HANDLE hFileImage;

@@ -7,11 +7,14 @@
 #include <QMenu>
 #include <QMessageBox>
 
+#include <opennn.h>
+
 #include "scanmodel.h"
 #include "pe_parser/peParser.h"
 #include "fpropsdialog.h"
 #include "dbprofile.h"
 #include "qpefilemenu.h"
+#include "qnnwrapper.h"
 
 #define PRED(x)     ((x) - 1)
 #define SUCC(x)     ((x) + 1)
