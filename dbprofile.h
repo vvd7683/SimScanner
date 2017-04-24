@@ -17,10 +17,12 @@ public:
     typedef SimScanNN::ssNNType nnType;
     explicit DbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
     explicit DbProfile(QString &Family,
-              const int c_index,
-              const nnType c_nn_type,
-              const nnKind c_nn_kind,
-              QObject *parent = 0);
+                       const int c_index,
+                       const nnType c_nn_type,
+                       const nnKind c_nn_kind,
+                       const double cThreashold = .0,
+                       const bool cLearned = false,
+                       QObject *parent = 0);
     ~DbProfile() {
         delete ssnn;
     }
@@ -42,8 +44,10 @@ protected:
     nnKind nn_kind;
 private:
     double threshold;
+    bool b_learned;
     static int loadProfilesCallback(void*,int,char**,char**);
     static int loadProfileCallback(void*,int,char**,char**);
+    static int getIdCallback(void*,int,char**,char**);
 };
 
 #endif // QDBPROFILE_H

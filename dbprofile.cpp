@@ -1,13 +1,22 @@
 #include "dbprofile.h"
 
 const char *cDefaultDbName = "profiles.vdb";
-//TODO: set threshold double field
+
 const char *SqlInitNeuroprofiles =
-        "CREATE TABLE IF NOT EXISTS neuroprofiles (id INTEGER PRIMARY KEY, family TEXT, idx INTEEGER, nn_type INTEGER, nn_kind INTEGER, profile TEXT, created TEXT NOT NULL DEFAULT (NOW()), comment TEXT, UNIQUE(family, idx, nn_type, nn_kind));";
+        "CREATE TABLE IF NOT EXISTS neuroprofiles (id INTEGER PRIMARY KEY, family TEXT, idx INTEEGER, nn_type INTEGER, nn_kind INTEGER, profile TEXT, threshold DOUBLE, learned BOOLEAN, created TEXT NOT NULL DEFAULT (NOW()), comment TEXT, UNIQUE(family, idx, nn_type, nn_kind));";
 const char *SqlLoadNeuroprofiles = "SELECT id FROM neuroprofiles;";
-const char *SqlLoadNeuroprofile = "SELECT nn_type, nn_kind, profile, created FROM neuroprofiles WHERE id=%d;";
-const char *SqlNewNeuroprofile = "INSERT INTO neuroprofiles (family, idx, nn_type, nn_kind, profile) VALUES (%s, %d, %d, %d, %s);";
-const char *SqlGetNeuroprofile = "SELECT id FROM neuroprofiles WHERE family=%s AND idx=%d AND nn_type=%d AND nn_kind=%d;";
+const char *SqlLoadNeuroprofile = "SELECT nn_type, nn_kind, profile, threshold, learned, created FROM neuroprofiles WHERE id=%d;";
+const char *SqlNewNeuroprofile = "INSERT INTO neuroprofiles (family, idx, nn_type, nn_kind, profile, threshold, learned) VALUES (%s, %d, %d, %d, %s, %f, %d);";
+const char *SqlGetNeuroprofileId = "SELECT id FROM neuroprofiles WHERE family=%s AND idx=%d AND nn_type=%d AND nn_kind=%d;";
+
+const char *cIdCol = "id";
+const char *cFamilyCol = "family";
+const char *cIdxCol = "idx";
+const char *cNnTypeCol = "nn_type";
+const char *cNnKindCol = "nn_kind";
+const char *cProfileCol = "profile";
+const char *cThresholdCol = "threshold";
+const char *cLearnedCol = "learned";
 
 DbProfile::DbProfile(PROFILE_ID ProfileId,
                        QObject *parent) : QObject(parent),
@@ -16,7 +25,8 @@ DbProfile::DbProfile(PROFILE_ID ProfileId,
     idx(0),
     profile_id(ProfileId),
     ssnn(NULL),
-    threshold(.0)
+    threshold(.0),
+    b_learned(false)
 {
     sqlite3 *db = NULL;
     if(!sqlite3_open(cDefaultDbName, &db)) {
@@ -31,6 +41,8 @@ DbProfile::DbProfile(QString &Family,
                      const int c_index,
                      const nnType c_nn_type,
                      const nnKind c_nn_kind,
+                     const double cThreshold,
+                     const bool cLearned,
                      QObject *parent) : QObject(parent),
     family(Family),
     idx(c_index),
@@ -38,7 +50,8 @@ DbProfile::DbProfile(QString &Family,
     nn_kind(c_nn_kind),
     profile_id(0),
     ssnn(NULL),
-    threshold(.0)
+    threshold(cThreshold),
+    b_learned(cLearned)
 {
     sqlite3 *db = NULL;
     if(!sqlite3_open(cDefaultDbName, &db))
@@ -48,16 +61,18 @@ DbProfile::DbProfile(QString &Family,
                     db,
                     QString().sprintf(
                         SqlNewNeuroprofile,
-                        Family.toStdString(
+                        Family.toStdString(//family - %s
                             ).c_str(
                             ),
-                        c_index,
-                        (int)c_nn_type,
-                        (int)c_nn_kind,
-                        SimScanNN::Empty(
+                        c_index,//idx - %d
+                        (int)c_nn_type,//nn_type - %d
+                        (int)c_nn_kind,//nn_kind - %d
+                        SimScanNN::Empty(//profile - %s
                             ).toStdString(
                             ).c_str(
-                            )
+                            ),
+                        threshold,//threshold - %f
+                        (int)b_learned//learned - %d
                         ).toStdString(
                         ).c_str(
                         ),
@@ -71,7 +86,7 @@ DbProfile::DbProfile(QString &Family,
                         db,
                         QString(
                             ).sprintf(
-                            SqlGetNeuroprofile,
+                            SqlGetNeuroprofileId,
                             Family.toStdString(
                                 ).c_str(
                                 ),
@@ -100,10 +115,24 @@ DbProfile::DbProfile(QString &Family,
     }
 }
 
+int DbProfile::getIdCallback(void *data, int argc, char **argv, char **azColName) {
+    DbProfile *This = (DbProfile *)data;
+    if((argc == 1) && (!strcmp(*azColName, cIdCol))) {
+        if(const unsigned int cId = QString(*argv).toInt()) {
+            if(!This->profile_id)
+                This->profile_id = cId;
+            else {
+                //TODO: compare IDs
+            }
+        }
+    }
+    return 0;
+}
+
 int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azColName) {
     DbProfile *This = (DbProfile *)data;
     for(int i = 0; i < argc; ++i) {
-        if(!strcmp(azColName[i], "id")) {
+        if(!strcmp(azColName[i], cIdCol)) {
             if(This->profile_id) {
                 //TODO: compare
             } else {
@@ -111,7 +140,7 @@ int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azC
             }
             continue;
         }
-        if(!strcmp(azColName[i], "nn_type")) {
+        if(!strcmp(azColName[i], cNnTypeCol)) {
             if(This->nn_type == nnType::nntUnknown) {
                 This->nn_type = (nnType)QString(argv[i]).toInt();
             } else {
@@ -119,7 +148,7 @@ int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azC
             }
             continue;
         }
-        if(!strcmp(azColName[i], "nn_kind")) {
+        if(!strcmp(azColName[i], cNnKindCol)) {
             if(This->nn_kind == nnKind::nnkUnknown) {
                 This->nn_kind = (nnKind)QString(argv[i]).toInt();
             } else {
@@ -127,22 +156,33 @@ int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azC
             }
             continue;
         }
-        if(!strcmp(azColName[i], "family")) {
+        if(!strcmp(azColName[i], cFamilyCol)) {
             if(This->family.length()) {
                 //TODO: compare
             } else {
                 This->family = QString(argv[i]);
             }
+            continue;
         }
-        if(!strcmp(azColName[i], "idx")) {
+        if(!strcmp(azColName[i], cIdxCol)) {
             if(This->idx) {
                 //TODO: compare
             } else {
                 This->idx = QString(argv[i]).toInt();
             }
+            continue;
         }
-        if(!strcmp(azColName[i], "profile")) {
+        if(!strcmp(azColName[i], cProfileCol)) {
             This->xml_str = QString(argv[i]);
+            continue;
+        }
+        if(!strcmp(azColName[i], cThresholdCol)) {
+            This->threshold = QString(argv[i]).toDouble();
+            continue;
+        }
+        if(!strcmp(azColName[i], cLearnedCol)) {
+            This->b_learned = !!QString(argv[i]).toInt();
+            continue;
         }
     }
     return 0;
@@ -150,8 +190,8 @@ int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azC
 
 int DbProfile::loadProfilesCallback(void *data, int argc, char **argv, char **azColName) {
     QVector<DbProfile *> &result = *(QVector<DbProfile *> *)data;
-    if((argc == 1) && (!strcmp(*azColName, "id"))) {
-        if(const unsigned int cId = atoi(argv[0])) {
+    if((argc == 1) && (!strcmp(*azColName, cIdCol))) {
+        if(const unsigned int cId = QString(*argv).toInt()) {
             result.push_back(new DbProfile(cId));
         }
     }
