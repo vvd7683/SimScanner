@@ -28,6 +28,8 @@ public:
     }
 
     static QVector<DbProfile *> loadProfiles();
+    static QVector<QString> getFamilies();
+    static QVector<int> getFamilyIndexes(QString Family);
     SimScanNN *getNN();
 signals:
     void signalDbError(QString msg);

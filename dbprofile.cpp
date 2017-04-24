@@ -7,7 +7,9 @@ const char *SqlInitNeuroprofiles =
 const char *SqlLoadNeuroprofiles = "SELECT id FROM neuroprofiles;";
 const char *SqlLoadNeuroprofile = "SELECT nn_type, nn_kind, profile, threshold, learned, created FROM neuroprofiles WHERE id=%d;";
 const char *SqlNewNeuroprofile = "INSERT INTO neuroprofiles (family, idx, nn_type, nn_kind, profile, threshold, learned) VALUES (%s, %d, %d, %d, %s, %f, %d);";
-const char *SqlGetNeuroprofileId = "SELECT id FROM neuroprofiles WHERE family=%s AND idx=%d AND nn_type=%d AND nn_kind=%d;";
+const char *SqlGetNeuroprofileId = "SELECT id FROM neuroprofiles WHERE family='%s' AND idx=%d AND nn_type=%d AND nn_kind=%d;";
+const char *SqlGetFamilies = "SELECT DISTINCT family FROM neuroprofiles;";
+const char *SqlGetFamily = "SELECT DISTINCT idx FROM neuroprofiles WHERE family='%s';";
 
 const char *cIdCol = "id";
 const char *cFamilyCol = "family";
@@ -210,6 +212,60 @@ QVector<DbProfile *> DbProfile::loadProfiles() {
             } else {
                 throw;
             }
+        } else {
+            throw;
+        }
+        sqlite3_close(db);
+    } else {
+        //
+    }
+    return result;
+}
+
+QVector<QString> DbProfile::getFamilies() {
+    QVector<QString> result;
+    sqlite3 *db = NULL;
+    if(!sqlite3_open(cDefaultDbName, &db))
+    {
+        char *err = NULL;
+        if(!sqlite3_exec(db,
+                         SqlGetFamilies,
+                         NULL/* TODO: make callback */,
+                         &result,
+                         &err))
+        {
+            //
+        } else {
+            throw;
+        }
+        sqlite3_close(db);
+    } else {
+        //
+    }
+    return result;
+}
+
+QVector<int> DbProfile::getFamilyIndexes(QString Family) {
+    QVector<int> result;
+    sqlite3 *db = NULL;
+    if(!sqlite3_open(cDefaultDbName, &db))
+    {
+        char *err = NULL;
+        if(!sqlite3_exec(db,
+                         QString(
+                             ).sprintf(
+                             SqlGetFamily,
+                             Family.toStdString(
+                                 ).c_str(
+                                 )
+                             ).toStdString(
+                             ).c_str(
+                             ),
+                         NULL/* TODO: make callback */,
+                         &result,
+                         &err))
+        {
+            //
         } else {
             throw;
         }
