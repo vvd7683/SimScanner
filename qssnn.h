@@ -12,6 +12,7 @@ class SimScanNN : public QObject
 public:
     typedef unsigned int PROFILE_ID;
     enum class ssNNType {
+        nntUnknown = -1,
         nntFullFileImage = 0,
         nntAnySection,
         nntCodeSection,
@@ -23,6 +24,7 @@ public:
     };
 
     enum class ssNNKind {
+        nnkUnknown = -1,
         nnkFixed = 0,
         nnkExtremum,
         nnkRelative,
@@ -34,19 +36,15 @@ public:
         nnkCount
     };
 
-    SimScanNN(const ssNNType c_type,
-              const ssNNKind c_kind,
-              QString &from,
+    explicit SimScanNN(tinyxml2::XMLDocument &xml,
               QObject *parent = 0);
 
     static QString Empty() {
+        //QDir::tempPath().append(QDir::separator()).append(tr("temp"));
         return QString();
     }
-
-    const ssNNType cType;
-    const ssNNKind cKind;
 signals:
-
+    void signalSimilarity(double similarity);
 public slots:
     //
 private:

@@ -1,12 +1,8 @@
 #include "qssnn.h"
 
-SimScanNN::SimScanNN(const ssNNType c_type,
-                     const ssNNKind c_kind,
-                     QString &from,
+SimScanNN::SimScanNN(tinyxml2::XMLDocument &xml,
                      QObject *parent) : QObject(parent),
-    cType(c_type),
-    cKind(c_kind),
-    nn(new OpenNN::NeuralNetwork(from.toStdString()))
+    nn(new OpenNN::NeuralNetwork(xml))
 {
     //
 }

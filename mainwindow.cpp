@@ -15,9 +15,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //tinyxml2::XMLDocument test;
-    //OpenNN::NeuralNetwork nn;
-
     setWindowIcon(QIcon(tr(":/icons/icons/SimScanner.png")));
 
     ScanModel *model = new ScanModel;
@@ -126,14 +123,18 @@ void MainWindow::on_actionNew_triggered()
         QString &family = dlg.getFamily();
         const int cIdx = dlg.getIndex();
 
-        for(DbProfile::nnType t = DbProfile::nnType::nntAnySection;
+        for(DbProfile::nnType t = DbProfile::nnType::nntFullFileImage;
             t < DbProfile::nnType::nntCount; t = (DbProfile::nnType)SUCC((int)t))
         {
             for(DbProfile::nnKind k = DbProfile::nnKind::nnkFixed;
                 k < DbProfile::nnKind::nnkCount;
                 k = (DbProfile::nnKind)SUCC((int)k))
             {
-                ssnnProfiles.push_back(new DbProfile(family, cIdx, t, k));
+                try {
+                    ssnnProfiles.push_back(new DbProfile(family, cIdx, t, k));
+                } catch(...) {
+                    //
+                }
             }
         }
     } else {
@@ -214,6 +215,8 @@ MainWindow::ScanState MainWindow::set_ss(ScanState _ss) {
 void MainWindow::on_actionScan_triggered()
 {
     SS = ScanState::ssScan;
+    QVector<SimScanNN *> nns;
+    foreach(DbProfile *db_profile, ssnnProfiles) nns.push_back(db_profile->getNN());
     //TODO: scan ui->treeView for checked elements; try checked directories and PE
 }
 
