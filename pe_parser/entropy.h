@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 #include <math.h>
+#include <vector>
 
 #define _COUNT(x)		(sizeof(x)/sizeof(*x))
 
@@ -20,4 +21,8 @@ public:
 		double
 		Value;
 };
+
+typedef double EntropyPoint;//TODO: make pair
+typedef std::vector<EntropyPoint> EntropyDiagram;
+
 #endif

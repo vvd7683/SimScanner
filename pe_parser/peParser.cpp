@@ -23,12 +23,22 @@ double peParser::_get_section_entropy(ULONG index) {
 		Section[index].SizeOfRawData).Value;
 }
 //-----------------------------------------------------------------------------
-peEntropyParser::EntropyDiagram peEntropyParser::_scan_entropy() {
-    return EntropyDiagram();
+EntropyDiagram peEntropyParser::_scan_entropy() {
+    if(!entropy_diagram.size()) {
+        const PBYTE c_start = pFileImage;
+        const PBYTE c_end = c_start + FileImageSz;
+        for (PBYTE Ptr = c_start;
+            Ptr + _range < c_end;
+            Ptr += _step)
+        {
+            //entropy_diagram.push_back(Entropy(Ptr, _range).Value);
+        }
+    }
+    return entropy_diagram;
 }
 
-peEntropyParser::EntropyDiagram peEntropyParser::_scan_section_entropy(ULONG index) {
-	std::vector<double> entropy_diagram;
+EntropyDiagram peEntropyParser::_scan_section_entropy(ULONG index) {
+    EntropyDiagram sec_entropy_diagram;
 	if (index < SectionsCount) {
 		if (Section[index].SizeOfRawData && Section[index].PointerToRawData) {
 			const PBYTE c_start = &pFileImage[Section[index].PointerToRawData];
@@ -37,10 +47,10 @@ peEntropyParser::EntropyDiagram peEntropyParser::_scan_section_entropy(ULONG ind
 				pSecPtr + _range < c_end; 
 				pSecPtr += _step) 
 			{
-				entropy_diagram.push_back(Entropy(pSecPtr, _range).Value);
+                sec_entropy_diagram.push_back(Entropy(pSecPtr, _range).Value);
 			}
 		}
 	}
-	return entropy_diagram;
+    return sec_entropy_diagram;
 }
 //-----------------------------------------------------------------------------

@@ -80,8 +80,6 @@ protected:
 class peEntropyParser : public peParser
 {
 public:
-    typedef double EntropyPoint;//TODO: make pair
-    typedef std::vector<EntropyPoint> EntropyDiagram;
 	peEntropyParser(HANDLE hFile, 
 		ULONG FileSz, 
 		ULONG n_step = 1, 
@@ -116,5 +114,6 @@ public:
 private:
 	ULONG _step;
 	ULONG _range;
+    EntropyDiagram entropy_diagram;
 };
 #endif

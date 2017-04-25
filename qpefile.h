@@ -23,7 +23,7 @@ public:
     const DWORD getImageSize() {return parser->cImageSize;}
     const DWORD getEntry() {return parser->cEntry;}
 
-    peEntropyParser::EntropyDiagram getEntropy() {
+    EntropyDiagram &getEntropy() {
         return parser->entropyDiagram;
     }
 

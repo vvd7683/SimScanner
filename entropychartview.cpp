@@ -22,3 +22,11 @@ EntropyChartView::EntropyChartView(QWidget *parent) : QtCharts::QChartView(paren
         }
     }
 }
+
+void EntropyChartView::clear() {
+    //
+}
+
+bool EntropyChartView::add_point(EntropyPoint pt) {
+    return true;
+}

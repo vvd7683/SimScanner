@@ -95,9 +95,10 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
                 QString().sprintf("%llu bytes", Info.size()));
     ui->lDateTimeVal->setText(
                 Info.created().toString());
-    peEntropyParser::EntropyDiagram entropy = pe_file.getEntropy();
-    foreach(peEntropyParser::EntropyPoint pt, entropy) {
-        //
+    EntropyDiagram &entropy = pe_file.getEntropy();
+    foreach(EntropyPoint pt, entropy) {
+        if(!chartEntropy->add_point(pt))
+            throw;
     }
 }
 
