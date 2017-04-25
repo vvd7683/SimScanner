@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     qpefile.cpp \
     qssnn.cpp \
     aboutdialog.cpp \
-    addnewdialog.cpp
+    addnewdialog.cpp \
+    entropychartview.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -41,7 +42,8 @@ HEADERS  += mainwindow.h \
     qssnn.h \
     aboutdialog.h \
     addnewdialog.h \
-    macro.h
+    macro.h \
+    entropychartview.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \

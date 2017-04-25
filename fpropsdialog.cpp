@@ -7,8 +7,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
 
     ui(new Ui::FilePropertiesDialog),
 
-    chartEntropy(new QtCharts::QChartView),
-    chartEntropyDerivative(new QtCharts::QChartView)
+    chartEntropy(new EntropyChartView(this)),
+    chartEntropyDerivative(new EntropyChartView(this))
 {
     ui->setupUi(this);
     setModal(true);
@@ -102,3 +102,4 @@ FilePropertiesDialog::~FilePropertiesDialog()
 {
     delete ui;
 }
+
