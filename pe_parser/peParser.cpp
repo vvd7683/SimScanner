@@ -23,6 +23,10 @@ double peParser::_get_section_entropy(ULONG index) {
 		Section[index].SizeOfRawData).Value;
 }
 //-----------------------------------------------------------------------------
+peEntropyParser::EntropyDiagram peEntropyParser::_scan_entropy() {
+    return EntropyDiagram();
+}
+
 peEntropyParser::EntropyDiagram peEntropyParser::_scan_section_entropy(ULONG index) {
 	std::vector<double> entropy_diagram;
 	if (index < SectionsCount) {

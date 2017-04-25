@@ -80,7 +80,8 @@ protected:
 class peEntropyParser : public peParser
 {
 public:
-	typedef std::vector<double> EntropyDiagram;
+    typedef double EntropyPoint;//TODO: make pair
+    typedef std::vector<EntropyPoint> EntropyDiagram;
 	peEntropyParser(HANDLE hFile, 
 		ULONG FileSz, 
 		ULONG n_step = 1, 
@@ -89,7 +90,12 @@ public:
 		_step(n_step),
 		_range(n_range)
 	{}
-	EntropyDiagram _scan_section_entropy(ULONG index);
+    EntropyDiagram _scan_entropy();
+    __declspec(property(
+        get = _scan_entropy))
+        EntropyDiagram
+        entropyDiagram;
+    EntropyDiagram _scan_section_entropy(ULONG index);
 	__declspec(property(
 		get = _scan_section_entropy))
 		EntropyDiagram

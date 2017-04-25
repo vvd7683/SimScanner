@@ -22,10 +22,15 @@ public:
     const DWORD getImageBase() {return parser->cImageBase;}
     const DWORD getImageSize() {return parser->cImageSize;}
     const DWORD getEntry() {return parser->cEntry;}
+
+    peEntropyParser::EntropyDiagram getEntropy() {
+        return parser->entropyDiagram;
+    }
+
 private:
     void init();
     QFileInfo &Info;
-    peParser *parser;
+    peEntropyParser *parser;
     PBYTE pHeader;
 };
 

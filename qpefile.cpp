@@ -84,7 +84,7 @@ void QPeFile::init() {
                 QIODevice::ReadOnly))
         {
             if(pHeader = map(0, size())) {
-                if(parser = new peParser(pHeader, size())) {
+                if(parser = new peEntropyParser(pHeader, size())) {
                     //
                 } else {
                     unmap(pHeader);

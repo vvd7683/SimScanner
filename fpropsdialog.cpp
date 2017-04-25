@@ -3,7 +3,7 @@
 
 FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     QDialog(parent),
-    file(Info),
+    pe_file(Info),
 
     ui(new Ui::FilePropertiesDialog),
 
@@ -41,22 +41,22 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
 
     ui->tblFileHeader->setItem(0, 0,
                                new QTableWidgetItem(
-                                   QString().sprintf("0x%04X", file.getMachine())));
+                                   QString().sprintf("0x%04X", pe_file.getMachine())));
     ui->tblFileHeader->setItem(0, 1,
-                               new QTableWidgetItem(file.getMachineString()));
+                               new QTableWidgetItem(pe_file.getMachineString()));
     ui->tblFileHeader->setItem(1, 0,
                                new QTableWidgetItem(
-                                   QString().sprintf("0x%04X", file.getFlags())));
+                                   QString().sprintf("0x%04X", pe_file.getFlags())));
     ui->tblFileHeader->setItem(1, 1,
-                               new QTableWidgetItem(file.getFlagsString()));
+                               new QTableWidgetItem(pe_file.getFlagsString()));
     ui->tblFileHeader->setItem(2, 0,
                                new QTableWidgetItem(
-                                   QString().sprintf("%d bytes", file.getOptHeaderSz())));
+                                   QString().sprintf("%d bytes", pe_file.getOptHeaderSz())));
 
     ui->lMachineVal->setText(
-                file.getMachineString());
+                pe_file.getMachineString());
     ui->lSubsystemVal->setText(
-                file.getSubsystemString());
+                pe_file.getSubsystemString());
     ui->lSectionsCountVal->setText(
                 QString().sprintf("%d", 0));
     ui->lDirectoriesCountVal->setText(
@@ -65,12 +65,12 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     ui->tblOptionalHeader->setItem(0, 0,
                                    new QTableWidgetItem(
                                        QString().sprintf(
-                                           "0x%08X", file.getImageBase())));
+                                           "0x%08X", pe_file.getImageBase())));
     ui->tblOptionalHeader->setItem(1, 0,
                                    new QTableWidgetItem(
                                        QString().sprintf(
-                                           "0x%08X", file.getImageSize())));
-    const DWORD cEntry = file.getEntry();
+                                           "0x%08X", pe_file.getImageSize())));
+    const DWORD cEntry = pe_file.getEntry();
     ui->tblOptionalHeader->setItem(2, 0,
                                    new QTableWidgetItem(
                                        QString().sprintf(
@@ -95,7 +95,10 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
                 QString().sprintf("%llu bytes", Info.size()));
     ui->lDateTimeVal->setText(
                 Info.created().toString());
-    //TODO: make charts here
+    peEntropyParser::EntropyDiagram entropy = pe_file.getEntropy();
+    foreach(peEntropyParser::EntropyPoint pt, entropy) {
+        //
+    }
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()

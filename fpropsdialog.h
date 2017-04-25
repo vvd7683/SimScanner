@@ -22,12 +22,13 @@ class FilePropertiesDialog : public QDialog
 public:
     explicit FilePropertiesDialog(QFileInfo &Info, QWidget *parent = 0);
     ~FilePropertiesDialog();
+
 protected:
     EntropyChartView *chartEntropy;
     EntropyChartView *chartEntropyDerivative;
 private:
     Ui::FilePropertiesDialog *ui;
-    QPeFile file;
+    QPeFile pe_file;
 };
 
 #endif // CHARTDIALOG_H
