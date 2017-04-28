@@ -24,9 +24,12 @@ public:
     Entropy(unsigned char *pData, size_t DataSz);
     EntropyType value() { return _value; }
 	__declspec(property(
-		get = value))
-		double
-		Value;
+                   get = value))
+    EntropyType Value;
+    size_t frame_size() { return _size; }
+    __declspec(property(
+                   get = frame_size))
+    size_t Size;
     EntropyType append_byte(unsigned char val);
     EntropyType reduce_byte(unsigned char val);
 };

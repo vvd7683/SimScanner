@@ -11,9 +11,9 @@ class EntropyFlowWindow : public QObject
     Q_OBJECT
 public:
     explicit EntropyFlowWindow(unsigned char *Area,
-                               int AreaSz,
-                               int WindowSz = 0x400,
-                               int StepSz = 1,
+                               size_t AreaSz,
+                               size_t WindowSz = 0x400,
+                               size_t StepSz = 1,
                                QObject *parent = 0);
 
 signals:
