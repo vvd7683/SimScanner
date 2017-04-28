@@ -10,7 +10,7 @@ class EntropyFlowWindow : public QObject
 {
     Q_OBJECT
 public:
-    explicit EntropyFlowWindow(PBYTE Area,
+    explicit EntropyFlowWindow(unsigned char *Area,
                                int AreaSz,
                                int WindowSz = 0x400,
                                int StepSz = 1,

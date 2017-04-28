@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->actionScan->setIcon(QIcon(tr(":/icons/icons/actionStart.png")));
     ui->actionStop->setIcon(QIcon(tr(":/icons/icons/actionStop.png")));
+    ui->btnScan->setIcon(QIcon(tr(":/icons/icons/actionStart.png")));
+    ui->btnStop->setIcon(QIcon(tr(":/icons/icons/actionStop.png")));
+
     ui->actionAbout->setIcon(QIcon(tr(":/icons/icons/Info.png")));
     ui->actionHelp_content->setIcon(QIcon(tr(":/icons/icons/Help.png")));
     ui->actionQuit->setIcon(QIcon(tr(":/icons/icons/quit.png")));
@@ -265,6 +268,23 @@ void MainWindow::on_actionScan_mode_triggered(bool checked)
 {
     if(checked) {
         ui->actionEdit_mode->setChecked(false);
+
+        ui->actionEdit->setVisible(false);
+        ui->actionEdit->setEnabled(false);
+//TODO: set enabled with FS conditions
+        ui->actionScan->setVisible(true);
+        ui->actionScan->setEnabled(true);
+        ui->actionStop->setVisible(true);
+        ui->actionStop->setEnabled(false);
+        ui->btnScan->setVisible(true);
+        ui->btnScan->setEnabled(true);
+        ui->btnStop->setVisible(true);
+        ui->btnStop->setEnabled(false);
+
+        ui->actionNew->setVisible(false);
+        ui->actionNew->setEnabled(false);
+        ui->actionEdit->setVisible(false);
+        ui->actionEdit->setEnabled(false);
     }
 }
 
@@ -272,5 +292,22 @@ void MainWindow::on_actionEdit_mode_triggered(bool checked)
 {
     if(checked) {
         ui->actionScan_mode->setChecked(false);
+
+        ui->actionEdit->setVisible(true);
+        ui->actionEdit->setEnabled(true);
+
+        ui->actionScan->setVisible(false);
+        ui->actionScan->setEnabled(false);
+        ui->actionStop->setVisible(false);
+        ui->actionStop->setEnabled(false);
+        ui->btnScan->setVisible(true);
+        ui->btnScan->setEnabled(false);
+        ui->btnStop->setVisible(true);
+        ui->btnStop->setEnabled(false);
+
+        ui->actionNew->setVisible(true);
+        ui->actionNew->setEnabled(true);
+        ui->actionEdit->setVisible(true);
+        ui->actionEdit->setEnabled(true);
     }
 }

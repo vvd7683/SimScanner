@@ -300,7 +300,6 @@
    </attribute>
    <addaction name="actionScan"/>
    <addaction name="actionStop"/>
-   <addaction name="separator"/>
    <addaction name="actionNew"/>
    <addaction name="separator"/>
    <addaction name="actionHelp_content"/>

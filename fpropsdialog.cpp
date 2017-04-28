@@ -90,9 +90,17 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     ui->gboxEntropy->setLayout(l);
 
     ui->leFilePathVal->setText(
-                Info.absoluteFilePath());
+                Info.absoluteFilePath(
+                    )
+                );
     ui->lFileSizeVal->setText(
-                QString().sprintf("%llu bytes", Info.size()));
+                QString(
+                    ).sprintf(
+                    "%llu bytes",
+                    Info.size(
+                        )
+                    )
+                );
     ui->lDateTimeVal->setText(
                 Info.created().toString());
     EntropyDiagram &entropy = pe_file.getEntropy();

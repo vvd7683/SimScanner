@@ -1,29 +1,34 @@
 #ifndef _entropy_h_
 #define _entropy_h_
 
-#include <Windows.h>
 #include <math.h>
 #ifdef QT_CORE_LIB
 #include <QVector>
 #else
+#include <Windows.h>
 #include <vector>
 #endif
 
-#define _COUNT(x)		(sizeof(x)/sizeof(*x))
+#include "macro.h"
+
+typedef double EntropyType;
 
 class Entropy
 {
 private:
-	double _value;
-	double _calc_entropy(PBYTE pData, ULONG DataSz);
-	//static double _log2(double number);
+    EntropyType _value;
+    size_t _size;
+    EntropyType _calc_entropy(unsigned char *pData, size_t DataSz);
+    size_t statistics[0x100];
 public:
-	Entropy(PBYTE pData, ULONG DataSz);
-	double value() { return _value; }
+    Entropy(unsigned char *pData, size_t DataSz);
+    EntropyType value() { return _value; }
 	__declspec(property(
 		get = value))
 		double
 		Value;
+    EntropyType append_byte(unsigned char val);
+    EntropyType reduce_byte(unsigned char val);
 };
 
 typedef double EntropyPoint;//TODO: make pair

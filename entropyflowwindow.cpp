@@ -1,6 +1,6 @@
 #include "entropyflowwindow.h"
 
-EntropyFlowWindow::EntropyFlowWindow(PBYTE Area,
+EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
                                      int AreaSz,
                                      int WindowSz,
                                      int StepSz,
@@ -9,6 +9,6 @@ EntropyFlowWindow::EntropyFlowWindow(PBYTE Area,
     windowSz(WindowSz)
 {
     for(int i = 0; i < AreaSz; ++i) {
-        PBYTE ptr = Area + i;
+        unsigned char *ptr = Area + i;
     }
 }
