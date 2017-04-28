@@ -9,14 +9,21 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
     windowSz(WindowSz)
 {
     const size_t cWinHalfSz = windowSz >> 1;
-    Entropy entropy(Area, cWinHalfSz);
-    for(size_t i = 0; i < AreaSz; ++i) {
-        unsigned char &refChar = *(Area + i);
-        if(i > cWinHalfSz)
-            entropy.reduce_byte(refChar);
-        if(i < AreaSz - cWinHalfSz)
-            entropy.append_byte(refChar);
-        const EntropyPoint pt = entropy.Value;
-        points.push_back(pt);
+    if(cWinHalfSz > AreaSz) {
+        Entropy entropy(Area, cWinHalfSz);
+        for(size_t i = 0; i < AreaSz; ++i) {
+            unsigned char &refChar = *(Area + i);
+            if(i > cWinHalfSz)
+                entropy.reduce_byte(refChar);
+            if(i < AreaSz - cWinHalfSz)
+                entropy.append_byte(refChar);
+            const EntropyPoint pt = entropy.Value;
+            points.push_back(pt);
+        }
+    } else {
+        //plateau - area is less than frame
+        Entropy entropy(Area, AreaSz);
+        for(size_t i = 0; i < AreaSz; ++i)
+            points.push_back(entropy.Value);
     }
 }

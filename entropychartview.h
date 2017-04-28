@@ -4,7 +4,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QSplineSeries>
 
-#include "pe_parser/peParser.h"
+#include "entropyflowwindow.h"
 
 class EntropyChartView : public QtCharts::QChartView
 {

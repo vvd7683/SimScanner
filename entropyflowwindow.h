@@ -16,12 +16,13 @@ public:
                                size_t StepSz = 1,
                                QObject *parent = 0);
 
+    EntropyDiagram get_points() { return points; }
 signals:
 
 public slots:
     //
 protected:
-    QVector<EntropyPoint>points;
+    EntropyDiagram points;
     int step;
     int windowSz;
 };

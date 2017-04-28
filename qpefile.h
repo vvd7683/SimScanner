@@ -5,7 +5,7 @@
 #include <QString>
 #include <QFileInfo>
 
-#include "pe_parser/peParser.h"
+#include "entropy_parser.h"
 
 class QPeFile : public QFile
 {
@@ -24,7 +24,7 @@ public:
     const DWORD getEntry() {return parser->cEntry;}
 
     EntropyDiagram &getEntropy() {
-        return parser->entropyDiagram;
+        return *parser->entropyDiagram;
     }
 
 private:

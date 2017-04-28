@@ -28,6 +28,10 @@ EntropyType Entropy::_calc_entropy(unsigned char *pData,
 }
 
 EntropyType Entropy::append_byte(unsigned char val) {
+    if(const EntropyType c_freq =
+            ((EntropyType)statistics[val]) /
+            ((EntropyType)_size))
+        _value += c_freq * log2(c_freq);
     _size++;
     statistics[val]++;
     if(const EntropyType c_freq =
@@ -38,6 +42,10 @@ EntropyType Entropy::append_byte(unsigned char val) {
 }
 
 EntropyType Entropy::reduce_byte(unsigned char val) {
+    if(const EntropyType c_freq =
+            ((EntropyType)statistics[val]) /
+            ((EntropyType)_size))
+        _value += c_freq * log2(c_freq);
     _size--;
     statistics[val]--;
     if(const EntropyType c_freq =
