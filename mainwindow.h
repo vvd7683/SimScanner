@@ -55,6 +55,10 @@ private slots:
 
     void on_actionStop_triggered();
 
+    void on_actionScan_mode_triggered(bool checked);
+
+    void on_actionEdit_mode_triggered(bool checked);
+
 private:
     Ui::MainWindow *ui;
     enum ScanState {
@@ -66,9 +70,20 @@ private:
 
         ssCount
     } ss;
+    enum SsMode {
+        ssmFailure = -1,
+        ssmScan = 0,
+        ssmEdit,
+
+        ssmCount
+    };
+
     ScanState get_ss() {return ss;}
     ScanState set_ss(ScanState _ss);
     __declspec( property( get=get_ss, put=set_ss) ) ScanState SS;
+    SsMode get_ssm();
+    SsMode set_ssm(SsMode _ssm);
+    __declspec( property( get=get_ssm, put=set_ssm) ) SsMode SSmode;
 };
 
 #endif // MAINWINDOW_H

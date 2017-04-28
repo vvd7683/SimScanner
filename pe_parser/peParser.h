@@ -88,7 +88,7 @@ public:
 		_step(n_step),
 		_range(n_range)
 	{}
-    EntropyDiagram _scan_entropy();
+    EntropyDiagram &_scan_entropy();
     __declspec(property(
         get = _scan_entropy))
         EntropyDiagram

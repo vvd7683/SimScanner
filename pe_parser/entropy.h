@@ -3,7 +3,11 @@
 
 #include <Windows.h>
 #include <math.h>
+#ifdef QT_CORE_LIB
+#include <QVector>
+#else
 #include <vector>
+#endif
 
 #define _COUNT(x)		(sizeof(x)/sizeof(*x))
 
@@ -23,6 +27,10 @@ public:
 };
 
 typedef double EntropyPoint;//TODO: make pair
+#ifdef QT_CORE_LIB
+typedef QVector<EntropyPoint> EntropyDiagram;
+#else
 typedef std::vector<EntropyPoint> EntropyDiagram;
+#endif
 
 #endif

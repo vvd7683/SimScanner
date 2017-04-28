@@ -23,7 +23,7 @@ double peParser::_get_section_entropy(ULONG index) {
 		Section[index].SizeOfRawData).Value;
 }
 //-----------------------------------------------------------------------------
-EntropyDiagram peEntropyParser::_scan_entropy() {
+EntropyDiagram &peEntropyParser::_scan_entropy() {
     if(!entropy_diagram.size()) {
         const PBYTE c_start = pFileImage;
         const PBYTE c_end = c_start + FileImageSz;

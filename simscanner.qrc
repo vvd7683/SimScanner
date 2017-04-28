@@ -5,5 +5,14 @@
         <file>icons/Grid.png</file>
         <file>icons/SimScanner.png</file>
         <file>icons/Target.png</file>
+        <file>icons/SimScannerLogo.png</file>
+        <file>icons/Info.png</file>
+        <file>icons/Help.png</file>
+        <file>icons/quit.png</file>
+        <file>icons/actionNew.png</file>
+        <file>icons/actionStart.png</file>
+        <file>icons/actionStop.png</file>
+        <file>icons/Close_file.png</file>
+        <file>icons/nn.png</file>
     </qresource>
 </RCC>

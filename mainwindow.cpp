@@ -5,6 +5,7 @@
 //-----------------------------------------------------------------------------
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
+
     ss(ssNotInitialized),
 
     menu_PE(new QPeFileMenu(this)),
@@ -21,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->treeView->setModel(model);
     ui->treeView->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->treeView, &QTreeView::customContextMenuRequested, this, &MainWindow::tvContextMenuRequested);
-//Temporary
+
     QAction *fileInfoAction = new QAction("File information", this);
     connect(fileInfoAction, &QAction::triggered, this, &MainWindow::peInfoExecute);
     menu_PE->addAction(fileInfoAction);
@@ -30,6 +31,14 @@ MainWindow::MainWindow(QWidget *parent) :
     menu_Dir->addAction(new QAction("Scan immediately", this));
     //menu_Dir->addAction(new QAction("Add", this));
 
+    ui->actionScan->setIcon(QIcon(tr(":/icons/icons/actionStart.png")));
+    ui->actionStop->setIcon(QIcon(tr(":/icons/icons/actionStop.png")));
+    ui->actionAbout->setIcon(QIcon(tr(":/icons/icons/Info.png")));
+    ui->actionHelp_content->setIcon(QIcon(tr(":/icons/icons/Help.png")));
+    ui->actionQuit->setIcon(QIcon(tr(":/icons/icons/quit.png")));
+    ui->actionNew->setIcon(QIcon(tr(":/icons/icons/actionNew.png")));
+    ui->actionEdit->setIcon(QIcon(tr(":/icons/icons/actionNew.png")));
+//Temporary
     menu_Other->addAction(new QAction("Action 1", this));
     menu_Other->addAction(new QAction("Action 2", this));
     menu_Other->addAction(new QAction("Action 3", this));
@@ -143,6 +152,33 @@ void MainWindow::on_actionNew_triggered()
     SS = ssPrev;
 }
 
+MainWindow::SsMode MainWindow::get_ssm() {
+    if(ui->actionEdit_mode->isChecked())
+        return MainWindow::SsMode::ssmEdit;
+    if(ui->actionScan_mode->isChecked())
+        return MainWindow::SsMode::ssmScan;
+    SS = ScanState::ssFailure;
+    return SsMode::ssmFailure;
+}
+
+MainWindow::SsMode MainWindow::set_ssm(SsMode _ssm) {
+    switch(_ssm)
+    {
+    case ssmScan:
+        ui->actionEdit_mode->setChecked(false);
+        ui->actionScan_mode->setChecked(true);
+        break;
+    case ssmEdit:
+        ui->actionEdit_mode->setChecked(true);
+        ui->actionScan_mode->setChecked(false);
+        break;
+    default:
+        SS = ScanState::ssFailure;
+        break;
+    }
+    return SSmode;
+}
+
 MainWindow::ScanState MainWindow::set_ss(ScanState _ss) {
     ss = _ss;
     switch(ss)
@@ -223,4 +259,18 @@ void MainWindow::on_actionScan_triggered()
 void MainWindow::on_actionStop_triggered()
 {
     SS = ScanState::ssReady;
+}
+
+void MainWindow::on_actionScan_mode_triggered(bool checked)
+{
+    if(checked) {
+        ui->actionEdit_mode->setChecked(false);
+    }
+}
+
+void MainWindow::on_actionEdit_mode_triggered(bool checked)
+{
+    if(checked) {
+        ui->actionScan_mode->setChecked(false);
+    }
 }

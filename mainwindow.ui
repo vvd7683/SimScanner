@@ -180,7 +180,7 @@
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../Users/jack/SimScanner/icons/actionStart.png</normaloff>../../../Users/jack/SimScanner/icons/actionStart.png</iconset>
+                 <normaloff>../Users/jack/SimScanner/icons/actionStart.png</normaloff>../Users/jack/SimScanner/icons/actionStart.png</iconset>
                </property>
               </widget>
              </item>
@@ -191,7 +191,7 @@
                </property>
                <property name="icon">
                 <iconset>
-                 <normaloff>../../../Users/jack/SimScanner/icons/actionStop.png</normaloff>../../../Users/jack/SimScanner/icons/actionStop.png</iconset>
+                 <normaloff>../Users/jack/SimScanner/icons/actionStop.png</normaloff>../Users/jack/SimScanner/icons/actionStop.png</iconset>
                </property>
               </widget>
              </item>
@@ -262,10 +262,18 @@
     <property name="title">
      <string>Actions</string>
     </property>
+    <widget class="QMenu" name="menuMode">
+     <property name="title">
+      <string>Mode</string>
+     </property>
+     <addaction name="actionScan_mode"/>
+     <addaction name="actionEdit_mode"/>
+    </widget>
     <addaction name="actionScan"/>
     <addaction name="actionStop"/>
     <addaction name="separator"/>
     <addaction name="actionNew"/>
+    <addaction name="menuMode"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuActions"/>
@@ -302,7 +310,7 @@
   <action name="actionQuit">
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/jack/SimScanner/icons/quit.png</normaloff>../../../Users/jack/SimScanner/icons/quit.png</iconset>
+     <normaloff>../Users/jack/SimScanner/icons/quit.png</normaloff>../Users/jack/SimScanner/icons/quit.png</iconset>
    </property>
    <property name="text">
     <string>Quit</string>
@@ -311,7 +319,7 @@
   <action name="actionAbout">
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/jack/SimScanner/icons/Info.png</normaloff>../../../Users/jack/SimScanner/icons/Info.png</iconset>
+     <normaloff>../Users/jack/SimScanner/icons/Info.png</normaloff>../Users/jack/SimScanner/icons/Info.png</iconset>
    </property>
    <property name="text">
     <string>About</string>
@@ -320,10 +328,13 @@
   <action name="actionNew">
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/jack/SimScanner/icons/actionNew.png</normaloff>../../../Users/jack/SimScanner/icons/actionNew.png</iconset>
+     <normaloff>../Users/jack/SimScanner/icons/actionNew.png</normaloff>../Users/jack/SimScanner/icons/actionNew.png</iconset>
    </property>
    <property name="text">
     <string>New</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
   <action name="actionEdit">
@@ -334,7 +345,7 @@
   <action name="actionScan">
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/jack/SimScanner/icons/actionStart.png</normaloff>../../../Users/jack/SimScanner/icons/actionStart.png</iconset>
+     <normaloff>../Users/jack/SimScanner/icons/actionStart.png</normaloff>../Users/jack/SimScanner/icons/actionStart.png</iconset>
    </property>
    <property name="text">
     <string>Scan</string>
@@ -343,7 +354,7 @@
   <action name="actionStop">
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/jack/SimScanner/icons/actionStop.png</normaloff>../../../Users/jack/SimScanner/icons/actionStop.png</iconset>
+     <normaloff>../Users/jack/SimScanner/icons/actionStop.png</normaloff>../Users/jack/SimScanner/icons/actionStop.png</iconset>
    </property>
    <property name="text">
     <string>Stop</string>
@@ -352,10 +363,29 @@
   <action name="actionHelp_content">
    <property name="icon">
     <iconset>
-     <normaloff>../../../Users/jack/SimScanner/icons/Help.png</normaloff>../../../Users/jack/SimScanner/icons/Help.png</iconset>
+     <normaloff>../Users/jack/SimScanner/icons/Help.png</normaloff>../Users/jack/SimScanner/icons/Help.png</iconset>
    </property>
    <property name="text">
     <string>Help content</string>
+   </property>
+  </action>
+  <action name="actionScan_mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Scan mode</string>
+   </property>
+  </action>
+  <action name="actionEdit_mode">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Edit mode</string>
    </property>
   </action>
  </widget>

@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>../../../Users/jack/SimScanner/icons/Info.png</normaloff>../../../Users/jack/SimScanner/icons/Info.png</iconset>
+    <normaloff>../Users/jack/SimScanner/icons/Info.png</normaloff>../Users/jack/SimScanner/icons/Info.png</iconset>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -37,12 +37,9 @@
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QLabel" name="label">
+       <widget class="QLabel" name="lLogo">
         <property name="text">
          <string/>
-        </property>
-        <property name="pixmap">
-         <pixmap>../../../Users/jack/SimScanner/icons/SimScannerLogo.png</pixmap>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -50,7 +47,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_2">
+       <widget class="QLabel" name="lName">
         <property name="text">
          <string>SimScanner 1.0</string>
         </property>
@@ -60,7 +57,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="label_3">
+       <widget class="QLabel" name="lCopyRight">
         <property name="minimumSize">
          <size>
           <width>0</width>
