@@ -23,9 +23,7 @@ public:
                        const double cThreashold = .0,
                        const bool cLearned = false,
                        QObject *parent = 0);
-    ~DbProfile() {
-        delete ssnn;
-    }
+    ~DbProfile();
 
     static QVector<DbProfile *> loadProfiles();
     static QVector<QString> getFamilies();

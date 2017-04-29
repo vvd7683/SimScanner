@@ -117,6 +117,10 @@ DbProfile::DbProfile(QString &Family,
     }
 }
 
+DbProfile::~DbProfile() {
+    delete ssnn;
+}
+
 int DbProfile::getIdCallback(void *data, int argc, char **argv, char **azColName) {
     DbProfile *This = (DbProfile *)data;
     if((argc == 1) && (!strcmp(*azColName, cIdCol))) {

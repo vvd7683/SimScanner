@@ -2,6 +2,7 @@
 
 EntropyChartView::EntropyChartView(QWidget *parent) : QtCharts::QChartView(parent)
 {
+    /*
     if(QtCharts::QChart *chart = new QtCharts::QChart) {
         if(QtCharts::QSplineSeries *series = new QtCharts::QSplineSeries) {
             series->append(0, 6);
@@ -21,12 +22,34 @@ EntropyChartView::EntropyChartView(QWidget *parent) : QtCharts::QChartView(paren
             this->setChart(chart);
         }
     }
+    */
+}
+
+EntropyChartView::EntropyChartView(EntropyDiagram &points, QWidget *parent) : QtCharts::QChartView(parent) {
+    if(!add_points(points))
+        throw;
 }
 
 void EntropyChartView::clear() {
     //
 }
 
-bool EntropyChartView::add_point(EntropyPoint pt) {
-    return true;
+bool EntropyChartView::add_points(EntropyDiagram &points) {
+    int i = 0;
+    if(QtCharts::QChart *chart = new QtCharts::QChart) {
+        if(QtCharts::QSplineSeries *series = new QtCharts::QSplineSeries) {
+            foreach(const EntropyPoint pt, points) {
+                series->append(i++, pt);
+            }
+            chart->legend()->hide();
+            chart->addSeries(series);
+            chart->setTitle("Entropy chart");
+            chart->createDefaultAxes();
+            chart->axisY()->setRange(0, 10);
+
+            setChart(chart);
+            return true;
+        }
+    }
+    return false;
 }

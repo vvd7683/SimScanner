@@ -23,9 +23,7 @@ public:
     const DWORD getImageSize() {return parser->cImageSize;}
     const DWORD getEntry() {return parser->cEntry;}
 
-    EntropyDiagram &getEntropy() {
-        return *parser->entropyDiagram;
-    }
+    EntropyDiagram &getEntropy();
 
 private:
     void init();

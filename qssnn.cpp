@@ -6,3 +6,8 @@ SimScanNN::SimScanNN(tinyxml2::XMLDocument &xml,
 {
     //
 }
+
+QString SimScanNN::Empty() {
+    //QDir::tempPath().append(QDir::separator()).append(tr("temp"));
+    return QString();
+}

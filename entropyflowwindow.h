@@ -16,7 +16,7 @@ public:
                                size_t StepSz = 1,
                                QObject *parent = 0);
 
-    EntropyDiagram get_points() { return points; }
+    EntropyDiagram get_points();
 signals:
 
 public slots:

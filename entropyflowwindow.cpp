@@ -27,3 +27,5 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
             points.push_back(entropy.Value);
     }
 }
+
+EntropyDiagram EntropyFlowWindow::get_points() { return points; }

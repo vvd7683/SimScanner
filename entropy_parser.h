@@ -10,14 +10,8 @@ public:
     peEntropyParser(HANDLE hFile,
         ULONG FileSz,
         ULONG n_step = 1,
-        ULONG n_range = 0x200) : peParser(hFile,
-        FileSz),
-        _step(n_step),
-        _range(n_range)
-    {}
-    EntropyDiagram *get_entropy() {
-        return &entropy_diagram;
-    }
+        ULONG n_range = 0x200);
+    EntropyDiagram *get_entropy();
     __declspec(property(
         get = get_entropy))
     EntropyDiagram *entropyDiagram;
@@ -26,14 +20,14 @@ public:
         get = get_section_entropy))
     EntropyDiagram *SectionEntropyDiagram[];
     //Getter/setter wraps internal variables for future development
-    ULONG _get_step() { return _step; }
-    ULONG _set_step(ULONG val) { return _step = val; }
+    ULONG _get_step();
+    ULONG _set_step(ULONG val);
     __declspec(property(
         get = _get_step,
         put = _set_step))
         ULONG Step;
-    ULONG _get_range() { return _range; }
-    ULONG _set_range(ULONG val) { return _range = val; }
+    ULONG _get_range();
+    ULONG _set_range(ULONG val);
     __declspec(property(
         get = _get_range,
         put = _set_range))

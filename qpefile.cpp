@@ -77,6 +77,10 @@ const QString QPeFile::getSubsystemString() {
     }
 }
 
+EntropyDiagram &QPeFile::getEntropy() {
+    return *parser->entropyDiagram;
+}
+
 void QPeFile::init() {
     if(exists()) {
         //const int c_sz = size();

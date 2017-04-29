@@ -39,10 +39,7 @@ public:
     explicit SimScanNN(tinyxml2::XMLDocument &xml,
               QObject *parent = 0);
 
-    static QString Empty() {
-        //QDir::tempPath().append(QDir::separator()).append(tr("temp"));
-        return QString();
-    }
+    static QString Empty();
 signals:
     void signalSimilarity(double similarity);
 public slots:

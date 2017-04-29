@@ -32,6 +32,19 @@ const ULONG peEntropyParser::_scan_section_entropies() {
     return sec_diagrams.size();
 }
 
+peEntropyParser::peEntropyParser(HANDLE hFile, ULONG FileSz, ULONG n_step, ULONG n_range) : peParser(hFile,
+                                                                                                     FileSz),
+    _step(n_step),
+    _range(n_range)
+{
+    //
+}
+
+EntropyDiagram *peEntropyParser::get_entropy() {
+    _scan_entropy();
+    return &entropy_diagram;
+}
+
 EntropyDiagram *peEntropyParser::get_section_entropy(ULONG index) {
     const ULONG c_count =
             _scan_section_entropies();
@@ -40,5 +53,13 @@ EntropyDiagram *peEntropyParser::get_section_entropy(ULONG index) {
         return &sec_diagrams[index];
     return Q_NULLPTR;
 }
+
+ULONG peEntropyParser::_get_step() { return _step; }
+
+ULONG peEntropyParser::_set_step(ULONG val) { return _step = val; }
+
+ULONG peEntropyParser::_get_range() { return _range; }
+
+ULONG peEntropyParser::_set_range(ULONG val) { return _range = val; }
 
 //-----------------------------------------------------------------------------

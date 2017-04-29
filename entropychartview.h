@@ -11,9 +11,10 @@ class EntropyChartView : public QtCharts::QChartView
     Q_OBJECT
 public:
     explicit EntropyChartView(QWidget *parent = 0);
+    explicit EntropyChartView(EntropyDiagram &points, QWidget *parent = 0);
 
     void clear();
-    bool add_point(EntropyPoint pt);
+    bool add_points(EntropyDiagram &points);
 
 signals:
 
