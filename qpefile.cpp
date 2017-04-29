@@ -81,6 +81,10 @@ EntropyDiagram &QPeFile::getEntropy() {
     return *parser->entropyDiagram;
 }
 
+EntropyDiagram &QPeFile::getEntropyDerivative() {
+    return *parser->derivativeDiagram;
+}
+
 void QPeFile::init() {
     if(exists()) {
         //const int c_sz = size();

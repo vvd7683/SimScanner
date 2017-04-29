@@ -103,8 +103,9 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
                 );
     ui->lDateTimeVal->setText(
                 Info.created().toString());
-    EntropyDiagram &entropy = pe_file.getEntropy();
-    if(!chartEntropy->add_points(entropy))
+    if(!chartEntropy->add_points(pe_file.getEntropy()))
+        throw;
+    if(!chartEntropyDerivative->add_points(pe_file.getEntropyDerivative()))
         throw;
 }
 

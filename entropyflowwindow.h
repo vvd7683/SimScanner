@@ -17,12 +17,14 @@ public:
                                QObject *parent = 0);
 
     EntropyDiagram get_points();
+    EntropyDiagram get_derivative();
 signals:
 
 public slots:
     //
 protected:
     EntropyDiagram points;
+    EntropyDiagram derivative_points;
     int step;
     int windowSz;
 };

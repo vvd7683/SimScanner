@@ -12,9 +12,13 @@ public:
         ULONG n_step = 1,
         ULONG n_range = 0x200);
     EntropyDiagram *get_entropy();
+    EntropyDiagram *get_derivative();
     __declspec(property(
         get = get_entropy))
     EntropyDiagram *entropyDiagram;
+    __declspec(property(
+        get = get_derivative))
+    EntropyDiagram *derivativeDiagram;
     EntropyDiagram *get_section_entropy(ULONG index);
     __declspec(property(
         get = get_section_entropy))
@@ -35,7 +39,7 @@ public:
 private:
     ULONG _step;
     ULONG _range;
-    EntropyDiagram entropy_diagram;
+    EntropyDiagram entropy_diagram, entropy_derivative;
     QVector<EntropyDiagram>sec_diagrams;
 
     const ULONG _scan_section_entropies();

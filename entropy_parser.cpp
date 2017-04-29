@@ -2,9 +2,10 @@
 
 EntropyDiagram &peEntropyParser::_scan_entropy() {
     if(!entropy_diagram.size()) {
-        entropy_diagram =
-                EntropyFlowWindow(pFileImage,
-                                  FileImageSz).get_points();
+        EntropyFlowWindow efwin(pFileImage,
+                          FileImageSz);
+        entropy_diagram = efwin.get_points();
+        entropy_derivative = efwin.get_derivative();
     }
     return entropy_diagram;
 }
@@ -43,6 +44,11 @@ peEntropyParser::peEntropyParser(HANDLE hFile, ULONG FileSz, ULONG n_step, ULONG
 EntropyDiagram *peEntropyParser::get_entropy() {
     _scan_entropy();
     return &entropy_diagram;
+}
+
+EntropyDiagram *peEntropyParser::get_derivative() {
+    _scan_entropy();
+    return &entropy_derivative;
 }
 
 EntropyDiagram *peEntropyParser::get_section_entropy(ULONG index) {

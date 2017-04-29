@@ -35,17 +35,33 @@ void EntropyChartView::clear() {
 }
 
 bool EntropyChartView::add_points(EntropyDiagram &points) {
-    int i = 0;
     if(QtCharts::QChart *chart = new QtCharts::QChart) {
         if(QtCharts::QSplineSeries *series = new QtCharts::QSplineSeries) {
+            /*
+            int i = 0;
             foreach(const EntropyPoint pt, points) {
-                series->append(i++, pt);
+                series->append(i, pt);
+                i++;
+            }*/
+            //TODO: append extremums
+            EntropyPoint max_pt = 0., min_pt = 0.;
+            foreach(const EntropyPoint pt, points) {
+                max_pt = std::max(pt, max_pt);
+                min_pt = std::min(pt, min_pt);
+            }
+            max_pt *= 1.1;
+            if(min_pt < 0) min_pt *= 1.1; else min_pt = 0.;// /= 1.1;
+
+            const int c_percent = (int)((points.size() / 100.) + .5);
+            for(int i = 0; i < points.size(); i += c_percent) {
+                const EntropyPoint c_pt = points[i];
+                series->append(i, c_pt);
             }
             chart->legend()->hide();
             chart->addSeries(series);
             chart->setTitle("Entropy chart");
             chart->createDefaultAxes();
-            chart->axisY()->setRange(0, 10);
+            chart->axisY()->setRange(min_pt, max_pt);
 
             setChart(chart);
             return true;

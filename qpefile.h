@@ -24,6 +24,7 @@ public:
     const DWORD getEntry() {return parser->cEntry;}
 
     EntropyDiagram &getEntropy();
+    EntropyDiagram &getEntropyDerivative();
 
 private:
     void init();
