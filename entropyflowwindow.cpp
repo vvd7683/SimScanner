@@ -27,6 +27,7 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
         for(size_t i = 0; i < AreaSz; ++i) {
             points.push_back(entropy.Value);
             derivative_points.push_back(0.);
+            //extremum_densities.
         }
     }
 }

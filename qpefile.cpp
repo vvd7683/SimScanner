@@ -82,7 +82,11 @@ EntropyDiagram &QPeFile::getEntropy() {
 }
 
 EntropyDiagram &QPeFile::getEntropyDerivative() {
-    return *parser->derivativeDiagram;
+    return *parser->entropyDerivativeDiagram;
+}
+
+ExtremumDensityDiagram &QPeFile::getExtremumDensity() {
+    return *parser->extremumDensity;
 }
 
 void QPeFile::init() {

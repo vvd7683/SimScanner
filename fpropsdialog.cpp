@@ -107,6 +107,10 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
         throw;
     if(!chartEntropyDerivative->add_points(pe_file.getEntropyDerivative()))
         throw;
+    /*
+    if(!chartExtremumDensity->add_points(pe_file.getExtremumDensity()))
+        throw;
+        */
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()

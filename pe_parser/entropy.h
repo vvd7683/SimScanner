@@ -35,10 +35,13 @@ public:
 };
 
 typedef double EntropyPoint;//TODO: make pair
+typedef double ExtremumDensityPoint;//TODO: make pair
 #ifdef QT_CORE_LIB
 typedef QVector<EntropyPoint> EntropyDiagram;
+typedef QVector<ExtremumDensityPoint> ExtremumDensityDiagram;
 #else
 typedef std::vector<EntropyPoint> EntropyDiagram;
+typedef std::vector<ExtremumDensityPoint> ExtremumDensityDiagram;
 #endif
 
 #endif

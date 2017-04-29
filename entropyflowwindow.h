@@ -25,6 +25,7 @@ public slots:
 protected:
     EntropyDiagram points;
     EntropyDiagram derivative_points;
+    ExtremumDensityDiagram extremum_density_points;
     int step;
     int windowSz;
 };

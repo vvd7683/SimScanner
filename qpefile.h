@@ -25,6 +25,7 @@ public:
 
     EntropyDiagram &getEntropy();
     EntropyDiagram &getEntropyDerivative();
+    ExtremumDensityDiagram &getExtremumDensity();
 
 private:
     void init();

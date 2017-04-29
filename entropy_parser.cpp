@@ -1,13 +1,13 @@
 #include "entropy_parser.h"
 
 EntropyDiagram &peEntropyParser::_scan_entropy() {
-    if(!entropy_diagram.size()) {
+    if(!entropy_diagrams.entropy_diagram.size()) {
         EntropyFlowWindow efwin(pFileImage,
                           FileImageSz);
-        entropy_diagram = efwin.get_points();
-        entropy_derivative = efwin.get_derivative();
+        entropy_diagrams.entropy_diagram = efwin.get_points();
+        entropy_diagrams.entropy_derivative_diagram = efwin.get_derivative();
     }
-    return entropy_diagram;
+    return entropy_diagrams.entropy_diagram;
 }
 
 EntropyDiagram peEntropyParser::_scan_section_entropy(ULONG index) {
@@ -41,14 +41,18 @@ peEntropyParser::peEntropyParser(HANDLE hFile, ULONG FileSz, ULONG n_step, ULONG
     //
 }
 
-EntropyDiagram *peEntropyParser::get_entropy() {
+EntropyDiagram *peEntropyParser::get_entropy_diagram() {
     _scan_entropy();
-    return &entropy_diagram;
+    return &entropy_diagrams.entropy_diagram;
 }
 
-EntropyDiagram *peEntropyParser::get_derivative() {
+EntropyDiagram *peEntropyParser::get_entropy_derivative_diagram() {
     _scan_entropy();
-    return &entropy_derivative;
+    return &entropy_diagrams.entropy_derivative_diagram;
+}
+
+ExtremumDensityDiagram *peEntropyParser::get_extremum_density() {
+    return &entropy_diagrams.extremum_density;
 }
 
 EntropyDiagram *peEntropyParser::get_section_entropy(ULONG index) {
