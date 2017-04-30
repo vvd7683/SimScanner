@@ -7,28 +7,16 @@
 class peEntropyParser : public peParser
 {
 public:
-    typedef struct EntropyDiagrams {
-        EntropyDiagram entropy_diagram;
-        EntropyDiagram entropy_derivative_diagram;
-        ExtremumDensityDiagram extremum_density;
-    } *PEntropyDiagrams, *HEntropyDiagrams;
 
     peEntropyParser(HANDLE hFile,
         ULONG FileSz,
         ULONG n_step = 1,
         ULONG n_range = 0x200);
     EntropyDiagram *get_entropy_diagram();
-    EntropyDiagram *get_entropy_derivative_diagram();
-    ExtremumDensityDiagram *get_extremum_density();
     __declspec(property(
         get = get_entropy_diagram))
     EntropyDiagram *entropyDiagram;
-    __declspec(property(
-        get = get_entropy_derivative_diagram))
-    EntropyDiagram *entropyDerivativeDiagram;
-    __declspec(property(
-        get = get_extremum_density))
-    ExtremumDensityDiagram *extremumDensity;
+
     EntropyDiagram *get_section_entropy(ULONG index);
     __declspec(property(
         get = get_section_entropy))
@@ -49,7 +37,7 @@ public:
 private:
     ULONG _step;
     ULONG _range;
-    EntropyDiagrams entropy_diagrams;
+    EntropyDiagram entropy_diagram;
     QVector<EntropyDiagram>sec_diagrams;
 
     const ULONG _scan_section_entropies();

@@ -13,21 +13,16 @@ public:
     explicit EntropyFlowWindow(unsigned char *Area,
                                size_t AreaSz,
                                size_t WindowSz = 0x400,
-                               size_t StepSz = 1,
                                QObject *parent = 0);
 
     EntropyDiagram get_points();
-    EntropyDiagram get_derivative();
 signals:
 
 public slots:
     //
 protected:
     EntropyDiagram points;
-    EntropyDiagram derivative_points;
-    ExtremumDensityDiagram extremum_density_points;
-    int step;
-    int windowSz;
+    const int cWindowSz;
 };
 
 #endif // ENTROPYFLOWWINDOW_H

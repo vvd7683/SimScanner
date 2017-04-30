@@ -24,9 +24,6 @@ public:
     const DWORD getEntry() {return parser->cEntry;}
 
     EntropyDiagram &getEntropy();
-    EntropyDiagram &getEntropyDerivative();
-    ExtremumDensityDiagram &getExtremumDensity();
-
 private:
     void init();
     QFileInfo &Info;

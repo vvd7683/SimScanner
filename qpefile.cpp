@@ -81,14 +81,6 @@ EntropyDiagram &QPeFile::getEntropy() {
     return *parser->entropyDiagram;
 }
 
-EntropyDiagram &QPeFile::getEntropyDerivative() {
-    return *parser->entropyDerivativeDiagram;
-}
-
-ExtremumDensityDiagram &QPeFile::getExtremumDensity() {
-    return *parser->extremumDensity;
-}
-
 void QPeFile::init() {
     if(exists()) {
         //const int c_sz = size();

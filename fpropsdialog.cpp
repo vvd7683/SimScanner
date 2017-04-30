@@ -8,7 +8,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     ui(new Ui::FilePropertiesDialog),
 
     chartEntropy(new EntropyChartView(this)),
-    chartEntropyDerivative(new EntropyChartView(this))
+    chartEntropyDerivative(new EntropyChartView(this)),
+    chartExtremumDensity(Q_NULLPTR)
 {
     ui->setupUi(this);
     setModal(true);
@@ -103,14 +104,15 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
                 );
     ui->lDateTimeVal->setText(
                 Info.created().toString());
-    if(!chartEntropy->add_points(pe_file.getEntropy()))
+    QVector<EntropyY>pts;
+    EntropyDiagram &diagram = pe_file.getEntropy();
+    pts.resize(diagram.size());
+    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_value;
+    if(!chartEntropy->add_points(pts))
         throw;
-    if(!chartEntropyDerivative->add_points(pe_file.getEntropyDerivative()))
+    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].extremums_density;//.entropy_derivative_value;
+    if(!chartEntropyDerivative->add_points(pts))
         throw;
-    /*
-    if(!chartExtremumDensity->add_points(pe_file.getExtremumDensity()))
-        throw;
-        */
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()

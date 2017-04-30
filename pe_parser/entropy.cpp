@@ -46,8 +46,6 @@ EntropyType Entropy::reduce_byte(unsigned char val) {
             ((EntropyType)statistics[val]) /
             ((EntropyType)_size))
         _value += c_freq * log2(c_freq);
-    if(!statistics[val])
-        return 0.;
     _size--;
     statistics[val]--;
     if(const EntropyType c_freq =
@@ -56,3 +54,7 @@ EntropyType Entropy::reduce_byte(unsigned char val) {
         _value -= c_freq * log2(c_freq);
     return _value;
 }
+
+
+
+

@@ -26,6 +26,7 @@ public:
 protected:
     EntropyChartView *chartEntropy;
     EntropyChartView *chartEntropyDerivative;
+    ExtremumDensityChartView *chartExtremumDensity;
 private:
     Ui::FilePropertiesDialog *ui;
     QPeFile pe_file;
