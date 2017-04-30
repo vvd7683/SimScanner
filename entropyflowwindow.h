@@ -22,7 +22,7 @@ public slots:
     //
 protected:
     EntropyDiagram points;
-    const int cWindowSz;
+    const size_t cWindowSz;
 };
 
 #endif // ENTROPYFLOWWINDOW_H

@@ -10,6 +10,7 @@
 
 #include "qpefile.h"
 #include "entropychartview.h"
+#include "qchartlayout.h"
 
 namespace Ui {
 class FilePropertiesDialog;
@@ -26,7 +27,17 @@ public:
 protected:
     EntropyChartView *chartEntropy;
     EntropyChartView *chartEntropyDerivative;
-    ExtremumDensityChartView *chartExtremumDensity;
+    ExtremumDensityChartView *chartMaximumDensity;
+    ExtremumDensityChartView *chartMinimumDensity;
+private slots:
+    void on_rbDerivative_toggled(bool checked);
+
+    void on_rbEntropy_toggled(bool checked);
+
+    void on_rbMaximums_toggled(bool checked);
+
+    void on_rbMinimums_toggled(bool checked);
+
 private:
     Ui::FilePropertiesDialog *ui;
     QPeFile pe_file;

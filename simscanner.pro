@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     addnewdialog.cpp \
     entropychartview.cpp \
     entropyflowwindow.cpp \
-    entropy_parser.cpp
+    entropy_parser.cpp \
+    qchartlayout.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     macro.h \
     entropychartview.h \
     entropyflowwindow.h \
-    entropy_parser.h
+    entropy_parser.h \
+    qchartlayout.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \

@@ -1,6 +1,8 @@
 #include "fpropsdialog.h"
 #include "ui_fpropsdialog.h"
 
+#include <QMessageBox>
+
 FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     QDialog(parent),
     pe_file(Info),
@@ -9,7 +11,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
 
     chartEntropy(new EntropyChartView(this)),
     chartEntropyDerivative(new EntropyChartView(this)),
-    chartExtremumDensity(Q_NULLPTR)
+    chartMaximumDensity(new EntropyChartView(this)),
+    chartMinimumDensity(new EntropyChartView(this))
 {
     ui->setupUi(this);
     setModal(true);
@@ -83,12 +86,19 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
                                        new QTableWidgetItem(tr("No entry point")));
     }
 
-    QVBoxLayout *l = new QVBoxLayout;
+    QVBoxLayout *lEntropy = new QChartLayout;
 
-    l->addWidget(chartEntropy);
-    l->addWidget(chartEntropyDerivative);
+    lEntropy->addWidget(chartEntropy);
+    chartEntropyDerivative->setVisible(false);
+    lEntropy->addWidget(chartEntropyDerivative);
 
-    ui->gboxEntropy->setLayout(l);
+    QVBoxLayout *lDensity = new QChartLayout;
+    lDensity->addWidget(chartMaximumDensity);
+    chartMinimumDensity->setVisible(false);
+    lDensity->addWidget(chartMinimumDensity);
+
+    ui->frameEntropy->setLayout(lEntropy);
+    ui->frameDensity->setLayout(lDensity);
 
     ui->leFilePathVal->setText(
                 Info.absoluteFilePath(
@@ -110,9 +120,22 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_value;
     if(!chartEntropy->add_points(pts))
         throw;
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].extremums_density;//.entropy_derivative_value;
+
+    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_derivative_value;
     if(!chartEntropyDerivative->add_points(pts))
         throw;
+    chartEntropyDerivative->chart()->setTitle(tr("Entropy derivative chart"));
+
+    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].maximums_density;
+    if(!chartMaximumDensity->add_points(pts))
+        throw;
+    chartMaximumDensity->chart()->setTitle(tr("Maximums density"));
+
+
+    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].minimums_density;
+    if(!chartMinimumDensity->add_points(pts))
+        throw;
+    chartMinimumDensity->chart()->setTitle(tr("Minimums density"));
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
@@ -120,3 +143,23 @@ FilePropertiesDialog::~FilePropertiesDialog()
     delete ui;
 }
 
+
+void FilePropertiesDialog::on_rbDerivative_toggled(bool checked)
+{
+    chartEntropyDerivative->setVisible(checked);
+}
+
+void FilePropertiesDialog::on_rbEntropy_toggled(bool checked)
+{
+    chartEntropy->setVisible(checked);
+}
+
+void FilePropertiesDialog::on_rbMaximums_toggled(bool checked)
+{
+    chartMaximumDensity->setVisible(checked);
+}
+
+void FilePropertiesDialog::on_rbMinimums_toggled(bool checked)
+{
+    chartMinimumDensity->setVisible(checked);
+}

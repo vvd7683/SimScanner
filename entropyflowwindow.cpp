@@ -10,11 +10,13 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
     const size_t cWinHalfSz = cWindowSz >> 1;
     points.resize(AreaSz);
     if(cWinHalfSz < AreaSz) {
-        ExtremumPoints maximums, minimums;
+        ExtremumPoints maximums;
+        ExtremumPoints minimums;
         Entropy entropy(Area, cWinHalfSz);
         points[0].entropy_value = entropy.Value;
         points[0].entropy_derivative_value = 0.;
-        points[0].extremums_density = 0.;
+        points[0].maximums_density = 0.;
+        points[0].minimums_density = 0.;
         for(size_t i = 1; i < AreaSz; ++i) {
             const EntropyX c_abs = (EntropyX)i;
             EntropyPoint &pt = points[i];
@@ -30,12 +32,12 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
             {
             case edirMax:
             {
-                maximums.push_back(ExtremumPoint(c_abs, edir));
+                maximums.push_back(ExtremumPoint(c_abs, pt.entropy_value, edir));
                 break;
             }
             case edirMin:
             {
-                minimums.push_back(ExtremumPoint(c_abs, edir));
+                minimums.push_back(ExtremumPoint(c_abs, pt.entropy_value, edir));
                 break;
             }
             case edirNo:
@@ -54,8 +56,20 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
                     minimums.remove(0);
                 while(maximums[0].X < c_lower)
                     maximums.remove(0);
-                const EntropyY c_density = maximums.size() / cFrameSz;
-                points[c_extremum_calc_x].extremums_density = c_density;
+                /*
+                EntropyY e_min = minimums[0].Y, e_max = maximums[0].Y;
+                foreach (ExtremumPoint minimum, minimums) {
+                    e_min = qMin(minimum.Y, e_min);
+                }
+                foreach (ExtremumPoint maximum, maximums) {
+                    e_max = qMax(maximum.Y, e_max);
+                }
+                const EntropyY c_volatility = e_max - e_min;
+                */
+                EntropyPoint &pt = points[c_extremum_calc_x];
+                pt.maximums_density = maximums.size() / cFrameSz;
+                pt.minimums_density = minimums.size() / cFrameSz;
+                //pt.volatility = volatility(points, c_extremum_calc_x);
             }
         }
         for(size_t i = AreaSz - cWinHalfSz; i < AreaSz; ++i) {
@@ -67,15 +81,26 @@ EntropyFlowWindow::EntropyFlowWindow(unsigned char *Area,
                 minimums.remove(0);
             while(maximums[0].X < c_lower)
                 maximums.remove(0);
-            const EntropyY c_density = maximums.size() / cFrameSz;
+            /*
+            EntropyY e_min = minimums[0].Y, e_max = maximums[0].Y;
+            foreach (ExtremumPoint minimum, minimums) {
+                e_min = qMin(minimum.Y, e_min);
+            }
+            foreach (ExtremumPoint maximum, maximums) {
+                e_max = qMax(maximum.Y, e_max);
+            }
+            const EntropyY c_volatility = e_max - e_min;
+            */
             EntropyPoint &pt = points[c_extremum_calc_x];
-            pt.extremums_density = c_density;
+            pt.maximums_density = maximums.size() / cFrameSz;
+            pt.minimums_density = minimums.size() / cFrameSz;
+            //pt.volatility = volatility(points, c_extremum_calc_x);
         }
     } else {
         //plateau - area is less than frame
         Entropy entropy(Area, AreaSz);
         for(size_t i = 0; i < AreaSz; ++i) {
-            points.push_back({entropy.Value, 0., 0.});
+            points.push_back({entropy.Value, 0., 0., 0., 0.});
         }
     }
 }
