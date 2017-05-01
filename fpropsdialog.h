@@ -29,6 +29,10 @@ protected:
     EntropyChartView *chartEntropyDerivative;
     ExtremumDensityChartView *chartMaximumDensity;
     ExtremumDensityChartView *chartMinimumDensity;
+    ExtremumDensityChartView *chartExtremumDensity;
+
+    inline void init_sections();
+    inline void init_directories();
 private slots:
     void on_rbDerivative_toggled(bool checked);
 
@@ -37,6 +41,8 @@ private slots:
     void on_rbMaximums_toggled(bool checked);
 
     void on_rbMinimums_toggled(bool checked);
+
+    void on_rbExtremums_toggled(bool checked);
 
 private:
     Ui::FilePropertiesDialog *ui;

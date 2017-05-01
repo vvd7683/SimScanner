@@ -12,6 +12,8 @@ QPeFile::~QPeFile() {
     close();
 }
 
+const WORD QPeFile::getFlags() {return parser->cFlags;}
+
 const QString QPeFile::getFlagsString() {
     QString result = QString();
     if(parser->cFlags & IMAGE_FILE_DLL)
@@ -20,6 +22,8 @@ const QString QPeFile::getFlagsString() {
         result.append("no relocations; ");
     return result;
 }
+
+const WORD QPeFile::getMachine() {return parser->cMachine;}
 
 const QString QPeFile::getMachineString() {
     switch(parser->cMachine)
@@ -77,9 +81,25 @@ const QString QPeFile::getSubsystemString() {
     }
 }
 
+const unsigned int QPeFile::getOptHeaderSz() {return parser->cOptHeaderSize;}
+
+const DWORD QPeFile::getImageBase() {return parser->cImageBase;}
+
+const DWORD QPeFile::getImageSize() {return parser->cImageSize;}
+
+const DWORD QPeFile::getEntry() {return parser->cEntry;}
+
 EntropyDiagram &QPeFile::getEntropy() {
     return *parser->entropyDiagram;
 }
+
+const DWORD QPeFile::memAlign(DWORD val) {
+    return SUCC(PRED(parser->cMemAlign) | PRED(val));
+}
+
+SectionMap &QPeFile::getSections() { return sec_map; }
+
+DirectoryMap &QPeFile::getDirectories() { return dir_map; }
 
 void QPeFile::init() {
     if(exists()) {
@@ -89,7 +109,14 @@ void QPeFile::init() {
         {
             if(pHeader = map(0, size())) {
                 if(parser = new peEntropyParser(pHeader, size())) {
-                    //
+                    for(int i = 0; i < parser->SectionsCount; ++i) {
+                        sec_map.push_back(SSSection(&parser->Section[i]));
+                    }
+                    for(int i = 0; i < parser->DirectoriesCount; ++i) {
+                        IMAGE_DATA_DIRECTORY &dir = parser->Directory[i];
+                        if(dir.VirtualAddress && dir.Size)
+                            dir_map.push_back(SSDirectory(parser->Directory, i));
+                    }
                 } else {
                     unmap(pHeader);
                     close();

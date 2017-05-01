@@ -42,4 +42,12 @@ PBYTE GetEntryPoint32(HANDLE hFileImage, ULONG FileImageSz);
 
 PIMAGE_SECTION_HEADER getPEsections32(PIMAGE_NT_HEADERS32 hPE);
 
+inline BOOL isExecutable(PIMAGE_SECTION_HEADER sec) {
+    return !!(sec->Characteristics & (IMAGE_SCN_CNT_CODE | IMAGE_SCN_MEM_EXECUTE));
+}
+
+inline BOOL isWriteable(PIMAGE_SECTION_HEADER sec) {
+    return !!(sec->Characteristics & IMAGE_SCN_MEM_WRITE);
+}
+
 #endif

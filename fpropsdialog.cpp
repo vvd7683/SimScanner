@@ -12,7 +12,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     chartEntropy(new EntropyChartView(this)),
     chartEntropyDerivative(new EntropyChartView(this)),
     chartMaximumDensity(new EntropyChartView(this)),
-    chartMinimumDensity(new EntropyChartView(this))
+    chartMinimumDensity(new EntropyChartView(this)),
+    chartExtremumDensity(new EntropyChartView(this))
 {
     ui->setupUi(this);
     setModal(true);
@@ -30,18 +31,14 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     ui->tblFileHeader->setColumnWidth(1, 200);
     ui->tblOptionalHeader->setColumnWidth(1, 200);
 
-    ui->tabFileProperties->setTabText(0, tr("File properties"));
+    //ui->tabFileProperties->setTabText(0, tr("File properties"));
     ui->tabFileProperties->setTabIcon(0, QIcon(tr(":/icons/icons/File.png")));
-    ui->tabFileProperties->setTabText(1, tr("PE header"));
+    //ui->tabFileProperties->setTabText(1, tr("PE header"));
     ui->tabFileProperties->setTabIcon(1, QIcon(tr(":/icons/icons/Grid.png")));
-    ui->tabFileProperties->setTabText(2, tr("Entropy chart"));
+    //ui->tabFileProperties->setTabText(2, tr("Entropy chart"));
     ui->tabFileProperties->setTabIcon(2, QIcon(tr(":/icons/icons/3d_bar_chart.png")));
 
     setWindowTitle(Info.absoluteFilePath());
-
-    ui->tabPeProperties->setTabText(0, tr("Common headers"));
-    ui->tabPeProperties->setTabText(1, tr("Sections"));
-    ui->tabPeProperties->setTabText(2, tr("Directories"));
 
     ui->tblFileHeader->setItem(0, 0,
                                new QTableWidgetItem(
@@ -96,6 +93,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     lDensity->addWidget(chartMaximumDensity);
     chartMinimumDensity->setVisible(false);
     lDensity->addWidget(chartMinimumDensity);
+    chartExtremumDensity->setVisible(false);
+    lDensity->addWidget(chartExtremumDensity);
 
     ui->frameEntropy->setLayout(lEntropy);
     ui->frameDensity->setLayout(lDensity);
@@ -136,11 +135,75 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     if(!chartMinimumDensity->add_points(pts))
         throw;
     chartMinimumDensity->chart()->setTitle(tr("Minimums density"));
+
+    for(int i = 0; i < diagram.size(); ++i) pts[i] += diagram[i].maximums_density;//Already contains minimums
+    if(!chartExtremumDensity->add_points(pts))
+        throw;
+    chartExtremumDensity->chart()->setTitle(tr("Extremums density"));
+
+    init_sections();
+    init_directories();
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
 {
     delete ui;
+}
+
+void FilePropertiesDialog::init_sections() {
+    QTreeWidgetItem *topSectionsItem = new QTreeWidgetItem(ui->treeSections);
+    ui->treeSections->addTopLevelItem(topSectionsItem);
+    topSectionsItem->setText(0, tr("SECTIONS"));
+    foreach(SSSection ss_sec, pe_file.getSections()) {
+        QTreeWidgetItem *child = new QTreeWidgetItem(topSectionsItem);
+        child->setText(0, ss_sec.SectionName);
+        //topSectionsItem->addChild(child);
+        QTreeWidgetItem *chars_child = new QTreeWidgetItem(child);
+        chars_child->setText(0, tr("Flags"));
+        chars_child->setText(1, QString().sprintf("0x%08X", ss_sec.pSection->Characteristics));
+        if(isExecutable(ss_sec.pSection))
+            chars_child->setText(2, chars_child->text(2).append(tr("executable; ")));
+        if(!isWriteable(ss_sec.pSection))
+            chars_child->setText(2, chars_child->text(2).append(tr("read-only; ")));
+        //child->addChild(chars_child);
+        QTreeWidgetItem *rva_child = new QTreeWidgetItem(child);
+        rva_child->setText(0, tr("Relative address"));
+        rva_child->setText(1, QString().sprintf("0x%08X", ss_sec.pSection->VirtualAddress));
+        rva_child->setText(2, QString().sprintf("[Flat address 0x%08X]",
+                                                pe_file.getImageBase() +
+                                                ss_sec.pSection->VirtualAddress));
+        //child->addChild(rva_child);
+        QTreeWidgetItem *vsz_child = new QTreeWidgetItem(child);
+        vsz_child->setText(0, tr("Memory size"));
+        vsz_child->setText(1, QString().sprintf("0x%08X",
+                                                ss_sec.pSection->Misc.VirtualSize));
+        vsz_child->setText(2, QString().sprintf("[Aligned 0x%08X]",
+                                                pe_file.memAlign(ss_sec.pSection->Misc.VirtualSize)));
+        //child->addChild(vsz_child);
+    }
+}
+
+void FilePropertiesDialog::init_directories() {
+    QTreeWidgetItem *topDirectoriesItem = new QTreeWidgetItem(ui->treeSections);
+    ui->treeSections->addTopLevelItem(topDirectoriesItem);
+    topDirectoriesItem->setText(0, tr("DIRECTORIES"));
+    foreach(SSDirectory ss_dir, pe_file.getDirectories()) {
+        QTreeWidgetItem *child = new QTreeWidgetItem(topDirectoriesItem);
+        child->setText(0, QString().sprintf("%d", ss_dir.index));
+        child->setText(1, ss_dir.DirectoryName());
+        child->setText(2, ss_dir.DirectoryComment());
+        QTreeWidgetItem *rva_child = new QTreeWidgetItem(child);
+        rva_child->setText(0, "Relative address");
+        rva_child->setText(1, QString().sprintf("0x%08X", ss_dir.Directory->VirtualAddress));
+        rva_child->setText(2, QString().sprintf("[Flat address 0x%08X]",
+                                                pe_file.getImageBase() +
+                                                ss_dir.Directory->VirtualAddress));
+        QTreeWidgetItem *vsz_child = new QTreeWidgetItem(child);
+        vsz_child->setText(0, "Size");
+        vsz_child->setText(1, QString().sprintf("0x%08X", ss_dir.Directory->Size));
+        vsz_child->setText(2, QString().sprintf("[Aligned 0x%08X]",
+                                                pe_file.memAlign(ss_dir.Directory->Size)));
+    }
 }
 
 
@@ -162,4 +225,9 @@ void FilePropertiesDialog::on_rbMaximums_toggled(bool checked)
 void FilePropertiesDialog::on_rbMinimums_toggled(bool checked)
 {
     chartMinimumDensity->setVisible(checked);
+}
+
+void FilePropertiesDialog::on_rbExtremums_toggled(bool checked)
+{
+    chartExtremumDensity->setVisible(checked);
 }

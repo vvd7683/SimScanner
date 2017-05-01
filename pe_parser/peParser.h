@@ -12,20 +12,31 @@ class peParser
 public:
 	peParser(HANDLE hFile, ULONG FileSz);
 	PIMAGE_SECTION_HEADER _get_sections();
+    PIMAGE_DATA_DIRECTORY _get_directories();
+    ULONG _get_directories_count();
 	ULONG _get_sections_count();
-	double _get_section_entropy(ULONG index);
+    //double _get_section_entropy(ULONG index);
 	__declspec(property(
 		get = _get_sections))
 		PIMAGE_SECTION_HEADER
 		Section;
-	__declspec(property(
+    __declspec(property(
+        get = _get_directories))
+        PIMAGE_DATA_DIRECTORY
+        Directory;
+    __declspec(property(
 		get = _get_sections_count))
 		ULONG
 		SectionsCount;
+    __declspec(property(
+        get = _get_directories_count))
+        ULONG
+        DirectoriesCount;
+    /*
 	__declspec(property(
 		get = _get_section_entropy))
 		double
-		SectionEntropy[];
+        SectionEntropy[];*/
     const WORD _get_machine() {
         return hPE->FileHeader.Machine;
     }
@@ -68,6 +79,12 @@ public:
     __declspec(property(
                    get = _get_subsystem))
     const WORD cSubsystem;
+    const DWORD getMemAlign() {
+        return hPE->OptionalHeader.SectionAlignment;
+    }
+    __declspec(property(
+                   get = getMemAlign))
+    const DWORD cMemAlign;
 protected:
 	union {
 		HANDLE hFileImage;

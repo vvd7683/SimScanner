@@ -37,7 +37,7 @@
      </property>
      <widget class="QWidget" name="tabFileInfo">
       <attribute name="title">
-       <string>Tab 1</string>
+       <string>File properties</string>
       </attribute>
       <layout class="QVBoxLayout" name="layoutFileInfo">
        <item>
@@ -255,7 +255,7 @@
      </widget>
      <widget class="QWidget" name="tabPeHeader">
       <attribute name="title">
-       <string>Страница</string>
+       <string>PE header</string>
       </attribute>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
@@ -265,7 +265,7 @@
          </property>
          <widget class="QWidget" name="tabCommonHeaders">
           <attribute name="title">
-           <string>Tab 1</string>
+           <string>Common headers</string>
           </attribute>
           <layout class="QVBoxLayout" name="layoutFileInfo_2">
            <item>
@@ -534,21 +534,39 @@
          </widget>
          <widget class="QWidget" name="tabSections">
           <attribute name="title">
-           <string>Страница</string>
+           <string>Sections and directories</string>
           </attribute>
           <layout class="QHBoxLayout" name="horizontalLayout_7">
            <item>
-            <widget class="QTableView" name="tblSections"/>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="tabDirectories">
-          <attribute name="title">
-           <string>Tab 2</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QTableView" name="tblDirectories"/>
+            <widget class="QTreeWidget" name="treeSections">
+             <property name="columnCount">
+              <number>3</number>
+             </property>
+             <attribute name="headerVisible">
+              <bool>false</bool>
+             </attribute>
+             <attribute name="headerDefaultSectionSize">
+              <number>200</number>
+             </attribute>
+             <attribute name="headerMinimumSectionSize">
+              <number>150</number>
+             </attribute>
+             <column>
+              <property name="text">
+               <string notr="true">1</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string notr="true">2</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string notr="true">3</string>
+              </property>
+             </column>
+            </widget>
            </item>
           </layout>
          </widget>
@@ -558,7 +576,7 @@
      </widget>
      <widget class="QWidget" name="tabEntropyChart">
       <attribute name="title">
-       <string>Tab 2</string>
+       <string>Entroopy charts</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -699,6 +717,13 @@
               <widget class="QRadioButton" name="rbMinimums">
                <property name="text">
                 <string>Minimums view</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QRadioButton" name="rbExtremums">
+               <property name="text">
+                <string>All of extremums</string>
                </property>
               </widget>
              </item>
