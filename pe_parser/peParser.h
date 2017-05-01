@@ -85,6 +85,14 @@ public:
     __declspec(property(
                    get = getMemAlign))
     const DWORD cMemAlign;
+    PBYTE get_image() {return pFileImage;}
+    __declspec(property(
+                   get = get_image))
+    PBYTE pImage;
+    ULONG get_size() {return FileImageSz;}
+    __declspec(property(
+                   get = get_size))
+    ULONG ImageSz;
 protected:
 	union {
 		HANDLE hFileImage;

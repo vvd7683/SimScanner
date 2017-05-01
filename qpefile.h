@@ -11,12 +11,26 @@
 typedef struct SSSection {
     QString SectionName;
     PIMAGE_SECTION_HEADER pSection;
+    PBYTE ptr;
+    EntropyType entropy_val;
     EntropyDiagram *sec_entropy;
-    SSSection(PIMAGE_SECTION_HEADER pSec = NULL) : pSection(pSec) {
+    SSSection(PBYTE pImage = NULL,
+              ULONG ImageSz = 0,
+              PIMAGE_SECTION_HEADER pSec = NULL) : ptr(NULL),
+        pSection(pSec),
+        entropy_val(.0)
+    {
         if(pSec) {
             char sec_name[0x10] = {'\0'};
             memcpy(sec_name, pSec->Name, sizeof(pSection->Name));
             SectionName = QString(sec_name);
+            if(pImage) {
+                ULONG offs = RVA2Offset32(pImage, ImageSz, pSection->VirtualAddress);
+                if(offs != OFFSET_ERR) {
+                    ptr = pImage + offs;
+                    entropy_val = Entropy(ptr, pSection->SizeOfRawData).value();
+                }
+            }
         }
     }
 } *PSSSection;

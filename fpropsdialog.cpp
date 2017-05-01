@@ -180,6 +180,11 @@ void FilePropertiesDialog::init_sections() {
         vsz_child->setText(2, QString().sprintf("[Aligned 0x%08X]",
                                                 pe_file.memAlign(ss_sec.pSection->Misc.VirtualSize)));
         //child->addChild(vsz_child);
+        QTreeWidgetItem *entropy_child = new QTreeWidgetItem(child);
+        entropy_child->setText(0, tr("Entropy"));
+        entropy_child->setText(1, QString().sprintf("%f",
+                                                ss_sec.entropy_val));
+        entropy_child->setText(2, QString("Total entropy of section"));
     }
 }
 
