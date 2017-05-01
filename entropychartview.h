@@ -24,18 +24,4 @@ public slots:
 
 typedef EntropyChartView ExtremumDensityChartView;
 
-class EntropyChartMini : public EntropyChartView
-{
-    //
-public:
-    explicit EntropyChartMini(QWidget *parent = 0) : EntropyChartView(parent) {
-        setFixedSize(200, 60);
-        chart()->setMaximumHeight(60);
-        chart()->setMaximumWidth(200);
-        chart()->setMinimumHeight(60);
-        chart()->setMinimumWidth(200);
-        chart()->setTheme(QtCharts::QChart::ChartTheme::ChartThemeLight);
-    }
-};
-
 #endif // ENTROPYCHARTVIEW_H

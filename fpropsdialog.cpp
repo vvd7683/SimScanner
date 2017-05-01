@@ -196,13 +196,23 @@ void FilePropertiesDialog::init_sections() {
         //TODO: use or not?
         EntropyChartItem *entropy_chart_item = new EntropyChartItem(entropy_child);
         entropy_chart_item->setText(0, QString("Entropy chart"));
-        //structureTree->setItemWidget(entropy_chart_item, 1, new EntropyChartMini);
+        connect(structureTree,
+                &StructureTree::signalMouseMove,
+                entropy_chart_item->chartView,
+                &EntropyChartItem::TreeChart::hoverItem);
+
         EntropyChartItem *derivative_chart_item = new EntropyChartItem(entropy_child);
         derivative_chart_item->setText(0, QString("Entropy Derivative"));
-        //structureTree->setItemWidget(derivative_chart_item, 1, new EntropyChartMini);
+        connect(structureTree,
+                &StructureTree::signalMouseMove,
+                derivative_chart_item->chartView,
+                &EntropyChartItem::TreeChart::hoverItem);
         EntropyChartItem *extremums_chart_item = new EntropyChartItem(entropy_child);
         extremums_chart_item->setText(0, QString("Extremums Density"));
-        //structureTree->setItemWidget(extremums_chart_item, 1, new EntropyChartMini);
+        connect(structureTree,
+                &StructureTree::signalMouseMove,
+                extremums_chart_item->chartView,
+                &EntropyChartItem::TreeChart::hoverItem);
     }
     topSectionsItem->setExpanded(true);
 }

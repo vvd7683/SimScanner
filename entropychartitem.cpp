@@ -13,9 +13,18 @@ EntropyChartItem::EntropyChartItem(QTreeWidgetItem *parent) : QTreeWidgetItem(pa
     }
 }
 
-EntropyChartItem::TreeChart::TreeChart(QTreeWidget *ownerTree) : EntropyChartMini(),
+EntropyChartItem::TreeChart::TreeChart(QTreeWidget *ownerTree) : EntropyChartView(Q_NULLPTR),
     tree(ownerTree)
 {
+    setFixedSize(200, 60);
+    chart()->setMaximumHeight(60);
+    chart()->setMaximumWidth(200);
+    chart()->setMinimumHeight(60);
+    chart()->setMinimumWidth(200);
+    chart()->setTheme(QtCharts::QChart::ChartTheme::ChartThemeLight);
+
+    setMouseTracking(true);
+
     chart()->setTheme(cDefault);
 }
 
@@ -28,5 +37,19 @@ void EntropyChartItem::TreeChart::selectedItem() {
             }
         }
     }
-    chart()->setTheme(cDefault);
+    chart()->setTheme(cDefault);//TODO: check for hover?
+}
+
+void EntropyChartItem::TreeChart::hoverItem(const int c_x, const int c_y) {
+    if(QTreeWidgetItem *item = tree->itemAt(c_x, c_y)) {
+        if(EntropyChartItem *e_item = dynamic_cast<EntropyChartItem *>(item)) {
+            if(e_item->chartView == this) {
+                if(chart()->theme() == cDefault)
+                    chart()->setTheme(cHover);
+                return;
+            }
+        }
+    }
+    if(chart()->theme() == cHover)
+        chart()->setTheme(cDefault);
 }

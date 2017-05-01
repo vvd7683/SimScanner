@@ -13,4 +13,6 @@ StructureTree::StructureTree(QWidget *parent) : QTreeWidget(parent)
     setColumnWidth(0, 300);
     setColumnWidth(1, 200);
     setColumnWidth(2, 200);
+
+    setMouseTracking(true);
 }
