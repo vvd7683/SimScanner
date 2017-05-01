@@ -532,43 +532,11 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tabSections">
+         <widget class="QWidget" name="tabStructure">
           <attribute name="title">
            <string>Sections and directories</string>
           </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_7">
-           <item>
-            <widget class="QTreeWidget" name="treeSections">
-             <property name="columnCount">
-              <number>3</number>
-             </property>
-             <attribute name="headerVisible">
-              <bool>false</bool>
-             </attribute>
-             <attribute name="headerDefaultSectionSize">
-              <number>200</number>
-             </attribute>
-             <attribute name="headerMinimumSectionSize">
-              <number>150</number>
-             </attribute>
-             <column>
-              <property name="text">
-               <string notr="true">1</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string notr="true">2</string>
-              </property>
-             </column>
-             <column>
-              <property name="text">
-               <string notr="true">3</string>
-              </property>
-             </column>
-            </widget>
-           </item>
-          </layout>
+          <layout class="QHBoxLayout" name="horizontalLayout_7"/>
          </widget>
         </widget>
        </item>

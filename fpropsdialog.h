@@ -11,6 +11,8 @@
 #include "qpefile.h"
 #include "entropychartview.h"
 #include "qchartlayout.h"
+#include "structuretree.h"
+#include "entropychartitem.h"
 
 namespace Ui {
 class FilePropertiesDialog;
@@ -31,6 +33,8 @@ protected:
     ExtremumDensityChartView *chartMinimumDensity;
     ExtremumDensityChartView *chartExtremumDensity;
 
+    StructureTree *structureTree;
+
     inline void init_sections();
     inline void init_directories();
 private slots:
@@ -43,6 +47,8 @@ private slots:
     void on_rbMinimums_toggled(bool checked);
 
     void on_rbExtremums_toggled(bool checked);
+
+    void on_structureTree_itemSelectionChanged();
 
 private:
     Ui::FilePropertiesDialog *ui;

@@ -13,7 +13,9 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     chartEntropyDerivative(new EntropyChartView(this)),
     chartMaximumDensity(new EntropyChartView(this)),
     chartMinimumDensity(new EntropyChartView(this)),
-    chartExtremumDensity(new EntropyChartView(this))
+    chartExtremumDensity(new EntropyChartView(this)),
+
+    structureTree(new StructureTree(this))
 {
     ui->setupUi(this);
     setModal(true);
@@ -143,6 +145,9 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
 
     init_sections();
     init_directories();
+
+    ui->tabStructure->layout()->addWidget(structureTree);
+    connect(structureTree, &StructureTree::itemSelectionChanged, this, &FilePropertiesDialog::on_structureTree_itemSelectionChanged);
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
@@ -151,10 +156,12 @@ FilePropertiesDialog::~FilePropertiesDialog()
 }
 
 void FilePropertiesDialog::init_sections() {
-    QTreeWidgetItem *topSectionsItem = new QTreeWidgetItem(ui->treeSections);
-    ui->treeSections->addTopLevelItem(topSectionsItem);
+    QTreeWidgetItem *topSectionsItem = new QTreeWidgetItem(structureTree);
+    structureTree->addTopLevelItem(topSectionsItem);
     topSectionsItem->setText(0, tr("SECTIONS"));
-    foreach(SSSection ss_sec, pe_file.getSections()) {
+    SectionMap &sections = pe_file.getSections();
+    ui->lSectionsCountVal->setText(QString().sprintf("%d", sections.size()));
+    foreach(SSSection ss_sec, sections) {
         QTreeWidgetItem *child = new QTreeWidgetItem(topSectionsItem);
         child->setText(0, ss_sec.SectionName);
         //topSectionsItem->addChild(child);
@@ -185,14 +192,28 @@ void FilePropertiesDialog::init_sections() {
         entropy_child->setText(1, QString().sprintf("%f",
                                                 ss_sec.entropy_val));
         entropy_child->setText(2, QString("Total entropy of section"));
+
+        //TODO: use or not?
+        EntropyChartItem *entropy_chart_item = new EntropyChartItem(entropy_child);
+        entropy_chart_item->setText(0, QString("Entropy chart"));
+        //structureTree->setItemWidget(entropy_chart_item, 1, new EntropyChartMini);
+        EntropyChartItem *derivative_chart_item = new EntropyChartItem(entropy_child);
+        derivative_chart_item->setText(0, QString("Entropy Derivative"));
+        //structureTree->setItemWidget(derivative_chart_item, 1, new EntropyChartMini);
+        EntropyChartItem *extremums_chart_item = new EntropyChartItem(entropy_child);
+        extremums_chart_item->setText(0, QString("Extremums Density"));
+        //structureTree->setItemWidget(extremums_chart_item, 1, new EntropyChartMini);
     }
+    topSectionsItem->setExpanded(true);
 }
 
 void FilePropertiesDialog::init_directories() {
-    QTreeWidgetItem *topDirectoriesItem = new QTreeWidgetItem(ui->treeSections);
-    ui->treeSections->addTopLevelItem(topDirectoriesItem);
+    QTreeWidgetItem *topDirectoriesItem = new QTreeWidgetItem(structureTree);
+    structureTree->addTopLevelItem(topDirectoriesItem);
     topDirectoriesItem->setText(0, tr("DIRECTORIES"));
-    foreach(SSDirectory ss_dir, pe_file.getDirectories()) {
+    DirectoryMap &directories = pe_file.getDirectories();
+    ui->lDirectoriesCountVal->setText(QString().sprintf("%d", directories.size()));
+    foreach(SSDirectory ss_dir, directories) {
         QTreeWidgetItem *child = new QTreeWidgetItem(topDirectoriesItem);
         child->setText(0, QString().sprintf("%d", ss_dir.index));
         child->setText(1, ss_dir.DirectoryName());
@@ -209,6 +230,7 @@ void FilePropertiesDialog::init_directories() {
         vsz_child->setText(2, QString().sprintf("[Aligned 0x%08X]",
                                                 pe_file.memAlign(ss_dir.Directory->Size)));
     }
+    topDirectoriesItem->setExpanded(true);
 }
 
 
@@ -235,4 +257,8 @@ void FilePropertiesDialog::on_rbMinimums_toggled(bool checked)
 void FilePropertiesDialog::on_rbExtremums_toggled(bool checked)
 {
     chartExtremumDensity->setVisible(checked);
+}
+
+void FilePropertiesDialog::on_structureTree_itemSelectionChanged()
+{
 }
