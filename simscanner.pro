@@ -32,7 +32,8 @@ SOURCES += main.cpp\
     entropy_parser.cpp \
     qchartlayout.cpp \
     structuretree.cpp \
-    entropychartitem.cpp
+    entropychartitem.cpp \
+    spropsdialog.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -53,12 +54,14 @@ HEADERS  += mainwindow.h \
     entropy_parser.h \
     qchartlayout.h \
     structuretree.h \
-    entropychartitem.h
+    entropychartitem.h \
+    spropsdialog.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \
     aboutdialog.ui \
-    addnewdialog.ui
+    addnewdialog.ui \
+    spropsdialog.ui
 
 RESOURCES += \
     simscanner.qrc

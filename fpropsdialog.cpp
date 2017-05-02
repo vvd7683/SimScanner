@@ -147,7 +147,15 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     init_directories();
 
     ui->tabStructure->layout()->addWidget(structureTree);
-    connect(structureTree, &StructureTree::itemSelectionChanged, this, &FilePropertiesDialog::on_structureTree_itemSelectionChanged);
+    connect(structureTree,
+            &StructureTree::itemSelectionChanged,
+            this,
+            &FilePropertiesDialog::on_structureTree_itemSelectionChanged);
+
+    connect(structureTree,
+            &StructureTree::customContextMenuRequested,
+            this,
+            &FilePropertiesDialog::tvContextMenuRequested);
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
@@ -271,4 +279,10 @@ void FilePropertiesDialog::on_rbExtremums_toggled(bool checked)
 
 void FilePropertiesDialog::on_structureTree_itemSelectionChanged()
 {
+}
+
+void FilePropertiesDialog::tvContextMenuRequested(const QPoint &pos) {
+    if(sender() == structureTree) {
+        //
+    }
 }

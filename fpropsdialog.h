@@ -13,6 +13,7 @@
 #include "qchartlayout.h"
 #include "structuretree.h"
 #include "entropychartitem.h"
+#include "spropsdialog.h"
 
 namespace Ui {
 class FilePropertiesDialog;
@@ -49,6 +50,8 @@ private slots:
     void on_rbExtremums_toggled(bool checked);
 
     void on_structureTree_itemSelectionChanged();
+public slots:
+    void tvContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::FilePropertiesDialog *ui;
