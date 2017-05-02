@@ -13,7 +13,7 @@ public:
     explicit EntropyChartItem(QTreeWidgetItem *parent = 0);
     class TreeChart : public EntropyChartView {
     public:
-        explicit TreeChart(QTreeWidget *ownerTree);
+        explicit TreeChart(QTreeWidgetItem *ownerItem, QWidget *parent = 0);
         static const QtCharts::QChart::ChartTheme cDefault =
                 QtCharts::QChart::ChartTheme::ChartThemeLight;
         static const QtCharts::QChart::ChartTheme cHover =
@@ -34,9 +34,9 @@ public:
         }
     public slots:
         void selectedItem();
-        void hoverItem(const int c_x, const int c_y);//TODO: Use the same for EntropyChartView
+        void hoverItem(QTreeWidgetItem *item);//TODO: Use the same for EntropyChartView
     protected:
-        QTreeWidget *tree;
+        QTreeWidgetItem *owner_item;
     };
     TreeChart *chartView;
 };

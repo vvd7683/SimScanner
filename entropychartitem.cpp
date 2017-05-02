@@ -4,7 +4,7 @@ EntropyChartItem::EntropyChartItem(QTreeWidgetItem *parent) : QTreeWidgetItem(pa
     chartView(Q_NULLPTR)
 {
     if(QTreeWidget *tree = treeWidget()) {
-        chartView = new TreeChart(tree);
+        chartView = new TreeChart(this);
         tree->setItemWidget(this, 1, chartView);
         QObject::connect(tree,
                          &QTreeWidget::itemSelectionChanged,
@@ -13,8 +13,9 @@ EntropyChartItem::EntropyChartItem(QTreeWidgetItem *parent) : QTreeWidgetItem(pa
     }
 }
 
-EntropyChartItem::TreeChart::TreeChart(QTreeWidget *ownerTree) : EntropyChartView(Q_NULLPTR),
-    tree(ownerTree)
+EntropyChartItem::TreeChart::TreeChart(QTreeWidgetItem *ownerItem,
+                                       QWidget *parent) : EntropyChartView(parent),
+    owner_item(ownerItem)
 {
     setFixedSize(200, 60);
     chart()->setMaximumHeight(60);
@@ -29,27 +30,17 @@ EntropyChartItem::TreeChart::TreeChart(QTreeWidget *ownerTree) : EntropyChartVie
 }
 
 void EntropyChartItem::TreeChart::selectedItem() {
-    foreach (QTreeWidgetItem *item, tree->selectedItems()) {
-        if(EntropyChartItem *e_item = dynamic_cast<EntropyChartItem *>(item)) {
-            if(e_item->chartView == this) {
-                chart()->setTheme(cHighlighted);
-                return;
-            }
-        }
-    }
-    chart()->setTheme(cDefault);//TODO: check for hover?
+    chart()->setTheme(owner_item->isSelected() ? cHighlighted : cDefault);
 }
 
-void EntropyChartItem::TreeChart::hoverItem(const int c_x, const int c_y) {
-    if(QTreeWidgetItem *item = tree->itemAt(c_x, c_y)) {
-        if(EntropyChartItem *e_item = dynamic_cast<EntropyChartItem *>(item)) {
-            if(e_item->chartView == this) {
-                if(chart()->theme() == cDefault)
-                    chart()->setTheme(cHover);
-                return;
-            }
-        }
+void EntropyChartItem::TreeChart::hoverItem(QTreeWidgetItem *item) {
+    if(owner_item->isSelected())
+        return;
+    if(item == owner_item) {
+        if(chart()->theme() == cDefault)
+            chart()->setTheme(cHover);
+    } else {
+        if(chart()->theme() == cHover)
+            chart()->setTheme(cDefault);
     }
-    if(chart()->theme() == cHover)
-        chart()->setTheme(cDefault);
 }

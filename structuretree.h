@@ -17,7 +17,7 @@ public:
         {
         case QEvent::MouseMove:
         {
-            emit signalMouseMove(event->x(), event->y());
+            emit signalMouseMove(itemAt(event->x(), event->y()));
             break;
         }
         default:
@@ -27,7 +27,7 @@ public:
         event->accept();
     }
 Q_SIGNALS:
-    void signalMouseMove(const int c_x, const int c_y);
+    void signalMouseMove(QTreeWidgetItem *item);
 };
 
 #endif // STRUCTURETREE_H
