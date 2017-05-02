@@ -109,12 +109,12 @@ void QPeFile::init() {
         {
             if(pHeader = map(0, size())) {
                 if(parser = new peEntropyParser(pHeader, size())) {
-                    for(int i = 0; i < parser->SectionsCount; ++i) {
+                    for(ULONG i = 0; i < parser->SectionsCount; ++i) {
                         sec_map.push_back(SSSection(parser->pImage,
                                                     parser->ImageSz,
                                                     &parser->Section[i]));
                     }
-                    for(int i = 0; i < parser->DirectoriesCount; ++i) {
+                    for(ULONG i = 0; i < parser->DirectoriesCount; ++i) {
                         IMAGE_DATA_DIRECTORY &dir = parser->Directory[i];
                         if(dir.VirtualAddress && dir.Size)
                             dir_map.push_back(SSDirectory(parser->Directory, i));
