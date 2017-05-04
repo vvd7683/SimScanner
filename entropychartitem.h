@@ -4,16 +4,20 @@
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QtCharts/QChart>
+#include <QVector>
+#include <QGraphicsLayout>
 
 #include "entropychartview.h"
 
 class EntropyChartItem : public QTreeWidgetItem
 {
 public:
-    explicit EntropyChartItem(QTreeWidgetItem *parent = 0);
+    explicit EntropyChartItem(QVector<EntropyY> &pts, QTreeWidgetItem *parent = 0);
     class TreeChart : public EntropyChartView {
     public:
-        explicit TreeChart(QTreeWidgetItem *ownerItem, QWidget *parent = 0);
+        explicit TreeChart(QTreeWidgetItem *ownerItem,
+                           QVector<EntropyY> &pts,
+                           QWidget *parent = 0);
         static const QtCharts::QChart::ChartTheme cDefault =
                 QtCharts::QChart::ChartTheme::ChartThemeLight;
         static const QtCharts::QChart::ChartTheme cHover =

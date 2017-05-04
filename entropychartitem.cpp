@@ -1,11 +1,12 @@
 #include "entropychartitem.h"
 
-EntropyChartItem::EntropyChartItem(QTreeWidgetItem *parent) : QTreeWidgetItem(parent),
+EntropyChartItem::EntropyChartItem(QVector<EntropyY> &pts,
+                                   QTreeWidgetItem *parent) : QTreeWidgetItem(parent),
     chartView(Q_NULLPTR)
 {
     if(QTreeWidget *tree = treeWidget()) {
-        chartView = new TreeChart(this);
-        tree->setItemWidget(this, 1, chartView);
+        chartView = new TreeChart(this, pts);
+        tree->setItemWidget(this, 2, chartView);
         QObject::connect(tree,
                          &QTreeWidget::itemSelectionChanged,
                          chartView,
@@ -14,15 +15,21 @@ EntropyChartItem::EntropyChartItem(QTreeWidgetItem *parent) : QTreeWidgetItem(pa
 }
 
 EntropyChartItem::TreeChart::TreeChart(QTreeWidgetItem *ownerItem,
+                                       QVector<EntropyY> &pts,
                                        QWidget *parent) : EntropyChartView(parent),
     owner_item(ownerItem)
 {
+    if(!add_points(pts))
+        throw;
+    //TODO: resize/hide some elements
     setFixedSize(200, 60);
     chart()->setMaximumHeight(60);
     chart()->setMaximumWidth(200);
     chart()->setMinimumHeight(60);
     chart()->setMinimumWidth(200);
     chart()->setTheme(QtCharts::QChart::ChartTheme::ChartThemeLight);
+
+    //chart()->legend()->setVisible(false);
 
     setMouseTracking(true);
 

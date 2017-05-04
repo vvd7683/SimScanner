@@ -11,6 +11,8 @@
 
 #include "macro.h"
 
+const size_t cDefaultWindowSz = 0x400;
+
 typedef double EntropyType;
 
 class Entropy
@@ -55,8 +57,6 @@ inline EntropyDirection e_dir(const EntropyY prev, const EntropyY cur) {
     else
         return edirNo;
 }
-
-const size_t cDefaultWindowSz = 0x400;
 
 #ifdef QT_CORE_LIB
 typedef QVector<EntropyPoint> EntropyDiagram;

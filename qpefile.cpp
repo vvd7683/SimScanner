@@ -133,3 +133,22 @@ void QPeFile::init() {
         throw;
     }
 }
+
+SSSection::SSSection(PBYTE pImage, ULONG ImageSz, PIMAGE_SECTION_HEADER pSec) : ptr(NULL),
+    pSection(pSec),
+    entropy_val(.0)
+{
+    if(pSec) {
+        char sec_name[0x10] = {'\0'};
+        memcpy(sec_name, pSec->Name, sizeof(pSection->Name));
+        SectionName = QString(sec_name);
+        if(pImage) {
+            ULONG offs = RVA2Offset32(pImage, ImageSz, pSection->VirtualAddress);
+            if(offs != OFFSET_ERR) {
+                ptr = pImage + offs;
+                entropy_val = Entropy(ptr, pSection->SizeOfRawData).value();
+                sec_entropy = EntropyFlowWindow(ptr, pSection->SizeOfRawData).get_points();
+            }
+        }
+    }
+}

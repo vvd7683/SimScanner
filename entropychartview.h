@@ -4,6 +4,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QChart>
+#include <QGraphicsLayout>
 
 #include "entropyflowwindow.h"
 

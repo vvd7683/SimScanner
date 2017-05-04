@@ -12,7 +12,7 @@ class EntropyFlowWindow : public QObject
 public:
     explicit EntropyFlowWindow(unsigned char *Area,
                                size_t AreaSz,
-                               size_t WindowSz = 0x400,
+                               size_t WindowSz = cDefaultWindowSz,
                                QObject *parent = 0);
 
     EntropyDiagram get_points();

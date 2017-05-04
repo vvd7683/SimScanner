@@ -3,6 +3,8 @@
 
 #include <QDialog>
 
+#include "scanmodel.h"
+
 namespace Ui {
 class addNewDialog;
 }

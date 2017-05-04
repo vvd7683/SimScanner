@@ -201,21 +201,35 @@ void FilePropertiesDialog::init_sections() {
                                                 ss_sec.entropy_val));
         entropy_child->setText(2, QString("Total entropy of section"));
 
-        //TODO: use or not?
-        EntropyChartItem *entropy_chart_item = new EntropyChartItem(entropy_child);
+        QVector<EntropyY>pts;
+        pts.resize(ss_sec.sec_entropy.size());
+
+        for(int i = 0; i < ss_sec.sec_entropy.size(); ++i)
+            pts[i] = ss_sec.sec_entropy[i].entropy_value;
+        EntropyChartItem *entropy_chart_item =
+                new EntropyChartItem(pts, entropy_child);
         entropy_chart_item->setText(0, QString("Entropy chart"));
         connect(structureTree,
                 &StructureTree::signalMouseMove,
                 entropy_chart_item->chartView,
                 &EntropyChartItem::TreeChart::hoverItem);
 
-        EntropyChartItem *derivative_chart_item = new EntropyChartItem(entropy_child);
+        for(int i = 0; i < ss_sec.sec_entropy.size(); ++i)
+            pts[i] = ss_sec.sec_entropy[i].entropy_derivative_value;
+        EntropyChartItem *derivative_chart_item =
+                new EntropyChartItem(pts, entropy_child);
         derivative_chart_item->setText(0, QString("Entropy Derivative"));
         connect(structureTree,
                 &StructureTree::signalMouseMove,
                 derivative_chart_item->chartView,
                 &EntropyChartItem::TreeChart::hoverItem);
-        EntropyChartItem *extremums_chart_item = new EntropyChartItem(entropy_child);
+
+        for(int i = 0; i < ss_sec.sec_entropy.size(); ++i)
+            pts[i] =
+                    ss_sec.sec_entropy[i].maximums_density +
+                    ss_sec.sec_entropy[i].minimums_density;
+        EntropyChartItem *extremums_chart_item =
+                new EntropyChartItem(pts, entropy_child);
         extremums_chart_item->setText(0, QString("Extremums Density"));
         connect(structureTree,
                 &StructureTree::signalMouseMove,

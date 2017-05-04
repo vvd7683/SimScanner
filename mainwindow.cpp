@@ -49,6 +49,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ssnnProfiles = DbProfile::loadProfiles();
 
     SS = ScanState::ssNotInitialized;
+
+    ui->treeView->setColumnWidth(0, 200);
 }
 
 void MainWindow::peInfoExecute(bool checked) {
@@ -268,14 +270,12 @@ void MainWindow::on_actionScan_mode_triggered(bool checked)
 {
     if(checked) {
         ui->actionEdit_mode->setChecked(false);
-
-        ui->actionEdit->setVisible(false);
-        ui->actionEdit->setEnabled(false);
-//TODO: set enabled with FS conditions
+        //TODO: set enabled with FS conditions
         ui->actionScan->setVisible(true);
         ui->actionScan->setEnabled(true);
         ui->actionStop->setVisible(true);
         ui->actionStop->setEnabled(false);
+
         ui->btnScan->setVisible(true);
         ui->btnScan->setEnabled(true);
         ui->btnStop->setVisible(true);
@@ -285,21 +285,12 @@ void MainWindow::on_actionScan_mode_triggered(bool checked)
         ui->actionNew->setEnabled(false);
         ui->actionEdit->setVisible(false);
         ui->actionEdit->setEnabled(false);
-    }
-}
-
-void MainWindow::on_actionEdit_mode_triggered(bool checked)
-{
-    if(checked) {
-        ui->actionScan_mode->setChecked(false);
-
-        ui->actionEdit->setVisible(true);
-        ui->actionEdit->setEnabled(true);
-
+    } else {
         ui->actionScan->setVisible(false);
         ui->actionScan->setEnabled(false);
         ui->actionStop->setVisible(false);
         ui->actionStop->setEnabled(false);
+
         ui->btnScan->setVisible(true);
         ui->btnScan->setEnabled(false);
         ui->btnStop->setVisible(true);
@@ -309,5 +300,47 @@ void MainWindow::on_actionEdit_mode_triggered(bool checked)
         ui->actionNew->setEnabled(true);
         ui->actionEdit->setVisible(true);
         ui->actionEdit->setEnabled(true);
+
+        ui->actionEdit_mode->setChecked(true);
     }
 }
+
+void MainWindow::on_actionEdit_mode_triggered(bool checked)
+{
+    if(checked) {
+        ui->actionScan_mode->setChecked(false);
+
+        ui->actionNew->setVisible(true);
+        ui->actionNew->setEnabled(true);
+        ui->actionEdit->setVisible(true);
+        ui->actionEdit->setEnabled(true);
+
+        ui->actionScan->setVisible(false);
+        ui->actionScan->setEnabled(false);
+        ui->actionStop->setVisible(false);
+        ui->actionStop->setEnabled(false);
+
+        ui->btnScan->setVisible(true);
+        ui->btnScan->setEnabled(false);
+        ui->btnStop->setVisible(true);
+        ui->btnStop->setEnabled(false);
+    } else {
+        ui->actionNew->setVisible(false);
+        ui->actionNew->setEnabled(false);
+        ui->actionEdit->setVisible(false);
+        ui->actionEdit->setEnabled(false);
+
+        ui->actionScan->setVisible(true);
+        ui->actionScan->setEnabled(true);
+        ui->actionStop->setVisible(true);
+        ui->actionStop->setEnabled(false);
+
+        ui->btnScan->setVisible(true);
+        ui->btnScan->setEnabled(true);
+        ui->btnStop->setVisible(true);
+        ui->btnStop->setEnabled(false);
+
+        ui->actionScan_mode->setChecked(true);
+    }
+}
+

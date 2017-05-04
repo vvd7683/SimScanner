@@ -35,6 +35,9 @@ bool EntropyChartView::add_points(QVector<EntropyY> &points) {
             chart->createDefaultAxes();
             chart->axisY()->setRange(min_pt, max_pt);
 
+            chart->layout()->setContentsMargins(0, 0, 0, 0);
+            chart->setBackgroundRoundness(0);
+
             setChart(chart);
 
             return true;
