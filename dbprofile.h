@@ -29,6 +29,7 @@ public:
     static QVector<QString> getFamilies();
     static QVector<int> getFamilyIndexes(QString Family);
     SimScanNN *getNN();
+    SimScanNN *setNN(SimScanNN *_nn);
 signals:
     void signalDbError(QString msg);
     void signalSimilar(QString &, const int, const nnType, const nnKind, double );
@@ -37,7 +38,7 @@ public slots:
 protected:
     PROFILE_ID profile_id;
     SimScanNN *ssnn;
-    QString xml_str;
+    QString xml_serialized;
     QString family;
     int idx;
     nnType nn_type;

@@ -4,7 +4,9 @@ EntropyChartView::EntropyChartView(QWidget *parent) : QtCharts::QChartView(paren
 {
 }
 
-EntropyChartView::EntropyChartView(QVector<EntropyY> &points, QWidget *parent) : QtCharts::QChartView(parent) {
+EntropyChartView::EntropyChartView(QVector<EntropyY> &points,
+                                   QWidget *parent) : QtCharts::QChartView(parent)
+{
     if(!add_points(points))
         throw;
 }
@@ -35,8 +37,8 @@ bool EntropyChartView::add_points(QVector<EntropyY> &points) {
             chart->createDefaultAxes();
             chart->axisY()->setRange(min_pt, max_pt);
 
-            chart->layout()->setContentsMargins(0, 0, 0, 0);
-            chart->setBackgroundRoundness(0);
+            chart->layout()->setContentsMargins(1, 1, 1, 1);
+//            chart->setBackgroundRoundness(0);
 
             setChart(chart);
 

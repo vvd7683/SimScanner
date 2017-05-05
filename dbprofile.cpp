@@ -69,7 +69,7 @@ DbProfile::DbProfile(QString &Family,
                         c_index,//idx - %d
                         (int)c_nn_type,//nn_type - %d
                         (int)c_nn_kind,//nn_kind - %d
-                        SimScanNN::Empty(//profile - %s
+                        SimScanNN::DefaultEmpty(//profile - %s
                             ).toStdString(
                             ).c_str(
                             ),
@@ -179,7 +179,7 @@ int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azC
             continue;
         }
         if(!strcmp(azColName[i], cProfileCol)) {
-            This->xml_str = QString(argv[i]);
+            This->xml_serialized = QString(argv[i]);
             continue;
         }
         if(!strcmp(azColName[i], cThresholdCol)) {
@@ -282,13 +282,19 @@ QVector<int> DbProfile::getFamilyIndexes(QString Family) {
 
 SimScanNN *DbProfile::getNN() {
     if(!ssnn) {
-        tinyxml2::XMLDocument xml;
-        if(xml.Parse(xml_str.toStdString().c_str())) {
-            ssnn = new SimScanNN(xml);
-            connect(ssnn, &SimScanNN::signalSimilarity, this, &DbProfile::slotSimilarity);
+        if(ssnn = SimScanNN::fromString(xml_serialized)) {
+            connect(ssnn,
+                    &SimScanNN::signalSimilarity,
+                    this,
+                    &DbProfile::slotSimilarity);
         }
     }
     return ssnn;
+}
+
+SimScanNN *DbProfile::setNN(SimScanNN *_nn) {
+    xml_serialized = _nn->toString();
+    return ssnn = _nn;
 }
 
 void DbProfile::slotSimilarity(double similarity) {

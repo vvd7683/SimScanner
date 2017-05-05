@@ -38,8 +38,23 @@ public:
 
     explicit SimScanNN(tinyxml2::XMLDocument &xml,
               QObject *parent = 0);
+    explicit SimScanNN(char *xml_str,
+              QObject *parent = 0);
+    explicit SimScanNN(QObject *parent = 0);
 
-    static QString Empty();
+    QString toString();
+    static SimScanNN *fromString(QString &str) {
+        tinyxml2::XMLDocument xml;
+        if(!!xml.Parse(
+            str.toStdString(
+                ).c_str(
+                )
+            )) throw;
+
+        return new SimScanNN(xml);
+    }
+
+    static QString DefaultEmpty();
 signals:
     void signalSimilarity(double similarity);
 public slots:

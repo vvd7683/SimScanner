@@ -33,7 +33,8 @@ SOURCES += main.cpp\
     qchartlayout.cpp \
     structuretree.cpp \
     entropychartitem.cpp \
-    spropsdialog.cpp
+    spropsdialog.cpp \
+    entropynn.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -55,7 +56,8 @@ HEADERS  += mainwindow.h \
     qchartlayout.h \
     structuretree.h \
     entropychartitem.h \
-    spropsdialog.h
+    spropsdialog.h \
+    entropynn.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \

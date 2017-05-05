@@ -27,7 +27,11 @@ EntropyChartItem::TreeChart::TreeChart(QTreeWidgetItem *ownerItem,
     chart()->setMaximumWidth(200);
     chart()->setMinimumHeight(60);
     chart()->setMinimumWidth(200);
-    chart()->setTheme(QtCharts::QChart::ChartTheme::ChartThemeLight);
+    //chart()->setTheme(QtCharts::QChart::ChartTheme::ChartThemeLight);
+    chart()->legend()->hide();
+    chart()->axisX()->hide();
+    chart()->axisY()->hide();
+    chart()->setTitle(QString());
 
     //chart()->legend()->setVisible(false);
 
