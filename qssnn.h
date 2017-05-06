@@ -23,44 +23,30 @@ public:
         nntCount
     };
 
-    enum class ssNNKind {
-        nnkUnknown = -1,
-        nnkFixed = 0,
-        nnkExtremum,
-        nnkRelative,
-        //derivative curves
-        nnkDerivedFixed,
-        nnkDerivedExtremum,
-        nnkDerivedRelative,
-
-        nnkCount
-    };
+    unsigned int get_inputs_count() {
+        return 0;
+    }
+    __declspec(property(
+        get = get_inputs_count))
+    unsigned int inputsCount;
 
     explicit SimScanNN(tinyxml2::XMLDocument &xml,
               QObject *parent = 0);
-    explicit SimScanNN(char *xml_str,
+    explicit SimScanNN(const char *xml_str,
               QObject *parent = 0);
     explicit SimScanNN(QObject *parent = 0);
 
     QString toString();
-    static SimScanNN *fromString(QString &str) {
-        tinyxml2::XMLDocument xml;
-        if(!!xml.Parse(
-            str.toStdString(
-                ).c_str(
-                )
-            )) throw;
-
-        return new SimScanNN(xml);
-    }
+    static SimScanNN *fromString(QString &str);
 
     static QString DefaultEmpty();
 signals:
     void signalSimilarity(double similarity);
 public slots:
     //
-private:
+protected:
     OpenNN::NeuralNetwork nn;
+    SimScanNN::ssNNType nn_type;
 };
 
 #endif // QSSNN_H

@@ -6,14 +6,26 @@
 #include <tinyxml2.h>
 
 #include "sqlite/sqlite3.h"
-#include "qssnn.h"
+#include "entropynn.h"
 
 class DbProfile : public QObject
 {
     Q_OBJECT
 public:
+    enum class nnKind {
+        nnkUnknown = -1,
+        //
+        nnkFixed = 0,
+        nnkDerivedFixed,
+        nnkExtremumFixed,
+        //
+        nnkRelative,
+        nnkExtremumRelative,
+        nnkDerivedRelative,
+
+        nnkCount
+    };
     typedef SimScanNN::PROFILE_ID PROFILE_ID;
-    typedef SimScanNN::ssNNKind nnKind;
     typedef SimScanNN::ssNNType nnType;
     explicit DbProfile(PROFILE_ID ProfileId, QObject *parent = 0);
     explicit DbProfile(QString &Family,

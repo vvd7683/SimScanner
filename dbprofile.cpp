@@ -282,11 +282,58 @@ QVector<int> DbProfile::getFamilyIndexes(QString Family) {
 
 SimScanNN *DbProfile::getNN() {
     if(!ssnn) {
-        if(ssnn = SimScanNN::fromString(xml_serialized)) {
-            connect(ssnn,
-                    &SimScanNN::signalSimilarity,
-                    this,
-                    &DbProfile::slotSimilarity);
+        switch(nn_kind)
+        {
+        case nnKind::nnkFixed:
+            if(ssnn = new EntropyFixedNN(xml_serialized)) {
+                connect(ssnn,
+                        &SimScanNN::signalSimilarity,
+                        this,
+                        &DbProfile::slotSimilarity);
+            }
+            break;
+        case nnKind::nnkExtremumFixed:
+            if(ssnn = new ExtremumFixedNN(xml_serialized)) {
+                connect(ssnn,
+                        &SimScanNN::signalSimilarity,
+                        this,
+                        &DbProfile::slotSimilarity);
+            }
+            break;
+        case nnKind::nnkDerivedFixed:
+            if(ssnn = new DerivedFixedNN(xml_serialized)) {
+                connect(ssnn,
+                        &SimScanNN::signalSimilarity,
+                        this,
+                        &DbProfile::slotSimilarity);
+            }
+            break;
+        //
+        case nnKind::nnkRelative:
+            if(ssnn = new EntropyRelativeNN(xml_serialized)) {
+                connect(ssnn,
+                        &SimScanNN::signalSimilarity,
+                        this,
+                        &DbProfile::slotSimilarity);
+            }
+            break;
+        case nnKind::nnkExtremumRelative:
+            if(ssnn = new ExtremumRelativeNN(xml_serialized)) {
+                connect(ssnn,
+                        &SimScanNN::signalSimilarity,
+                        this,
+                        &DbProfile::slotSimilarity);
+            }
+            break;
+        case nnKind::nnkDerivedRelative:
+            if(ssnn = new DerivedRelativeNN(xml_serialized)) {
+                connect(ssnn,
+                        &SimScanNN::signalSimilarity,
+                        this,
+                        &DbProfile::slotSimilarity);
+            }
+        default:
+            break;
         }
     }
     return ssnn;

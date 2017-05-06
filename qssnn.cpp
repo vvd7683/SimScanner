@@ -2,20 +2,20 @@
 
 SimScanNN::SimScanNN(tinyxml2::XMLDocument &xml,
                      QObject *parent) : QObject(parent),
-    nn(xml)
+    nn(xml),
+    nn_type(ssNNType::nntUnknown)
 {
     //
 }
 
-SimScanNN::SimScanNN(char *xml_str, QObject *parent) : QObject(parent),
-    nn(tinyxml2::XMLDocument().Parse(xml_str))
+SimScanNN::SimScanNN(const char *xml_str, QObject *parent) : QObject(parent),
+    nn(tinyxml2::XMLDocument().Parse(xml_str)),
+    nn_type(ssNNType::nntUnknown)
 {}
 
 SimScanNN::SimScanNN(QObject *parent) : QObject(parent),
-    nn(new OpenNN::NeuralNetwork())
-{
-    //
-}
+    nn_type(ssNNType::nntUnknown)
+{}
 
 QString SimScanNN::toString() {
     tinyxml2::XMLPrinter printer;
@@ -24,6 +24,16 @@ QString SimScanNN::toString() {
                 QString(printer.CStr()) : DefaultEmpty();
     delete doc;
     return result;
+}
+
+SimScanNN *SimScanNN::fromString(QString &str) {
+    tinyxml2::XMLDocument xml;
+    if(!!xml.Parse(
+                str.toStdString(
+                    ).c_str(
+                    )
+                )) throw;
+    return new SimScanNN(xml);
 }
 
 QString SimScanNN::DefaultEmpty() {
