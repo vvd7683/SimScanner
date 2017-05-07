@@ -1,6 +1,9 @@
 #ifndef ENTROPYCHARTVIEW_H
 #define ENTROPYCHARTVIEW_H
 
+/*
+ * Specialized chart class for entropy & extremums density diagram
+ */
 #include <QtCharts/QChartView>
 #include <QtCharts/QSplineSeries>
 #include <QtCharts/QChart>

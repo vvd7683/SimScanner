@@ -1,6 +1,9 @@
 #ifndef ENTROPYCHARTITEM_H
 #define ENTROPYCHARTITEM_H
 
+/*
+ * Class of Tree item containing visualized entropy/extremums density charts
+ */
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QtCharts/QChart>

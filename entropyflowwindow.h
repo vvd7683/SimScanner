@@ -1,6 +1,9 @@
 #ifndef ENTROPYFLOWWINDOW_H
 #define ENTROPYFLOWWINDOW_H
 
+/*
+ * Flow window class calculating entropy and extremum density
+ */
 #include <QObject>
 #include <QVector>
 

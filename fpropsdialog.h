@@ -1,6 +1,9 @@
 #ifndef CHARTDIALOG_H
 #define CHARTDIALOG_H
 
+/*
+ * File properties dialog class
+ */
 #include <QDialog>
 #include <QFileInfo>
 #include <QtCharts/QChartView>

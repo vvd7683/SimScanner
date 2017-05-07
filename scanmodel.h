@@ -1,6 +1,9 @@
 #ifndef SCANMODEL_H
 #define SCANMODEL_H
 
+/*
+ * Class of treeview model mapping filesystem
+ */
 #include <QDirModel>
 #include <QSet>
 #include <QPersistentModelIndex>

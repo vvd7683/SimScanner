@@ -1,6 +1,9 @@
 #ifndef QPEFILEMENU_H
 #define QPEFILEMENU_H
 
+/*
+ * Class of menu including actions associated with PE format
+ */
 #include <QMenu>
 #include <QFileInfo>
 

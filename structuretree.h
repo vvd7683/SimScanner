@@ -1,6 +1,10 @@
 #ifndef STRUCTURETREE_H
 #define STRUCTURETREE_H
 
+/*
+ * Structured Memory reflection of neuroprofiles database
+ * containing tuned neural nets, sample descriptors etc
+ */
 #include <QTreeWidget>
 #include <QtCharts/QChart>
 

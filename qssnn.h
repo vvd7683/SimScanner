@@ -1,6 +1,9 @@
 #ifndef QSSNN_H
 #define QSSNN_H
 
+/*
+ * Neural network basic wrapper class
+ */
 #include <QObject>
 #include <opennn.h>
 

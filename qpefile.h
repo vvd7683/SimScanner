@@ -1,6 +1,9 @@
 #ifndef QPEFILE_H
 #define QPEFILE_H
 
+/*
+ * QFile child class parsing PE format
+ */
 #include <QFile>
 #include <QString>
 #include <QFileInfo>

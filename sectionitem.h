@@ -1,6 +1,10 @@
 #ifndef SECTIONITEM_H
 #define SECTIONITEM_H
 
+/*
+ * Class of treeview item
+ * containing section object referense
+ */
 #include <QTreeWidgetItem>
 
 #include "qpefile.h"

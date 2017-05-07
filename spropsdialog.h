@@ -1,6 +1,12 @@
 #ifndef SPROPSDIALOG_H
 #define SPROPSDIALOG_H
 
+/*
+ * Class of section properties dialog.
+ * Form GUI contains QTabWidget including
+ * first table of section structure/dump
+ * and second table of entropy charts.
+ */
 #include <QDialog>
 #include <QMenu>
 #include <QBoxLayout>
