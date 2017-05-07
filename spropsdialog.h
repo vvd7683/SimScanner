@@ -29,6 +29,17 @@ protected:
     ExtremumDensityChartView *chartMinimumDensity;
     ExtremumDensityChartView *chartExtremumDensity;
 
+private slots:
+    void on_rbEntropy_toggled(bool checked);
+
+    void on_rbDerivative_toggled(bool checked);
+
+    void on_rbMaximums_toggled(bool checked);
+
+    void on_rbMinimums_toggled(bool checked);
+
+    void on_rbExtremums_toggled(bool checked);
+
 private:
     Ui::SPropsDialog *ui;
     SSSection &sec;

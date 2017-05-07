@@ -24,6 +24,7 @@ const QString QPeFile::getFlagsString() {
 const WORD QPeFile::getMachine() {return parser->cMachine;}
 
 const QString QPeFile::getMachineString() {
+    //TODO: implement all cases
     switch(parser->cMachine)
     {
     case IMAGE_FILE_MACHINE_I386:
@@ -141,7 +142,9 @@ void QPeFile::deinit() {
     close();
 }
 
-SSSection::SSSection(PBYTE pImage, ULONG ImageSz, PIMAGE_SECTION_HEADER pSec) : ptr(NULL),
+SSSection::SSSection(PBYTE pImage,
+                     ULONG ImageSz,
+                     PIMAGE_SECTION_HEADER pSec) : ptr(NULL),
     pSection(pSec),
     entropy_val(.0)
 {

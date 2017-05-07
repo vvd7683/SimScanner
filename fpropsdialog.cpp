@@ -167,6 +167,11 @@ FilePropertiesDialog::~FilePropertiesDialog()
 {
     delete ui;
     delete section_menu;
+    delete chartEntropy;
+    delete chartEntropyDerivative;
+    delete chartExtremumDensity;
+    delete chartMaximumDensity;
+    delete chartMinimumDensity;
 }
 
 void FilePropertiesDialog::init_sections() {

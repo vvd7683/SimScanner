@@ -131,4 +131,34 @@ SectionPropertiesDialog::SectionPropertiesDialog(SSSection &ss_sec, QWidget *par
 SectionPropertiesDialog::~SectionPropertiesDialog()
 {
     delete ui;
+    delete chartEntropy;
+    delete chartEntropyDerivative;
+    delete chartExtremumDensity;
+    delete chartMaximumDensity;
+    delete chartMinimumDensity;
+}
+
+void SectionPropertiesDialog::on_rbEntropy_toggled(bool checked)
+{
+    chartEntropy->setVisible(checked);
+}
+
+void SectionPropertiesDialog::on_rbDerivative_toggled(bool checked)
+{
+    chartEntropyDerivative->setVisible(checked);
+}
+
+void SectionPropertiesDialog::on_rbMaximums_toggled(bool checked)
+{
+    chartMaximumDensity->setVisible(checked);
+}
+
+void SectionPropertiesDialog::on_rbMinimums_toggled(bool checked)
+{
+    chartMinimumDensity->setVisible(checked);
+}
+
+void SectionPropertiesDialog::on_rbExtremums_toggled(bool checked)
+{
+    chartExtremumDensity->setVisible(checked);
 }
