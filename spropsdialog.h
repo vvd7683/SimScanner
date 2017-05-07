@@ -3,9 +3,13 @@
 
 #include <QDialog>
 #include <QMenu>
+#include <QBoxLayout>
+#include <QtCharts/QChart>
 
 #include "qpefile.h"
 #include "entropychartview.h"
+#include "sectionitem.h"
+#include "qchartlayout.h"
 
 namespace Ui {
 class SPropsDialog;

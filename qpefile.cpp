@@ -7,9 +7,7 @@ QPeFile::QPeFile(QFileInfo &info) : QFile(info.absoluteFilePath()),
 }
 
 QPeFile::~QPeFile() {
-    delete parser;
-    unmap(pHeader);
-    close();
+    deinit();
 }
 
 const WORD QPeFile::getFlags() {return parser->cFlags;}
@@ -110,7 +108,7 @@ void QPeFile::init() {
             if(pHeader = map(0, size())) {
                 if(parser = new peEntropyParser(pHeader, size())) {
                     for(ULONG i = 0; i < parser->SectionsCount; ++i) {
-                        sec_map.push_back(SSSection(parser->pImage,
+                        sec_map.push_back(new SSSection(parser->pImage,
                                                     parser->ImageSz,
                                                     &parser->Section[i]));
                     }
@@ -132,6 +130,15 @@ void QPeFile::init() {
     } else {
         throw;
     }
+}
+
+void QPeFile::deinit() {
+    foreach(SSSection *pss_sec, sec_map)
+        delete pss_sec;
+    sec_map.clear();
+    delete parser;
+    unmap(pHeader);
+    close();
 }
 
 SSSection::SSSection(PBYTE pImage, ULONG ImageSz, PIMAGE_SECTION_HEADER pSec) : ptr(NULL),

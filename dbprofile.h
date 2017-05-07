@@ -61,6 +61,7 @@ private:
     static int loadProfilesCallback(void*,int,char**,char**);
     static int loadProfileCallback(void*,int,char**,char**);
     static int getIdCallback(void*,int,char**,char**);
+    static int getFamiliesCallback(void*,int,char**,char**);
 };
 
 #endif // QDBPROFILE_H

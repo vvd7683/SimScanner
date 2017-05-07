@@ -14,5 +14,6 @@
         <file>icons/actionStop.png</file>
         <file>icons/Close_file.png</file>
         <file>icons/nn.png</file>
+        <file>icons/To_do_list.png</file>
     </qresource>
 </RCC>

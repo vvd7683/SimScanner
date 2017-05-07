@@ -110,7 +110,7 @@ typedef struct SSDirectory {
     PIMAGE_DATA_DIRECTORY Directory;
 } *PSSDirectory;
 
-typedef QVector<SSSection> SectionMap;
+typedef QVector<SSSection *> SectionMap;
 typedef QVector<SSDirectory> DirectoryMap;
 
 class QPeFile : public QFile
@@ -135,6 +135,7 @@ public:
     DirectoryMap &getDirectories();
 private:
     void init();
+    void deinit();
     QFileInfo &Info;
     peEntropyParser *parser;
     PBYTE pHeader;

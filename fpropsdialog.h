@@ -7,6 +7,7 @@
 #include <QLayout>
 #include <QFile>
 #include <QDateTime>
+#include <QMenu>
 
 #include "qpefile.h"
 #include "entropychartview.h"
@@ -34,6 +35,8 @@ protected:
     ExtremumDensityChartView *chartMinimumDensity;
     ExtremumDensityChartView *chartExtremumDensity;
 
+    QMenu *section_menu;
+
     StructureTree *structureTree;
 
     inline void init_sections();
@@ -50,6 +53,8 @@ private slots:
     void on_rbExtremums_toggled(bool checked);
 
     void on_structureTree_itemSelectionChanged();
+    void on_actionView_Section_properties_triggered();
+
 public slots:
     void tvContextMenuRequested(const QPoint &pos);
 

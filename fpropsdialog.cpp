@@ -15,6 +15,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     chartMinimumDensity(new EntropyChartView(this)),
     chartExtremumDensity(new EntropyChartView(this)),
 
+    section_menu(new QMenu(this)),
+
     structureTree(new StructureTree(this))
 {
     ui->setupUi(this);
@@ -147,6 +149,7 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
     init_directories();
 
     ui->tabStructure->layout()->addWidget(structureTree);
+    structureTree->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(structureTree,
             &StructureTree::itemSelectionChanged,
             this,
@@ -156,11 +159,14 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
             &StructureTree::customContextMenuRequested,
             this,
             &FilePropertiesDialog::tvContextMenuRequested);
+
+    section_menu->addAction(ui->actionView_Section_properties);
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
 {
     delete ui;
+    delete section_menu;
 }
 
 void FilePropertiesDialog::init_sections() {
@@ -169,9 +175,12 @@ void FilePropertiesDialog::init_sections() {
     topSectionsItem->setText(0, tr("SECTIONS"));
     SectionMap &sections = pe_file.getSections();
     ui->lSectionsCountVal->setText(QString().sprintf("%d", sections.size()));
-    foreach(SSSection ss_sec, sections) {
-        QTreeWidgetItem *child = new QTreeWidgetItem(topSectionsItem);
+    foreach(SSSection *pss_sec, sections) {
+        SSSection &ss_sec = *pss_sec;
+        QTreeWidgetItem *child = new SectionItem(ss_sec, topSectionsItem);
         child->setText(0, ss_sec.SectionName);
+        //child->setData(0, Qt::UserRole, );
+        child->data(0, 0).data();
         //topSectionsItem->addChild(child);
         QTreeWidgetItem *chars_child = new QTreeWidgetItem(child);
         chars_child->setText(0, tr("Flags"));
@@ -297,6 +306,27 @@ void FilePropertiesDialog::on_structureTree_itemSelectionChanged()
 
 void FilePropertiesDialog::tvContextMenuRequested(const QPoint &pos) {
     if(sender() == structureTree) {
-        //
+        if(SectionItem *sec_item =
+                dynamic_cast<SectionItem *>(structureTree->itemAt(pos)))
+        {
+            section_menu->popup(structureTree->viewport()->mapToGlobal(pos));
+        }
+    }
+}
+
+void FilePropertiesDialog::on_actionView_Section_properties_triggered()
+{
+    if(SectionItem *sec_item =
+            dynamic_cast<SectionItem *>(structureTree->currentItem()))
+    {
+        switch(SectionPropertiesDialog(sec_item->getSection(), this).exec())
+        {
+        case QDialog::Accepted:
+            break;
+        case QDialog::Rejected:
+            break;
+        default:
+            break;
+        }
     }
 }

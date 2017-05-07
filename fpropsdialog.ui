@@ -736,8 +736,19 @@
     </widget>
    </item>
   </layout>
+  <action name="actionView_Section_properties">
+   <property name="icon">
+    <iconset resource="simscanner.qrc">
+     <normaloff>:/icons/icons/To_do_list.png</normaloff>:/icons/icons/To_do_list.png</iconset>
+   </property>
+   <property name="text">
+    <string>View Section properties</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="simscanner.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>bboxFileProperties</sender>

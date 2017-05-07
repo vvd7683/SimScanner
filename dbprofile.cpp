@@ -135,6 +135,20 @@ int DbProfile::getIdCallback(void *data, int argc, char **argv, char **azColName
     return 0;
 }
 
+int DbProfile::getFamiliesCallback(void *data,
+                                          int argc,
+                                          char **argv,
+                                          char **azColName)
+{
+    QVector<QString> &families = *(QVector<QString> *)data;
+    if((argc == 1) && (!strcmp(*azColName, cFamilyCol))) {
+        families.push_back(QString(*argv));
+    } else {
+        return -1;
+    }
+    return 0;
+}
+
 int DbProfile::loadProfileCallback(void *data, int argc, char **argv, char **azColName) {
     DbProfile *This = (DbProfile *)data;
     for(int i = 0; i < argc; ++i) {
@@ -234,7 +248,7 @@ QVector<QString> DbProfile::getFamilies() {
         char *err = NULL;
         if(!sqlite3_exec(db,
                          SqlGetFamilies,
-                         NULL/* TODO: make callback */,
+                         getFamiliesCallback,
                          &result,
                          &err))
         {

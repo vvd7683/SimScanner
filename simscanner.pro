@@ -34,7 +34,9 @@ SOURCES += main.cpp\
     structuretree.cpp \
     entropychartitem.cpp \
     spropsdialog.cpp \
-    entropynn.cpp
+    entropynn.cpp \
+    samplestree.cpp \
+    sectionitem.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -57,7 +59,9 @@ HEADERS  += mainwindow.h \
     structuretree.h \
     entropychartitem.h \
     spropsdialog.h \
-    entropynn.h
+    entropynn.h \
+    samplestree.h \
+    sectionitem.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \
