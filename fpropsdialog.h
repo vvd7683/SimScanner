@@ -38,7 +38,7 @@ public:
     ~FilePropertiesDialog();
 
     QMenu *section_menu;
-    QToolBar *file_menu_bar;
+    QToolBar *file_tool_bar;
 
     StructureTree *structureTree;
 

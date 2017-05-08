@@ -10,12 +10,14 @@
 #include <QDialog>
 #include <QMenu>
 #include <QBoxLayout>
+#include <QToolBar>
 #include <QtCharts/QChart>
 
 #include "qpefile.h"
 #include "sectionitem.h"
 #include "qchartlayout.h"
 #include "qchartdialog.h"
+#include "nnprofilesdialog.h"
 #include "ss_types.h"
 
 namespace Ui {
@@ -40,6 +42,8 @@ private slots:
 
     void on_rbExtremums_toggled(bool checked);
 
+    void on_actionView_Section_associated_neuroprofiles_triggered();
+
 private:
     Ui::SPropsDialog *ui;
     SSSection &sec;
@@ -50,6 +54,8 @@ private:
 
     QMenu *sec_menu;
     QMenu *dir_menu;
+
+    QToolBar *sec_tool_bar;
 };
 
 #endif // SPROPSDIALOG_H

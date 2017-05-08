@@ -7,8 +7,8 @@ aboutDialog::aboutDialog(QWidget *parent) :
     ui(new Ui::aboutDialog)
 {
     ui->setupUi(this);
-    setModal(true);
-    setWindowIcon(QIcon(tr(":/icons/icons/Info.png")));
+    //setModal(true);
+    //setWindowIcon(QIcon(tr(":/icons/icons/Info.png")));
     ui->lLogo->setPixmap(QPixmap(tr(":/icons/icons/SimScannerLogo.png")));
 }
 

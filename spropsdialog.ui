@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>SPropsDialog</class>
  <widget class="QDialog" name="SPropsDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,7 +26,14 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Section information</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="simscanner.qrc">
+    <normaloff>:/icons/icons/To_do_list.png</normaloff>:/icons/icons/To_do_list.png</iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -291,8 +301,19 @@
     </widget>
    </item>
   </layout>
+  <action name="actionView_Section_associated_neuroprofiles">
+   <property name="icon">
+    <iconset resource="simscanner.qrc">
+     <normaloff>:/icons/icons/nn.png</normaloff>:/icons/icons/nn.png</iconset>
+   </property>
+   <property name="text">
+    <string>View Section associated neuroprofiles</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="simscanner.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>

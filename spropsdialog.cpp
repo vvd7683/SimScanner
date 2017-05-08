@@ -10,9 +10,13 @@ SectionPropertiesDialog::SectionPropertiesDialog(SSSection &ss_sec, SsMode mode,
     secs_menu(new QMenu(this)),
     dirs_menu(new QMenu(this)),
 
+    sec_tool_bar(new QToolBar()),
+
     sec(ss_sec)
 {
     ui->setupUi(this);
+
+    layout()->setMenuBar(sec_tool_bar);
 
     ui->tblSection->setItem(0, 0,
                             new QTableWidgetItem(sec.SectionName));
@@ -94,11 +98,27 @@ SectionPropertiesDialog::SectionPropertiesDialog(SSSection &ss_sec, SsMode mode,
 
     EntropyDiagram &diagram = ss_sec.sec_entropy;
     setCharts(diagram);
+
+    switch(ss_mode)
+    {
+    case SsMode::ssmScan:
+        sec_tool_bar->setVisible(false);
+        //sec_tool_bar->addAction(tr)
+        break;
+    case SsMode::ssmEdit:
+        sec_tool_bar->setVisible(true);
+        sec_tool_bar->addAction(ui->actionView_Section_associated_neuroprofiles);
+        break;
+    default:
+        break;
+    }
 }
 
 SectionPropertiesDialog::~SectionPropertiesDialog()
 {
     delete ui;
+
+    delete sec_tool_bar;
 }
 
 void SectionPropertiesDialog::on_rbEntropy_toggled(bool checked)
@@ -124,4 +144,9 @@ void SectionPropertiesDialog::on_rbMinimums_toggled(bool checked)
 void SectionPropertiesDialog::on_rbExtremums_toggled(bool checked)
 {
     chartExtremumDensity->setVisible(checked);
+}
+
+void SectionPropertiesDialog::on_actionView_Section_associated_neuroprofiles_triggered()
+{
+    NnProfilesDialog().exec();
 }

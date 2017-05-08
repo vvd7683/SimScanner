@@ -134,9 +134,11 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, SsMode mode, QWidget
     switch(ss_mode)
     {
     case SsMode::ssmScan:
+        file_tool_bar->setVisible(false);
         section_menu->addAction(ui->actionView_Section_properties);
         break;
     case SsMode::ssmEdit:
+        file_tool_bar->setVisible(true);
         section_menu->addAction(ui->actionView_Section_properties);
         section_menu->addAction(ui->actionView_Section_associated_neuroprofiles);
         file_tool_bar->addAction(ui->actionView_File_associated_neuroprofiles);
@@ -302,7 +304,7 @@ void FilePropertiesDialog::tvContextMenuRequested(const QPoint &pos) {
 void FilePropertiesDialog::on_actionView_Section_properties_triggered()
 {
     if(SectionItem *sec_item = structureTree->getSectionItem()) {
-        switch(SectionPropertiesDialog(sec_item->getSection(), SsMode::ssmScan, this).exec())
+        switch(SectionPropertiesDialog(sec_item->getSection(), ss_mode, this).exec())
         {
         case QDialog::Accepted:
             break;
