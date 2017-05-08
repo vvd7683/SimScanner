@@ -27,6 +27,7 @@ bool ScanModel::setData(const QModelIndex &index, const QVariant &value, int rol
         if(value == Qt::Checked)
         {
             checkedIndexes.insert(index);
+            emit signalAppendFile(index);
             if(hasChildren(index) == true)
             {
                 recursiveCheck(index, value);
@@ -35,6 +36,7 @@ bool ScanModel::setData(const QModelIndex &index, const QVariant &value, int rol
         else
         {
             checkedIndexes.remove(index);
+            emit signalRemoveFile(index);
             if(hasChildren(index) == true)
             {
                 recursiveCheck(index, value);
@@ -45,6 +47,25 @@ bool ScanModel::setData(const QModelIndex &index, const QVariant &value, int rol
     }
 
     return QDirModel::setData(index, value, role);
+}
+
+QFileInfo ScanModel::get_file_info(const QModelIndex &c_idx) {
+    return QFileInfo(get_full_path(c_idx));
+}
+
+QString ScanModel::get_full_path(QModelIndex idx) {
+    QString s;
+    while(true) {
+        s = data(idx).toString() + s;
+        idx = idx.parent();
+        if(idx.parent() == idx)
+            break;
+        s = tr("\\") + s;
+    }
+    if(s[PRED(s.length())] == QChar(':')) {
+        s += tr("\\");
+    }
+    return s;
 }
 
 void ScanModel::recursiveCheck(const QModelIndex &index, const QVariant &value)

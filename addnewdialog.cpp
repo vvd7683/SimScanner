@@ -34,6 +34,15 @@ addNewDialog::addNewDialog(QWidget *parent) :
     connect(trySampleAction, &QAction::triggered, this, &addNewDialog::trySampleSlot);
     menu_PE->addAction(trySampleAction);
     //menu_PE->addAction(new QAction("View PE", this));
+
+    connect(positive_model,
+            &ScanModel::signalAppendFile,
+            this,
+            &addNewDialog::slotAppendSample);
+    connect(positive_model,
+            &ScanModel::signalRemoveFile,
+            this,
+            &addNewDialog::slotRemoveSample);
 }
 
 addNewDialog::~addNewDialog()
@@ -56,26 +65,13 @@ int addNewDialog::getIndex() {
 
 void addNewDialog::tvPositiveContextMenuRequested(const QPoint &pos) {
     if(sender() == ui->tvPositiveSamples) {
-        QAbstractItemModel *model = ui->tvPositiveSamples->model();
+        ScanModel *model = dynamic_cast<ScanModel *>(ui->tvPositiveSamples->model());
+        if(!model)
+            return;
         QModelIndex idx = ui->tvPositiveSamples->indexAt(pos);
         if(idx.column())
-            //idx = model->index(idx.row(), 0);
             return;
-        //QModelIndex idx = model->index(item_index.row(), 0);
-
-        QString s;
-        while(true) {
-            s = model->data(idx).toString() + s;
-            idx = idx.parent();
-            if(idx.parent() == idx)
-                break;
-            s = tr("\\") + s;
-        }
-        if(s[PRED(s.length())] == QChar(':')) {
-            s += tr("\\");
-        }
-
-        QFileInfo file_info(s);
+        QFileInfo file_info = model->get_file_info(idx);
         if(file_info.isDir()) {
             //menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
         } else {
@@ -99,9 +95,8 @@ void addNewDialog::trySampleSlot(bool checked) {
         {
         case QDialog::Accepted:
         {
-            QTreeWidgetItem *sample_item = new SelectedSampleItem(*info);
-            ui->tvSelectedSamples->addTopLevelItem(sample_item);
-            positive_model->setData(ui->tvPositiveSamples->currentIndex(),
+            QModelIndex idx = ui->tvPositiveSamples->currentIndex();
+            positive_model->setData(idx,
                                     QVariant(Qt::Checked),
                                     Qt::CheckStateRole);
             break;
@@ -112,4 +107,24 @@ void addNewDialog::trySampleSlot(bool checked) {
         }
         menu_PE->PeFileInfo = Q_NULLPTR;
     }
+}
+
+void addNewDialog::slotAppendSample(const QModelIndex &c_idx) {
+    QFileInfo info = positive_model->get_file_info(c_idx);
+    QTreeWidgetItem *sample_item = new SelectedSampleItem(info);
+
+    sample_item->setText(0, info.fileName());
+    sample_item->setText(1,
+                         QString(
+                             ).sprintf(
+                             "%d bytes",
+                             info.size(
+                                 )
+                             )
+                         );
+    sample_item->setText(2, info.absoluteFilePath());
+    ui->tvSelectedSamples->addTopLevelItem(sample_item);
+}
+
+void addNewDialog::slotRemoveSample(const QModelIndex &c_idx) {
 }

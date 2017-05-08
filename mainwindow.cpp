@@ -62,26 +62,14 @@ void MainWindow::peInfoExecute(bool checked) {
 
 void MainWindow::tvContextMenuRequested(const QPoint &pos) {
     if(sender() == ui->treeView) {
-        QAbstractItemModel *model = ui->treeView->model();
+        ScanModel *model = dynamic_cast<ScanModel *>(ui->treeView->model());
         QModelIndex idx = ui->treeView->indexAt(pos);
         if(idx.column())
             //idx = model->index(idx.row(), 0);
             return;
         //QModelIndex idx = model->index(item_index.row(), 0);
 
-        QString s;
-        while(true) {
-            s = model->data(idx).toString() + s;
-            idx = idx.parent();
-            if(idx.parent() == idx)
-                break;
-            s = tr("\\") + s;
-        }
-        if(s[PRED(s.length())] == QChar(':')) {
-            s += tr("\\");
-        }
-
-        QFileInfo file_info(s);
+        QFileInfo file_info = model->get_file_info(idx);
         if(file_info.isDir()) {
             menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
         } else {

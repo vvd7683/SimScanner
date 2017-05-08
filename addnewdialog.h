@@ -25,6 +25,8 @@ public:
 public slots:
     void tvPositiveContextMenuRequested(const QPoint &pos);
     void trySampleSlot(bool checked);
+    void slotAppendSample(const QModelIndex &c_idx);
+    void slotRemoveSample(const QModelIndex &c_idx);
 
 private:
     Ui::addNewDialog *ui;

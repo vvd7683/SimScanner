@@ -8,6 +8,7 @@ class SelectedSampleItem : public QTreeWidgetItem
 {
 public:
     SelectedSampleItem(QFileInfo &file_info, QTreeWidgetItem *parent = 0);
+    QFileInfo &get_info();
 protected:
     QFileInfo info;
 };
