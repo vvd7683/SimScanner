@@ -54,8 +54,8 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 void MainWindow::peInfoExecute(bool checked) {
-    if(menu_PE->PeFileInfo) {
-        FilePropertiesDialog(*menu_PE->PeFileInfo, SsMode::ssmScan, this).exec();
+    if(QFileInfo *info = menu_PE->PeFileInfo) {
+        FilePropertiesDialog(*info, SsMode::ssmScan, this).exec();
         menu_PE->PeFileInfo = Q_NULLPTR;
     }
 }
@@ -82,9 +82,9 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
         }
 
         QFileInfo file_info(s);
-        if(file_info.isDir())
+        if(file_info.isDir()) {
             menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
-        else {
+        } else {
             try {
                 {
                     QPeFile file(file_info);
@@ -93,6 +93,7 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
                 menu_PE->popup(ui->treeView->viewport()->mapToGlobal(pos));
             } catch(...) {
                 menu_Other->popup(ui->treeView->viewport()->mapToGlobal(pos));
+                menu_PE->PeFileInfo = Q_NULLPTR;
             }
         }
     }

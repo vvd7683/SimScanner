@@ -28,14 +28,9 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, SsMode mode, QWidget
                 )->setStretchLastSection(true);
     ui->tblOptionalHeader->horizontalHeader(
                 )->setStretchLastSection(true);
-    ui->tblFileHeader->setColumnWidth(1, 200);
-    ui->tblOptionalHeader->setColumnWidth(1, 200);
 
-    //ui->tabFileProperties->setTabText(0, tr("File properties"));
     ui->tabFileProperties->setTabIcon(0, QIcon(tr(":/icons/icons/File.png")));
-    //ui->tabFileProperties->setTabText(1, tr("PE header"));
     ui->tabFileProperties->setTabIcon(1, QIcon(tr(":/icons/icons/Grid.png")));
-    //ui->tabFileProperties->setTabText(2, tr("Entropy chart"));
     ui->tabFileProperties->setTabIcon(2, QIcon(tr(":/icons/icons/3d_bar_chart.png")));
 
     setWindowTitle(Info.absoluteFilePath());
@@ -291,7 +286,6 @@ void FilePropertiesDialog::on_structureTree_itemSelectionChanged()
 }
 
 void FilePropertiesDialog::tvContextMenuRequested(const QPoint &pos) {
-    structureTree;
     if(sender() == structureTree) {
         if(SectionItem *sec_item = structureTree->getSectionItem(pos))
         {

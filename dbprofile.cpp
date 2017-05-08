@@ -6,7 +6,7 @@ const char *SqlInitNeuroprofiles =
         "CREATE TABLE IF NOT EXISTS neuroprofiles (id INTEGER PRIMARY KEY, family TEXT, idx INTEEGER, nn_type INTEGER, nn_kind INTEGER, profile TEXT, threshold DOUBLE, learned BOOLEAN, created TEXT NOT NULL DEFAULT (NOW()), comment TEXT, UNIQUE(family, idx, nn_type, nn_kind));";
 const char *SqlLoadNeuroprofiles = "SELECT id FROM neuroprofiles;";
 const char *SqlLoadNeuroprofile = "SELECT nn_type, nn_kind, profile, threshold, learned, created FROM neuroprofiles WHERE id=%d;";
-const char *SqlNewNeuroprofile = "INSERT INTO neuroprofiles (family, idx, nn_type, nn_kind, profile, threshold, learned) VALUES (%s, %d, %d, %d, %s, %f, %d);";
+const char *SqlNewNeuroprofile = "INSERT INTO neuroprofiles (family, idx, nn_type, nn_kind, profile, threshold, learned) VALUES ('%s'', %d, %d, %d, '%s', %f, %d);";
 const char *SqlGetNeuroprofileId = "SELECT id FROM neuroprofiles WHERE family='%s' AND idx=%d AND nn_type=%d AND nn_kind=%d;";
 const char *SqlGetFamilies = "SELECT DISTINCT family FROM neuroprofiles;";
 const char *SqlGetFamily = "SELECT DISTINCT idx FROM neuroprofiles WHERE family='%s';";
@@ -58,24 +58,25 @@ DbProfile::DbProfile(QString &Family,
     sqlite3 *db = NULL;
     if(!sqlite3_open(cDefaultDbName, &db))
     {
+        QString request = QString().sprintf(
+                    SqlNewNeuroprofile,
+                    Family.toStdString(//family - %s
+                        ).c_str(
+                        ),
+                    c_index,//idx - %d
+                    (int)c_nn_type,//nn_type - %d
+                    (int)c_nn_kind,//nn_kind - %d
+                    SimScanNN::DefaultEmpty(//profile - %s
+                        ).toStdString(
+                        ).c_str(
+                        ),
+                    threshold,//threshold - %f
+                    (int)b_learned//learned - %d
+                    );
         char *err = NULL;
         if(!sqlite3_exec(
                     db,
-                    QString().sprintf(
-                        SqlNewNeuroprofile,
-                        Family.toStdString(//family - %s
-                            ).c_str(
-                            ),
-                        c_index,//idx - %d
-                        (int)c_nn_type,//nn_type - %d
-                        (int)c_nn_kind,//nn_kind - %d
-                        SimScanNN::DefaultEmpty(//profile - %s
-                            ).toStdString(
-                            ).c_str(
-                            ),
-                        threshold,//threshold - %f
-                        (int)b_learned//learned - %d
-                        ).toStdString(
+                    request.toStdString(
                         ).c_str(
                         ),
                     NULL,

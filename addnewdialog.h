@@ -7,6 +7,7 @@
 #include "fpropsdialog.h"
 #include "qpefile.h"
 #include "qpefilemenu.h"
+#include "selectedsampleitem.h"
 
 namespace Ui {
 class addNewDialog;
@@ -28,6 +29,8 @@ public slots:
 private:
     Ui::addNewDialog *ui;
     QPeFileMenu *menu_PE;
+    ScanModel *negative_model;
+    ScanModel *positive_model;
 };
 
 #endif // ADDNEWDIALOG_H

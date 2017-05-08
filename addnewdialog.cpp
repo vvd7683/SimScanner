@@ -6,14 +6,16 @@ addNewDialog::addNewDialog(QWidget *parent) :
 
     menu_PE(new QPeFileMenu(this)),
 
+    negative_model(new ScanModel),
+    positive_model(new ScanModel),
+
     ui(new Ui::addNewDialog)
 {
     ui->setupUi(this);
-    setModal(true);
+    setWindowIcon(QIcon(":/icons/icons/actionNew.png"));
 
     ui->cboxFamily->setCurrentText(tr("Trojan.Generic"));
 
-    ScanModel *positive_model = new ScanModel;
     ui->tvPositiveSamples->setModel(positive_model);
     ui->tvPositiveSamples->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->tvPositiveSamples->setColumnWidth(0, 200);
@@ -24,7 +26,6 @@ addNewDialog::addNewDialog(QWidget *parent) :
             this, &addNewDialog::tvPositiveContextMenuRequested);
 
 
-    ScanModel *negative_model = new ScanModel;
     ui->tvNegativeSamples->setModel(negative_model);
     ui->tvNegativeSamples->setContextMenuPolicy(Qt::CustomContextMenu);
     ui->tvNegativeSamples->setColumnWidth(0, 200);
@@ -38,7 +39,11 @@ addNewDialog::addNewDialog(QWidget *parent) :
 addNewDialog::~addNewDialog()
 {
     delete ui;
+
     delete menu_PE;
+
+    delete negative_model;
+    delete positive_model;
 }
 
 QString addNewDialog::getFamily() {
@@ -71,9 +76,9 @@ void addNewDialog::tvPositiveContextMenuRequested(const QPoint &pos) {
         }
 
         QFileInfo file_info(s);
-        if(file_info.isDir())
-            ;//menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
-        else {
+        if(file_info.isDir()) {
+            //menu_Dir->popup(ui->treeView->viewport()->mapToGlobal(pos));
+        } else {
             try {
                 {
                     QPeFile file(file_info);
@@ -82,14 +87,29 @@ void addNewDialog::tvPositiveContextMenuRequested(const QPoint &pos) {
                 menu_PE->popup(ui->tvPositiveSamples->viewport()->mapToGlobal(pos));
             } catch(...) {
                 //menu_Other->popup(ui->treeView->viewport()->mapToGlobal(pos));
+                menu_PE->PeFileInfo = Q_NULLPTR;
             }
         }
     }
 }
 
 void addNewDialog::trySampleSlot(bool checked) {
-    if(menu_PE->PeFileInfo) {
-        FilePropertiesDialog(*menu_PE->PeFileInfo, SsMode::ssmEdit, this).exec();
+    if(QFileInfo *info = menu_PE->PeFileInfo) {
+        switch(FilePropertiesDialog(*info, SsMode::ssmEdit, this).exec())
+        {
+        case QDialog::Accepted:
+        {
+            QTreeWidgetItem *sample_item = new SelectedSampleItem(*info);
+            ui->tvSelectedSamples->addTopLevelItem(sample_item);
+            positive_model->setData(ui->tvPositiveSamples->currentIndex(),
+                                    QVariant(Qt::Checked),
+                                    Qt::CheckStateRole);
+            break;
+        }
+        case QDialog::Rejected:
+        default:
+            break;
+        }
         menu_PE->PeFileInfo = Q_NULLPTR;
     }
 }

@@ -183,16 +183,31 @@
         <property name="title">
          <string>Learning Samples</string>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <layout class="QVBoxLayout" name="verticalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
          <item>
-          <widget class="QFrame" name="frameNegativeSamples">
+          <widget class="QFrame" name="frameSelectedSamples">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>150</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>200</height>
+            </size>
+           </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_5">
+           <layout class="QVBoxLayout" name="verticalLayout_6">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -206,7 +221,7 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="lNegativeSamples">
+             <widget class="QLabel" name="label">
               <property name="font">
                <font>
                 <weight>75</weight>
@@ -214,25 +229,44 @@
                </font>
               </property>
               <property name="text">
-               <string>Negative samples</string>
+               <string>Selected samples</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QTreeView" name="tvNegativeSamples"/>
+             <widget class="QTreeWidget" name="tvSelectedSamples">
+              <attribute name="headerVisible">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Sample name</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>File size</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Full path</string>
+               </property>
+              </column>
+             </widget>
             </item>
            </layout>
           </widget>
          </item>
          <item>
-          <widget class="QFrame" name="framePositiveSamples">
+          <widget class="QFrame" name="frame">
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
            </property>
            <property name="frameShadow">
             <enum>QFrame::Raised</enum>
            </property>
-           <layout class="QVBoxLayout" name="verticalLayout_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
             <property name="leftMargin">
              <number>0</number>
             </property>
@@ -246,20 +280,92 @@
              <number>0</number>
             </property>
             <item>
-             <widget class="QLabel" name="lPositiveSamples">
-              <property name="font">
-               <font>
-                <weight>75</weight>
-                <bold>true</bold>
-               </font>
+             <widget class="QFrame" name="frameNegativeSamples">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
               </property>
-              <property name="text">
-               <string>Positive samples</string>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
               </property>
+              <layout class="QVBoxLayout" name="verticalLayout_5">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lNegativeSamples">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Negative samples</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTreeView" name="tvNegativeSamples">
+                 <attribute name="headerDefaultSectionSize">
+                  <number>0</number>
+                 </attribute>
+                </widget>
+               </item>
+              </layout>
              </widget>
             </item>
             <item>
-             <widget class="QTreeView" name="tvPositiveSamples"/>
+             <widget class="QFrame" name="framePositiveSamples">
+              <property name="frameShape">
+               <enum>QFrame::StyledPanel</enum>
+              </property>
+              <property name="frameShadow">
+               <enum>QFrame::Raised</enum>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_4">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="lPositiveSamples">
+                 <property name="font">
+                  <font>
+                   <weight>75</weight>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Positive samples</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QTreeView" name="tvPositiveSamples">
+                 <attribute name="headerDefaultSectionSize">
+                  <number>0</number>
+                 </attribute>
+                </widget>
+               </item>
+              </layout>
+             </widget>
             </item>
            </layout>
           </widget>
