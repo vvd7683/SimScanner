@@ -39,7 +39,8 @@ SOURCES += main.cpp\
     sectionitem.cpp \
     qchartdialog.cpp \
     nnprofilesdialog.cpp \
-    selectedsampleitem.cpp
+    selectedsampleitem.cpp \
+    ss_defs.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -68,7 +69,8 @@ HEADERS  += mainwindow.h \
     qchartdialog.h \
     ss_types.h \
     nnprofilesdialog.h \
-    selectedsampleitem.h
+    selectedsampleitem.h \
+    ss_defs.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \

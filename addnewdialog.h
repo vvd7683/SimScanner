@@ -8,6 +8,7 @@
 #include "qpefile.h"
 #include "qpefilemenu.h"
 #include "selectedsampleitem.h"
+#include "ss_defs.h"
 
 namespace Ui {
 class addNewDialog;

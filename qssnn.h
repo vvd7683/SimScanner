@@ -5,27 +5,18 @@
  * Neural network basic wrapper class
  */
 #include <QObject>
+//#include <QMap>
 #include <opennn.h>
 
 #include "macro.h"
+#include "ss_types.h"
 
 class SimScanNN : public QObject
 {
     Q_OBJECT
 public:
     typedef unsigned int PROFILE_ID;
-    enum class ssNNType {
-        nntUnknown = -1,
-        nntFullFileImage = 0,
-        nntAnySection,
-        nntCodeSection,
-        nntResource,
-        nntData,
-        nntOverlay,
-
-        nntCount
-    };
-
+    typedef NNType ssNNType;
     unsigned int get_inputs_count() {
         return 0;
     }
@@ -43,6 +34,7 @@ public:
     static SimScanNN *fromString(QString &str);
 
     static QString DefaultEmpty();
+
 signals:
     void signalSimilarity(double similarity);
 public slots:

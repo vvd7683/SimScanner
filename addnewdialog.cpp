@@ -194,6 +194,15 @@ void addNewDialog::slotAppendSample(const QModelIndex &c_idx) {
     QTreeWidgetItem *entropy_child = new QTreeWidgetItem(sample_item);
     entropy_child->setText(0, tr("Entropy"));
 
+    QTreeWidgetItem *nn_child = new QTreeWidgetItem(sample_item);
+    nn_child->setText(0, tr("Neuroprofiles"));
+
+    foreach(QString ssNNTypeName, getNnTypes()) {
+        QTreeWidgetItem *object_nns = new QTreeWidgetItem(nn_child);
+        object_nns->setText(0, ssNNTypeName);
+        //TODO: add childs for each type of nn
+    }
+
     ui->tvSelectedSamples->addTopLevelItem(sample_item);
     ui->tvSelectedSamples->setColumnWidth(0, 200);
 }

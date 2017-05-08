@@ -9,4 +9,16 @@ enum SsMode {
     ssmCount
 };
 
+enum class NNType {
+    nntUnknown = -1,
+    nntFullFileImage = 0,
+    nntAnySection,
+    nntCodeSection,
+    nntResource,
+    nntData,
+    nntOverlay,
+
+    nntCount
+};
+
 #endif // SSMODE_H
