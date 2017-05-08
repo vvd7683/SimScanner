@@ -10,6 +10,7 @@
 
 #include "entropychartitem.h"
 #include "entropychartview.h"
+#include "sectionitem.h"
 
 class StructureTree : public QTreeWidget
 {
@@ -30,6 +31,10 @@ public:
 
         event->accept();
     }
+    bool isTopItem(QTreeWidgetItem *item);
+    SectionItem *getSectionItem(QTreeWidgetItem *item = Q_NULLPTR);
+    SectionItem *getSectionItem(const QPoint &pos);
+
 Q_SIGNALS:
     void signalMouseMove(QTreeWidgetItem *item);
 };

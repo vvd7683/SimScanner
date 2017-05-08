@@ -4,6 +4,9 @@
 #include <QDialog>
 
 #include "scanmodel.h"
+#include "fpropsdialog.h"
+#include "qpefile.h"
+#include "qpefilemenu.h"
 
 namespace Ui {
 class addNewDialog;
@@ -18,9 +21,13 @@ public:
     ~addNewDialog();
     QString getFamily();
     int getIndex();
+public slots:
+    void tvPositiveContextMenuRequested(const QPoint &pos);
+    void trySampleSlot(bool checked);
 
 private:
     Ui::addNewDialog *ui;
+    QPeFileMenu *menu_PE;
 };
 
 #endif // ADDNEWDIALOG_H

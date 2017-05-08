@@ -3,24 +3,20 @@
 
 #include <QMessageBox>
 
-FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
-    QDialog(parent),
+FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, SsMode mode, QWidget *parent) :
+    QChartDialog(mode, parent),
     pe_file(Info),
 
     ui(new Ui::FilePropertiesDialog),
 
-    chartEntropy(new EntropyChartView(this)),
-    chartEntropyDerivative(new EntropyChartView(this)),
-    chartMaximumDensity(new EntropyChartView(this)),
-    chartMinimumDensity(new EntropyChartView(this)),
-    chartExtremumDensity(new EntropyChartView(this)),
-
     section_menu(new QMenu(this)),
+    file_tool_bar(new QToolBar()),
 
     structureTree(new StructureTree(this))
 {
     ui->setupUi(this);
-    setModal(true);
+
+    layout()->setMenuBar(file_tool_bar);
 
     setWindowIcon(QIcon(tr(":/icons/icons/Target.png")));
 
@@ -117,33 +113,8 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
                 );
     ui->lDateTimeVal->setText(
                 Info.created().toString());
-    QVector<EntropyY>pts;
-    EntropyDiagram &diagram = pe_file.getEntropy();
-    pts.resize(diagram.size());
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_value;
-    if(!chartEntropy->add_points(pts))
-        throw;
 
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_derivative_value;
-    if(!chartEntropyDerivative->add_points(pts))
-        throw;
-    chartEntropyDerivative->chart()->setTitle(tr("Entropy derivative chart"));
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].maximums_density;
-    if(!chartMaximumDensity->add_points(pts))
-        throw;
-    chartMaximumDensity->chart()->setTitle(tr("Maximums density"));
-
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].minimums_density;
-    if(!chartMinimumDensity->add_points(pts))
-        throw;
-    chartMinimumDensity->chart()->setTitle(tr("Minimums density"));
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] += diagram[i].maximums_density;//Already contains minimums
-    if(!chartExtremumDensity->add_points(pts))
-        throw;
-    chartExtremumDensity->chart()->setTitle(tr("Extremums density"));
+    setCharts(pe_file.getEntropy());
 
     init_sections();
     init_directories();
@@ -160,18 +131,26 @@ FilePropertiesDialog::FilePropertiesDialog(QFileInfo &Info, QWidget *parent) :
             this,
             &FilePropertiesDialog::tvContextMenuRequested);
 
-    section_menu->addAction(ui->actionView_Section_properties);
+    switch(ss_mode)
+    {
+    case SsMode::ssmScan:
+        section_menu->addAction(ui->actionView_Section_properties);
+        break;
+    case SsMode::ssmEdit:
+        section_menu->addAction(ui->actionView_Section_properties);
+        section_menu->addAction(ui->actionView_Section_associated_neuroprofiles);
+        file_tool_bar->addAction(ui->actionView_File_associated_neuroprofiles);
+        break;
+    default:
+        break;
+    }
 }
 
 FilePropertiesDialog::~FilePropertiesDialog()
 {
     delete ui;
     delete section_menu;
-    delete chartEntropy;
-    delete chartEntropyDerivative;
-    delete chartExtremumDensity;
-    delete chartMaximumDensity;
-    delete chartMinimumDensity;
+    delete file_tool_bar;
 }
 
 void FilePropertiesDialog::init_sections() {
@@ -310,10 +289,11 @@ void FilePropertiesDialog::on_structureTree_itemSelectionChanged()
 }
 
 void FilePropertiesDialog::tvContextMenuRequested(const QPoint &pos) {
+    structureTree;
     if(sender() == structureTree) {
-        if(SectionItem *sec_item =
-                dynamic_cast<SectionItem *>(structureTree->itemAt(pos)))
+        if(SectionItem *sec_item = structureTree->getSectionItem(pos))
         {
+            //structureTree->setCurrentItem(sec_item, 0, QItemSelectionModel::SelectionFlag::NoUpdate);
             section_menu->popup(structureTree->viewport()->mapToGlobal(pos));
         }
     }
@@ -321,10 +301,8 @@ void FilePropertiesDialog::tvContextMenuRequested(const QPoint &pos) {
 
 void FilePropertiesDialog::on_actionView_Section_properties_triggered()
 {
-    if(SectionItem *sec_item =
-            dynamic_cast<SectionItem *>(structureTree->currentItem()))
-    {
-        switch(SectionPropertiesDialog(sec_item->getSection(), this).exec())
+    if(SectionItem *sec_item = structureTree->getSectionItem()) {
+        switch(SectionPropertiesDialog(sec_item->getSection(), SsMode::ssmScan, this).exec())
         {
         case QDialog::Accepted:
             break;
@@ -334,4 +312,9 @@ void FilePropertiesDialog::on_actionView_Section_properties_triggered()
             break;
         }
     }
+}
+
+void FilePropertiesDialog::on_actionView_Section_associated_neuroprofiles_triggered()
+{
+    NnProfilesDialog().exec();
 }

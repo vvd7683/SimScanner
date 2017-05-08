@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>FilePropertiesDialog</class>
  <widget class="QDialog" name="FilePropertiesDialog">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -23,11 +26,14 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>File properties</string>
   </property>
   <property name="windowIcon">
    <iconset>
     <normaloff>icons/Target.png</normaloff>icons/Target.png</iconset>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -544,7 +550,7 @@
      </widget>
      <widget class="QWidget" name="tabEntropyChart">
       <attribute name="title">
-       <string>Entroopy charts</string>
+       <string>Entropy charts</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
@@ -743,6 +749,24 @@
    </property>
    <property name="text">
     <string>View Section properties</string>
+   </property>
+  </action>
+  <action name="actionView_Section_associated_neuroprofiles">
+   <property name="icon">
+    <iconset resource="simscanner.qrc">
+     <normaloff>:/icons/icons/nn.png</normaloff>:/icons/icons/nn.png</iconset>
+   </property>
+   <property name="text">
+    <string>View Section associated neuroprofiles</string>
+   </property>
+  </action>
+  <action name="actionView_File_associated_neuroprofiles">
+   <property name="icon">
+    <iconset resource="simscanner.qrc">
+     <normaloff>:/icons/icons/nn.png</normaloff>:/icons/icons/nn.png</iconset>
+   </property>
+   <property name="text">
+    <string>View File associated neuroprofiles</string>
    </property>
   </action>
  </widget>

@@ -13,28 +13,22 @@
 #include <QtCharts/QChart>
 
 #include "qpefile.h"
-#include "entropychartview.h"
 #include "sectionitem.h"
 #include "qchartlayout.h"
+#include "qchartdialog.h"
+#include "ss_types.h"
 
 namespace Ui {
 class SPropsDialog;
 }
 
-class SectionPropertiesDialog : public QDialog
+class SectionPropertiesDialog : public QChartDialog
 {
     Q_OBJECT
 
 public:
-    explicit SectionPropertiesDialog(SSSection &ss_sec, QWidget *parent = 0);
+    explicit SectionPropertiesDialog(SSSection &ss_sec, SsMode mode = SsMode::ssmScan, QWidget *parent = 0);
     ~SectionPropertiesDialog();
-protected:
-    EntropyChartView *chartEntropy;
-    EntropyChartView *chartEntropyDerivative;
-    ExtremumDensityChartView *chartMaximumDensity;
-    ExtremumDensityChartView *chartMinimumDensity;
-    ExtremumDensityChartView *chartExtremumDensity;
-
 private slots:
     void on_rbEntropy_toggled(bool checked);
 

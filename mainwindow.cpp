@@ -55,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 void MainWindow::peInfoExecute(bool checked) {
     if(menu_PE->PeFileInfo) {
-        FilePropertiesDialog(*menu_PE->PeFileInfo).exec();
+        FilePropertiesDialog(*menu_PE->PeFileInfo, SsMode::ssmScan, this).exec();
         menu_PE->PeFileInfo = Q_NULLPTR;
     }
 }
@@ -101,6 +101,9 @@ void MainWindow::tvContextMenuRequested(const QPoint &pos) {
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete menu_PE;
+    delete menu_Dir;
+    delete menu_Other;
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -157,16 +160,16 @@ void MainWindow::on_actionNew_triggered()
     SS = ssPrev;
 }
 
-MainWindow::SsMode MainWindow::get_ssm() {
+SsMode MainWindow::get_ssm() {
     if(ui->actionEdit_mode->isChecked())
-        return MainWindow::SsMode::ssmEdit;
+        return SsMode::ssmEdit;
     if(ui->actionScan_mode->isChecked())
-        return MainWindow::SsMode::ssmScan;
+        return SsMode::ssmScan;
     SS = ScanState::ssFailure;
     return SsMode::ssmFailure;
 }
 
-MainWindow::SsMode MainWindow::set_ssm(SsMode _ssm) {
+SsMode MainWindow::set_ssm(SsMode _ssm) {
     switch(_ssm)
     {
     case ssmScan:
@@ -286,22 +289,7 @@ void MainWindow::on_actionScan_mode_triggered(bool checked)
         ui->actionEdit->setVisible(false);
         ui->actionEdit->setEnabled(false);
     } else {
-        ui->actionScan->setVisible(false);
-        ui->actionScan->setEnabled(false);
-        ui->actionStop->setVisible(false);
-        ui->actionStop->setEnabled(false);
-
-        ui->btnScan->setVisible(true);
-        ui->btnScan->setEnabled(false);
-        ui->btnStop->setVisible(true);
-        ui->btnStop->setEnabled(false);
-
-        ui->actionNew->setVisible(true);
-        ui->actionNew->setEnabled(true);
-        ui->actionEdit->setVisible(true);
-        ui->actionEdit->setEnabled(true);
-
-        ui->actionEdit_mode->setChecked(true);
+        ui->actionScan_mode->setChecked(true);
     }
 }
 
@@ -325,22 +313,7 @@ void MainWindow::on_actionEdit_mode_triggered(bool checked)
         ui->btnStop->setVisible(true);
         ui->btnStop->setEnabled(false);
     } else {
-        ui->actionNew->setVisible(false);
-        ui->actionNew->setEnabled(false);
-        ui->actionEdit->setVisible(false);
-        ui->actionEdit->setEnabled(false);
-
-        ui->actionScan->setVisible(true);
-        ui->actionScan->setEnabled(true);
-        ui->actionStop->setVisible(true);
-        ui->actionStop->setEnabled(false);
-
-        ui->btnScan->setVisible(true);
-        ui->btnScan->setEnabled(true);
-        ui->btnStop->setVisible(true);
-        ui->btnStop->setEnabled(false);
-
-        ui->actionScan_mode->setChecked(true);
+        ui->actionEdit_mode->setChecked(true);
     }
 }
 

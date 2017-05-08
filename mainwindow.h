@@ -18,6 +18,7 @@
 #include "aboutdialog.h"
 #include "addnewdialog.h"
 #include "macro.h"
+#include "ss_types.h"
 
 namespace Ui {
 class MainWindow;
@@ -70,13 +71,6 @@ private:
 
         ssCount
     } ss;
-    enum SsMode {
-        ssmFailure = -1,
-        ssmScan = 0,
-        ssmEdit,
-
-        ssmCount
-    };
 
     ScanState get_ss() {return ss;}
     ScanState set_ss(ScanState _ss);

@@ -1,15 +1,9 @@
 #include "spropsdialog.h"
 #include "ui_spropsdialog.h"
 
-SectionPropertiesDialog::SectionPropertiesDialog(SSSection &ss_sec, QWidget *parent) :
-    QDialog(parent),
+SectionPropertiesDialog::SectionPropertiesDialog(SSSection &ss_sec, SsMode mode, QWidget *parent) :
+    QChartDialog(mode, parent),
     ui(new Ui::SPropsDialog),
-
-    chartEntropy(new EntropyChartView(this)),
-    chartEntropyDerivative(new EntropyChartView(this)),
-    chartMaximumDensity(new EntropyChartView(this)),
-    chartMinimumDensity(new EntropyChartView(this)),
-    chartExtremumDensity(new EntropyChartView(this)),
 
     sec_menu(new QMenu(this)),
     dir_menu(new QMenu(this)),
@@ -98,44 +92,13 @@ SectionPropertiesDialog::SectionPropertiesDialog(SSSection &ss_sec, QWidget *par
     ui->frameEntropy->setLayout(lEntropy);
     ui->frameDensity->setLayout(lDensity);
 
-    QVector<EntropyY>pts;
     EntropyDiagram &diagram = ss_sec.sec_entropy;
-    pts.resize(diagram.size());
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_value;
-    if(!chartEntropy->add_points(pts))
-        throw;
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].entropy_derivative_value;
-    if(!chartEntropyDerivative->add_points(pts))
-        throw;
-    chartEntropyDerivative->chart()->setTitle(tr("Entropy derivative chart"));
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].maximums_density;
-    if(!chartMaximumDensity->add_points(pts))
-        throw;
-    chartMaximumDensity->chart()->setTitle(tr("Maximums density"));
-
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] = diagram[i].minimums_density;
-    if(!chartMinimumDensity->add_points(pts))
-        throw;
-    chartMinimumDensity->chart()->setTitle(tr("Minimums density"));
-
-    for(int i = 0; i < diagram.size(); ++i) pts[i] += diagram[i].maximums_density;//Already contains minimums
-    if(!chartExtremumDensity->add_points(pts))
-        throw;
-    chartExtremumDensity->chart()->setTitle(tr("Extremums density"));
-
+    setCharts(diagram);
 }
 
 SectionPropertiesDialog::~SectionPropertiesDialog()
 {
     delete ui;
-    delete chartEntropy;
-    delete chartEntropyDerivative;
-    delete chartExtremumDensity;
-    delete chartMaximumDensity;
-    delete chartMinimumDensity;
 }
 
 void SectionPropertiesDialog::on_rbEntropy_toggled(bool checked)

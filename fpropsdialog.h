@@ -11,34 +11,34 @@
 #include <QFile>
 #include <QDateTime>
 #include <QMenu>
+#include <QToolBar>
 
 #include "qpefile.h"
 #include "entropychartview.h"
 #include "qchartlayout.h"
+#include "qchartdialog.h"
 #include "structuretree.h"
 #include "entropychartitem.h"
 #include "spropsdialog.h"
+#include "ss_types.h"
+#include "nnprofilesdialog.h"
 
 namespace Ui {
 class FilePropertiesDialog;
 }
 
-class FilePropertiesDialog : public QDialog
+class FilePropertiesDialog : public QChartDialog
 {
     Q_OBJECT
 
 public:
-    explicit FilePropertiesDialog(QFileInfo &Info, QWidget *parent = 0);
+    explicit FilePropertiesDialog(QFileInfo &Info,
+                                  SsMode mode = SsMode::ssmScan,
+                                  QWidget *parent = 0);
     ~FilePropertiesDialog();
 
-protected:
-    EntropyChartView *chartEntropy;
-    EntropyChartView *chartEntropyDerivative;
-    ExtremumDensityChartView *chartMaximumDensity;
-    ExtremumDensityChartView *chartMinimumDensity;
-    ExtremumDensityChartView *chartExtremumDensity;
-
     QMenu *section_menu;
+    QToolBar *file_menu_bar;
 
     StructureTree *structureTree;
 
@@ -58,6 +58,8 @@ private slots:
     void on_structureTree_itemSelectionChanged();
 
     void on_actionView_Section_properties_triggered();
+
+    void on_actionView_Section_associated_neuroprofiles_triggered();
 
 public slots:
     void tvContextMenuRequested(const QPoint &pos);

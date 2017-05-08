@@ -36,7 +36,9 @@ SOURCES += main.cpp\
     spropsdialog.cpp \
     entropynn.cpp \
     samplestree.cpp \
-    sectionitem.cpp
+    sectionitem.cpp \
+    qchartdialog.cpp \
+    nnprofilesdialog.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -61,13 +63,17 @@ HEADERS  += mainwindow.h \
     spropsdialog.h \
     entropynn.h \
     samplestree.h \
-    sectionitem.h
+    sectionitem.h \
+    qchartdialog.h \
+    ss_types.h \
+    nnprofilesdialog.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \
     aboutdialog.ui \
     addnewdialog.ui \
-    spropsdialog.ui
+    spropsdialog.ui \
+    nnprofilesdialog.ui
 
 RESOURCES += \
     simscanner.qrc
