@@ -60,6 +60,25 @@ void MainWindow::peInfoExecute(bool checked) {
     }
 }
 
+void MainWindow::setStatus(QString &status) {
+    ui->statusBar->showMessage(status, 2000);
+    QStringListModel *model = nullptr;
+    if(ui->lvResults->model())
+        model = dynamic_cast<QStringListModel *>(ui->lvResults->model());
+    if(!model) {
+        model = new QStringListModel(this);
+        ui->lvResults->setModel(model);
+    }
+    model->insertRow(model->rowCount());
+    model->setData(model->index(
+                       PRED(
+                           model->rowCount(
+                               )
+                           ), 0
+                       ), status
+                   );
+}
+
 void MainWindow::tvContextMenuRequested(const QPoint &pos) {
     if(sender() == ui->treeView) {
         ScanModel *model = dynamic_cast<ScanModel *>(ui->treeView->model());
@@ -126,8 +145,8 @@ void MainWindow::on_actionNew_triggered()
     SS = ScanState::ssEdit;
     addNewDialog dlg;
     if(dlg.exec()) {
-        QString &family = dlg.getFamily();
-        const int cIdx = dlg.getIndex();
+        QString &family = dlg.getSampleFamily();
+        const int cIdx = dlg.getSampleIndex();
 
         for(DbProfile::nnType t = DbProfile::nnType::nntFullFileImage;
             t < DbProfile::nnType::nntCount; t = (DbProfile::nnType)SUCC((int)t))
@@ -159,6 +178,7 @@ SsMode MainWindow::get_ssm() {
 }
 
 SsMode MainWindow::set_ssm(SsMode _ssm) {
+    //TODO: what is it?
     switch(_ssm)
     {
     case ssmScan:
@@ -240,6 +260,7 @@ MainWindow::ScanState MainWindow::set_ss(ScanState _ss) {
         ui->actionNew->setEnabled(false);
         ui->btnScan->setEnabled(false);
         ui->btnStop->setEnabled(false);
+        setStatus(tr("SimScanner failure"));
         break;
     }
     return ss;
@@ -277,6 +298,8 @@ void MainWindow::on_actionScan_mode_triggered(bool checked)
         ui->actionNew->setEnabled(false);
         ui->actionEdit->setVisible(false);
         ui->actionEdit->setEnabled(false);
+
+        setStatus(tr("SimScanner switched to scan mode"));
     } else {
         ui->actionScan_mode->setChecked(true);
     }
@@ -301,6 +324,8 @@ void MainWindow::on_actionEdit_mode_triggered(bool checked)
         ui->btnScan->setEnabled(false);
         ui->btnStop->setVisible(true);
         ui->btnStop->setEnabled(false);
+
+        setStatus(tr("SimScanner switched to learn mode"));
     } else {
         ui->actionEdit_mode->setChecked(true);
     }

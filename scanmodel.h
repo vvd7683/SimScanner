@@ -21,6 +21,8 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role);
     QFileInfo get_file_info(const QModelIndex &c_idx);
+    QVector<QModelIndex>getChecked();
+
 Q_SIGNALS:
     void signalAppendFile(const QModelIndex &index);
     void signalRemoveFile(const QModelIndex &index);

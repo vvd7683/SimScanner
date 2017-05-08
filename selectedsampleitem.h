@@ -7,10 +7,10 @@
 class SelectedSampleItem : public QTreeWidgetItem
 {
 public:
-    SelectedSampleItem(QFileInfo &file_info, QTreeWidgetItem *parent = 0);
-    QFileInfo &get_info();
+    SelectedSampleItem(const QModelIndex c_idx, QTreeWidgetItem *parent = 0);
+    const QModelIndex get_index();
 protected:
-    QFileInfo info;
+    const QModelIndex c_index;
 };
 
 #endif // SELECTEDSAMPLEITEM_H

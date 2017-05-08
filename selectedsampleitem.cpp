@@ -1,11 +1,11 @@
 #include "selectedsampleitem.h"
 
-SelectedSampleItem::SelectedSampleItem(QFileInfo &file_info,
+SelectedSampleItem::SelectedSampleItem(const QModelIndex c_idx,
                                        QTreeWidgetItem *parent) : QTreeWidgetItem(parent),
-    info(file_info)
+    c_index(c_idx)
 {
 }
 
-QFileInfo &SelectedSampleItem::get_info() {
-    return info;
+const QModelIndex SelectedSampleItem::get_index() {
+    return c_index;
 }

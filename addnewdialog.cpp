@@ -43,6 +43,14 @@ addNewDialog::addNewDialog(QWidget *parent) :
             &ScanModel::signalRemoveFile,
             this,
             &addNewDialog::slotRemoveSample);
+
+    ui->tvSelectedSamples->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->tvSelectedSamples,
+            &QTreeView::customContextMenuRequested,
+            this,
+            &addNewDialog::tvSelectedContextMenuRequested);
+    selected_menu.addAction(ui->actionRemove_sample);
+    selected_menu.addAction(ui->actionView_PE_properties);
 }
 
 addNewDialog::~addNewDialog()
@@ -55,12 +63,53 @@ addNewDialog::~addNewDialog()
     delete positive_model;
 }
 
-QString addNewDialog::getFamily() {
+QString addNewDialog::getSampleFamily() {
     return ui->cboxFamily->currentText();
 }
 
-int addNewDialog::getIndex() {
+int addNewDialog::getSampleIndex() {
     return ui->sboxIndex->value();
+}
+
+QVector<QFileInfo> addNewDialog::getSelectedSamples() {
+    QVector<QFileInfo> result;
+    for(int i = 0; i < ui->tvSelectedSamples->topLevelItemCount(); ++i) {
+        if(SelectedSampleItem *item =
+                dynamic_cast<SelectedSampleItem *>(
+                    ui->tvSelectedSamples->topLevelItem(i)
+                    )
+                )
+        {
+            result.push_back(positive_model->get_file_info(item->get_index()));
+        }
+    }
+    return result;
+}
+
+QVector<QFileInfo> addNewDialog::getNegativeSamples() {
+    QVector<QFileInfo>result;
+    foreach(QModelIndex index, negative_model->getChecked()) {
+        result.push_back(negative_model->get_file_info(index));
+    }
+    return result;
+}
+
+void addNewDialog::tvSelectedContextMenuRequested(const QPoint &pos) {
+    if(sender() == ui->tvSelectedSamples) {
+        if(SelectedSampleItem *item =
+                dynamic_cast<SelectedSampleItem *>(
+                    ui->tvSelectedSamples->itemAt(pos)
+                    )
+                )
+        {
+            selected_menu.popup(
+                        ui->tvSelectedSamples->viewport(
+                            )->mapToGlobal(
+                            pos
+                            )
+                        );
+        }
+    }
 }
 
 void addNewDialog::tvPositiveContextMenuRequested(const QPoint &pos) {
@@ -110,8 +159,20 @@ void addNewDialog::trySampleSlot(bool checked) {
 }
 
 void addNewDialog::slotAppendSample(const QModelIndex &c_idx) {
+    const int c_count = ui->tvSelectedSamples->topLevelItemCount();
+    for(int i = 0; i < c_count; ++i) {
+        if(SelectedSampleItem *item =
+                dynamic_cast<SelectedSampleItem *>(
+                    ui->tvSelectedSamples->topLevelItem(i)
+                    )
+                )
+        {
+            if(c_idx == item->get_index())
+                return;
+        }
+    }
+    QTreeWidgetItem *sample_item = new SelectedSampleItem(c_idx);
     QFileInfo info = positive_model->get_file_info(c_idx);
-    QTreeWidgetItem *sample_item = new SelectedSampleItem(info);
 
     sample_item->setText(0, info.fileName());
     sample_item->setText(1,
@@ -123,11 +184,21 @@ void addNewDialog::slotAppendSample(const QModelIndex &c_idx) {
                              )
                          );
     sample_item->setText(2, info.absoluteFilePath());
+
+    QTreeWidgetItem *sections_child = new QTreeWidgetItem(sample_item);
+    sections_child->setText(0, tr("SECTIONS"));
+
+    QTreeWidgetItem *directories_child = new QTreeWidgetItem(sample_item);
+    directories_child->setText(0, tr("DIRECTORIES"));
+
+    QTreeWidgetItem *entropy_child = new QTreeWidgetItem(sample_item);
+    entropy_child->setText(0, tr("Entropy"));
+
     ui->tvSelectedSamples->addTopLevelItem(sample_item);
+    ui->tvSelectedSamples->setColumnWidth(0, 200);
 }
 
 void addNewDialog::slotRemoveSample(const QModelIndex &c_idx) {
-    QFileInfo info = positive_model->get_file_info(c_idx);
     const int c_count = ui->tvSelectedSamples->topLevelItemCount();
     for(int i = 0; i < c_count; ++i) {
         if(SelectedSampleItem *item =
@@ -136,9 +207,42 @@ void addNewDialog::slotRemoveSample(const QModelIndex &c_idx) {
                     )
                 )
         {
-            if(item->get_info() == info) {
-                ui->tvSelectedSamples;//TODO: remove element
+            if(item->get_index() == c_idx) {
+                delete ui->tvSelectedSamples->takeTopLevelItem(i);
+                break;
             }
+        }
+    }
+}
+
+void addNewDialog::on_actionRemove_sample_triggered()
+{
+    if(SelectedSampleItem *selected =
+            dynamic_cast<SelectedSampleItem *>(ui->tvSelectedSamples->currentItem()))
+    {
+        positive_model->setData(selected->get_index(),
+                                QVariant(Qt::Unchecked),
+                                Qt::CheckStateRole);
+    }
+}
+
+void addNewDialog::on_actionView_PE_properties_triggered()
+{
+    if(SelectedSampleItem *selected =
+            dynamic_cast<SelectedSampleItem *>(ui->tvSelectedSamples->currentItem()))
+    {
+        switch(FilePropertiesDialog(
+                   positive_model->get_file_info(
+                       selected->get_index()),
+                   SsMode::ssmEdit,
+                   this).exec(
+                   )
+               )
+        {
+        case QDialog::Accepted:
+        case QDialog::Rejected:
+        default:
+            break;
         }
     }
 }

@@ -53,6 +53,12 @@ QFileInfo ScanModel::get_file_info(const QModelIndex &c_idx) {
     return QFileInfo(get_full_path(c_idx));
 }
 
+QVector<QModelIndex> ScanModel::getChecked() {
+    QVector<QModelIndex>result;
+    foreach(QPersistentModelIndex index, checkedIndexes) result.push_back(index);
+    return result;
+}
+
 QString ScanModel::get_full_path(QModelIndex idx) {
     QString s;
     while(true) {

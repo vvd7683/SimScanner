@@ -20,17 +20,27 @@ class addNewDialog : public QDialog
 public:
     explicit addNewDialog(QWidget *parent = 0);
     ~addNewDialog();
-    QString getFamily();
-    int getIndex();
+    QString getSampleFamily();
+    int getSampleIndex();
+    QVector<QFileInfo>getSelectedSamples();
+    QVector<QFileInfo>getNegativeSamples();
+
 public slots:
     void tvPositiveContextMenuRequested(const QPoint &pos);
+    void tvSelectedContextMenuRequested(const QPoint &pos);
     void trySampleSlot(bool checked);
     void slotAppendSample(const QModelIndex &c_idx);
     void slotRemoveSample(const QModelIndex &c_idx);
 
+private slots:
+    void on_actionRemove_sample_triggered();
+
+    void on_actionView_PE_properties_triggered();
+
 private:
     Ui::addNewDialog *ui;
     QPeFileMenu *menu_PE;
+    QMenu selected_menu;
     ScanModel *negative_model;
     ScanModel *positive_model;
 };

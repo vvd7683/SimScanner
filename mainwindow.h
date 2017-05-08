@@ -6,6 +6,7 @@
 #include <QMap>
 #include <QMenu>
 #include <QMessageBox>
+#include <QStringListModel>
 
 #include <opennn.h>
 #include <tinyxml2.h>
@@ -39,6 +40,7 @@ protected:
 public slots:
     void tvContextMenuRequested(const QPoint &pos);
     void peInfoExecute(bool checked);
+    void setStatus(QString &status);
 private slots:
     void on_pushButton_clicked();
 

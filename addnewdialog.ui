@@ -238,6 +238,12 @@
               <attribute name="headerVisible">
                <bool>false</bool>
               </attribute>
+              <attribute name="headerDefaultSectionSize">
+               <number>100</number>
+              </attribute>
+              <attribute name="headerMinimumSectionSize">
+               <number>37</number>
+              </attribute>
               <column>
                <property name="text">
                 <string>Sample name</string>
@@ -387,6 +393,16 @@
     </widget>
    </item>
   </layout>
+  <action name="actionRemove_sample">
+   <property name="text">
+    <string>Remove sample</string>
+   </property>
+  </action>
+  <action name="actionView_PE_properties">
+   <property name="text">
+    <string>View PE properties</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections>
