@@ -127,4 +127,18 @@ void addNewDialog::slotAppendSample(const QModelIndex &c_idx) {
 }
 
 void addNewDialog::slotRemoveSample(const QModelIndex &c_idx) {
+    QFileInfo info = positive_model->get_file_info(c_idx);
+    const int c_count = ui->tvSelectedSamples->topLevelItemCount();
+    for(int i = 0; i < c_count; ++i) {
+        if(SelectedSampleItem *item =
+                dynamic_cast<SelectedSampleItem *>(
+                    ui->tvSelectedSamples->topLevelItem(i)
+                    )
+                )
+        {
+            if(item->get_info() == info) {
+                ui->tvSelectedSamples;//TODO: remove element
+            }
+        }
+    }
 }
