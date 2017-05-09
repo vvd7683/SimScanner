@@ -3,6 +3,9 @@
 
 #include <QVector>
 
+#include <opennn.h>
+#include <tinyxml2.h>
+
 #include "qssnn.h"
 #include "pe_parser/entropy.h"
 
@@ -13,23 +16,21 @@ class FixedNN : public SimScanNN
 {
 public:
     explicit FixedNN(QString &xmlString,
-                     const SimScanNN::ssNNType c_nn_type =
-            SimScanNN::ssNNType::nntUnknown,
+                     const SimScanNN::ssNNType c_nn_type = SimScanNN::ssNNType::nntUnknown,
                      const size_t cWindowSz = cDefaultWindowSz,
                      QObject *parent = 0) : SimScanNN(xmlString.toStdString().c_str(),
+                                                      c_nn_type,
                                                       parent),
         c_window_sz(cWindowSz)
     {
-        nn_type = c_nn_type;
+        //
     }
     explicit FixedNN(EntropyDiagram &diagram,
-                            const SimScanNN::ssNNType c_nn_type =
-            SimScanNN::ssNNType::nntUnknown,
+                            const SimScanNN::ssNNType c_nn_type = SimScanNN::ssNNType::nntUnknown,
                             const size_t cWindowSz = cDefaultWindowSz,
-                            QObject *parent = 0) : SimScanNN(parent),
+                            QObject *parent = 0) : SimScanNN(c_nn_type, parent),
         c_window_sz(cWindowSz)
     {
-        nn_type = c_nn_type;
         const size_t cDiagramLength = diagram.length();
         if(cDiagramLength < cDefaultWindowSz) {
             throw;
@@ -55,23 +56,22 @@ class RelativeNN : public SimScanNN
 {
 public:
     explicit RelativeNN(QString &xmlString,
-                        const SimScanNN::ssNNType c_nn_type =
-            SimScanNN::ssNNType::nntUnknown,
+                        const SimScanNN::ssNNType c_nn_type = SimScanNN::ssNNType::nntUnknown,
                         const size_t cWindowSz = cDefaultWindowSz,
                         QObject *parent = 0) : SimScanNN(xmlString.toStdString().c_str(),
+                                                         c_nn_type,
                                                          parent),
         c_window_sz(cWindowSz)
     {
-        nn_type = c_nn_type;
+        //
     }
     explicit RelativeNN(EntropyDiagram &diagram,
-                            const SimScanNN::ssNNType c_nn_type =
-            SimScanNN::ssNNType::nntUnknown,
+                            const SimScanNN::ssNNType c_nn_type = SimScanNN::ssNNType::nntUnknown,
                             const size_t cWindowSz = cDefaultWindowSz,
-                            QObject *parent = 0) : SimScanNN(parent),
+                            QObject *parent = 0) : SimScanNN(c_nn_type,
+                                                             parent),
         c_window_sz(cWindowSz)
     {
-        nn_type = c_nn_type;
         const size_t cDiagramLength = diagram.length();
         if(cDiagramLength < cDefaultWindowSz) {
             throw;

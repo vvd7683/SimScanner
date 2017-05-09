@@ -4,6 +4,7 @@
 #include <QMap>
 #include <QString>
 #include "ss_types.h"
+//#include "entropynn.h"
 
 QMap<NNType, QString> getNnTypes();
 

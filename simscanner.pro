@@ -40,7 +40,12 @@ SOURCES += main.cpp\
     qchartdialog.cpp \
     nnprofilesdialog.cpp \
     selectedsampleitem.cpp \
-    ss_defs.cpp
+    ss_defs.cpp \
+    nnitem.cpp \
+    trojandescriptoritem.cpp \
+    trainingsampleitem.cpp \
+    trainingsampletypeitem.cpp \
+    negativesampleitem.cpp
 
 HEADERS  += mainwindow.h \
     scanmodel.h \
@@ -70,7 +75,12 @@ HEADERS  += mainwindow.h \
     ss_types.h \
     nnprofilesdialog.h \
     selectedsampleitem.h \
-    ss_defs.h
+    ss_defs.h \
+    nnitem.h \
+    trojandescriptoritem.h \
+    trainingsampleitem.h \
+    trainingsampletypeitem.h \
+    negativesampleitem.h
 
 FORMS    += mainwindow.ui \
     fpropsdialog.ui \

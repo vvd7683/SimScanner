@@ -14,12 +14,16 @@
 #include "scanmodel.h"
 #include "pe_parser/peParser.h"
 #include "fpropsdialog.h"
+#include "entropynn.h"
 #include "dbprofile.h"
 #include "qpefilemenu.h"
 #include "aboutdialog.h"
 #include "addnewdialog.h"
 #include "macro.h"
 #include "ss_types.h"
+#include "trainingsampleitem.h"
+#include "negativesampleitem.h"
+#include "trojandescriptoritem.h"
 
 namespace Ui {
 class MainWindow;

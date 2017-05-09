@@ -10,4 +10,3 @@ QMap<NNType, QString> getNnTypes() {
     result.insert(NNType::nntOverlay, QString("Overlay"));
     return result;
 }
-

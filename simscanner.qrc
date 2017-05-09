@@ -15,5 +15,10 @@
         <file>icons/Close_file.png</file>
         <file>icons/nn.png</file>
         <file>icons/To_do_list.png</file>
+        <file>icons/Stop.png</file>
+        <file>icons/Yes.png</file>
+        <file>icons/train_in_progress.png</file>
+        <file>icons/trained.png</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

@@ -1,20 +1,26 @@
 #include "qssnn.h"
 
 SimScanNN::SimScanNN(tinyxml2::XMLDocument &xml,
+                     SimScanNN::ssNNType init_type,
                      QObject *parent) : QObject(parent),
     nn(xml),
-    nn_type(ssNNType::nntUnknown)
+    nn_type(init_type),
+    nn_state(ssNNState::nnsDisabled)
 {
     //
 }
 
-SimScanNN::SimScanNN(const char *xml_str, QObject *parent) : QObject(parent),
+SimScanNN::SimScanNN(const char *xml_str,
+                     SimScanNN::ssNNType init_type,
+                     QObject *parent) : QObject(parent),
     nn(tinyxml2::XMLDocument().Parse(xml_str)),
-    nn_type(ssNNType::nntUnknown)
+    nn_type(init_type),
+    nn_state(ssNNState::nnsDisabled)
 {}
 
-SimScanNN::SimScanNN(QObject *parent) : QObject(parent),
-    nn_type(ssNNType::nntUnknown)
+SimScanNN::SimScanNN(SimScanNN::ssNNType init_type, QObject *parent) : QObject(parent),
+    nn_type(init_type),
+    nn_state(ssNNState::nnsDisabled)
 {}
 
 QString SimScanNN::toString() {
