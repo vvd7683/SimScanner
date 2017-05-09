@@ -2,6 +2,7 @@
 #define ADDNEWDIALOG_H
 
 #include <QDialog>
+#include <QPushButton>
 
 #include "scanmodel.h"
 #include "fpropsdialog.h"
@@ -37,6 +38,8 @@ private slots:
     void on_actionRemove_sample_triggered();
 
     void on_actionView_PE_properties_triggered();
+
+    void on_tvSelectedSamples_customContextMenuRequested(const QPoint &pos);
 
 private:
     Ui::addNewDialog *ui;

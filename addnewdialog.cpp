@@ -14,6 +14,13 @@ addNewDialog::addNewDialog(QWidget *parent) :
     ui->setupUi(this);
     setWindowIcon(QIcon(":/icons/icons/actionNew.png"));
 
+    ui->buttonBox->button(
+                QDialogButtonBox::StandardButton::Ok
+                )->setEnabled(
+                ui->tvSelectedSamples->topLevelItemCount(
+                    )
+                );
+
     ui->cboxFamily->setCurrentText(tr("Trojan.Generic"));
 
     ui->tvPositiveSamples->setModel(positive_model);
@@ -51,6 +58,8 @@ addNewDialog::addNewDialog(QWidget *parent) :
             &addNewDialog::tvSelectedContextMenuRequested);
     selected_menu.addAction(ui->actionRemove_sample);
     selected_menu.addAction(ui->actionView_PE_properties);
+
+    ui->tvSelectedSamples->setColumnWidth(0, 200);
 }
 
 addNewDialog::~addNewDialog()
@@ -204,7 +213,13 @@ void addNewDialog::slotAppendSample(const QModelIndex &c_idx) {
     }
 
     ui->tvSelectedSamples->addTopLevelItem(sample_item);
-    ui->tvSelectedSamples->setColumnWidth(0, 200);
+
+    ui->buttonBox->button(
+                QDialogButtonBox::StandardButton::Ok
+                )->setEnabled(
+                ui->tvSelectedSamples->topLevelItemCount(
+                    )
+                );
 }
 
 void addNewDialog::slotRemoveSample(const QModelIndex &c_idx) {
@@ -218,6 +233,12 @@ void addNewDialog::slotRemoveSample(const QModelIndex &c_idx) {
         {
             if(item->get_index() == c_idx) {
                 delete ui->tvSelectedSamples->takeTopLevelItem(i);
+                ui->buttonBox->button(
+                            QDialogButtonBox::StandardButton::Ok
+                            )->setEnabled(
+                            ui->tvSelectedSamples->topLevelItemCount(
+                                )
+                            );
                 break;
             }
         }
@@ -254,4 +275,9 @@ void addNewDialog::on_actionView_PE_properties_triggered()
             break;
         }
     }
+}
+
+void addNewDialog::on_tvSelectedSamples_customContextMenuRequested(const QPoint &pos)
+{
+    //
 }

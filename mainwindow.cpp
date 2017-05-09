@@ -51,6 +51,8 @@ MainWindow::MainWindow(QWidget *parent) :
     SS = ScanState::ssNotInitialized;
 
     ui->treeView->setColumnWidth(0, 200);
+
+    ui->twModes->findChild<QTabBar *>()->hide();
 }
 
 void MainWindow::peInfoExecute(bool checked) {
@@ -299,6 +301,8 @@ void MainWindow::on_actionScan_mode_triggered(bool checked)
         ui->actionEdit->setVisible(false);
         ui->actionEdit->setEnabled(false);
 
+        ui->twModes->setCurrentIndex(0);
+
         setStatus(tr("SimScanner switched to scan mode"));
     } else {
         ui->actionScan_mode->setChecked(true);
@@ -324,6 +328,8 @@ void MainWindow::on_actionEdit_mode_triggered(bool checked)
         ui->btnScan->setEnabled(false);
         ui->btnStop->setVisible(true);
         ui->btnStop->setEnabled(false);
+
+        ui->twModes->setCurrentIndex(1);
 
         setStatus(tr("SimScanner switched to learn mode"));
     } else {
