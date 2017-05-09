@@ -5,9 +5,9 @@ TrojanDescriptorItem::TrojanDescriptorItem(const QVector<SimScanNN *> &nns,
                                            QTreeWidgetItem *parent) : QTreeWidgetItem(parent),
     state(c_state),
     nn_profiles(new QTreeWidgetItem(this)),
-    negative(Q_NULLPTR),
-    positive(Q_NULLPTR),
-    control(Q_NULLPTR)
+    negative(new QTreeWidgetItem(this)),
+    positive(new QTreeWidgetItem(this)),
+    control(new QTreeWidgetItem(this))
 {
     nn_profiles->setText(0, QString("Neuroprofiles"));
     foreach (SimScanNN *nn, nns) {
@@ -16,6 +16,13 @@ TrojanDescriptorItem::TrojanDescriptorItem(const QVector<SimScanNN *> &nns,
     if(state == SimScanNN::nnsTraining) {
         //TODO: append training sample items
     }
+}
+
+TrojanDescriptorItem::~TrojanDescriptorItem() {
+    delete control;
+    delete positive;
+    delete negative;
+    delete nn_profiles;
 }
 
 bool TrojanDescriptorItem::train() {

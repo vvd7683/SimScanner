@@ -21,6 +21,7 @@ public:
     TrojanDescriptorItem(const QVector<SimScanNN *> &nns,
                          const SimScanNN::ssNNState c_state = SimScanNN::nnsDisabled,
                          QTreeWidgetItem *parent = 0);
+    virtual ~TrojanDescriptorItem();
     bool train();
 protected:
     QTreeWidgetItem *nn_profiles;
