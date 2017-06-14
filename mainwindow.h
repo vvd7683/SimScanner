@@ -8,22 +8,14 @@
 #include <QMessageBox>
 #include <QStringListModel>
 
-#include <opennn.h>
-#include <tinyxml2.h>
-
 #include "scanmodel.h"
 #include "pe_parser/peParser.h"
 #include "fpropsdialog.h"
-#include "entropynn.h"
-#include "dbprofile.h"
 #include "qpefilemenu.h"
 #include "aboutdialog.h"
 #include "addnewdialog.h"
 #include "macro.h"
 #include "ss_types.h"
-#include "trainingsampleitem.h"
-#include "negativesampleitem.h"
-#include "trojandescriptoritem.h"
 
 namespace Ui {
 class MainWindow;
@@ -37,8 +29,6 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 protected:
-    QVector<DbProfile *> ssnnProfiles;
-
     QPeFileMenu *menu_PE;
     QMenu *menu_Dir, *menu_Other;
 public slots:
@@ -51,20 +41,6 @@ private slots:
     void on_actionAbout_triggered();
 
     void on_actionQuit_triggered();
-
-    void on_btnScan_clicked();
-
-    void on_btnStop_clicked();
-
-    void on_actionNew_triggered();
-
-    void on_actionScan_triggered();
-
-    void on_actionStop_triggered();
-
-    void on_actionScan_mode_triggered(bool checked);
-
-    void on_actionEdit_mode_triggered(bool checked);
 
 private:
     Ui::MainWindow *ui;

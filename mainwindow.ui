@@ -65,112 +65,6 @@
           </layout>
          </widget>
         </item>
-        <item>
-         <widget class="QGroupBox" name="gboxScanOptions">
-          <property name="minimumSize">
-           <size>
-            <width>300</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>300</width>
-            <height>16777215</height>
-           </size>
-          </property>
-          <property name="title">
-           <string>Scan options</string>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_5">
-           <item>
-            <widget class="QFrame" name="frameScanArea">
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <item>
-               <widget class="QRadioButton" name="radioButton_2">
-                <property name="text">
-                 <string>RadioButton</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton_3">
-                <property name="text">
-                 <string>RadioButton</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="radioButton">
-                <property name="text">
-                 <string>RadioButton</string>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QFrame" name="frame_3">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>40</height>
-              </size>
-             </property>
-             <property name="frameShape">
-              <enum>QFrame::StyledPanel</enum>
-             </property>
-             <property name="frameShadow">
-              <enum>QFrame::Raised</enum>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_2">
-              <property name="leftMargin">
-               <number>0</number>
-              </property>
-              <property name="topMargin">
-               <number>0</number>
-              </property>
-              <property name="rightMargin">
-               <number>0</number>
-              </property>
-              <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <item>
-               <widget class="QPushButton" name="btnScan">
-                <property name="text">
-                 <string>Scan</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>../Users/jack/SimScanner/icons/actionStart.png</normaloff>../Users/jack/SimScanner/icons/actionStart.png</iconset>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QPushButton" name="btnStop">
-                <property name="text">
-                 <string>Stop</string>
-                </property>
-                <property name="icon">
-                 <iconset>
-                  <normaloff>../Users/jack/SimScanner/icons/actionStop.png</normaloff>../Users/jack/SimScanner/icons/actionStop.png</iconset>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-        </item>
        </layout>
       </widget>
       <widget class="QWidget" name="tabLearn">
@@ -266,8 +160,6 @@
      <property name="title">
       <string>Neuroprofiles</string>
      </property>
-     <addaction name="actionNew"/>
-     <addaction name="actionEdit"/>
     </widget>
     <addaction name="menuNeuroprofiles"/>
     <addaction name="actionQuit"/>
@@ -287,13 +179,8 @@
      <property name="title">
       <string>Mode</string>
      </property>
-     <addaction name="actionScan_mode"/>
-     <addaction name="actionEdit_mode"/>
     </widget>
-    <addaction name="actionScan"/>
-    <addaction name="actionStop"/>
     <addaction name="separator"/>
-    <addaction name="actionNew"/>
     <addaction name="menuMode"/>
    </widget>
    <addaction name="menuFile"/>
@@ -319,9 +206,6 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="actionScan"/>
-   <addaction name="actionStop"/>
-   <addaction name="actionNew"/>
    <addaction name="separator"/>
    <addaction name="actionHelp_content"/>
    <addaction name="actionAbout"/>
@@ -345,41 +229,6 @@
     <string>About</string>
    </property>
   </action>
-  <action name="actionNew">
-   <property name="icon">
-    <iconset>
-     <normaloff>../Users/jack/SimScanner/icons/actionNew.png</normaloff>../Users/jack/SimScanner/icons/actionNew.png</iconset>
-   </property>
-   <property name="text">
-    <string>New</string>
-   </property>
-   <property name="visible">
-    <bool>false</bool>
-   </property>
-  </action>
-  <action name="actionEdit">
-   <property name="text">
-    <string>Edit</string>
-   </property>
-  </action>
-  <action name="actionScan">
-   <property name="icon">
-    <iconset>
-     <normaloff>../Users/jack/SimScanner/icons/actionStart.png</normaloff>../Users/jack/SimScanner/icons/actionStart.png</iconset>
-   </property>
-   <property name="text">
-    <string>Scan</string>
-   </property>
-  </action>
-  <action name="actionStop">
-   <property name="icon">
-    <iconset>
-     <normaloff>../Users/jack/SimScanner/icons/actionStop.png</normaloff>../Users/jack/SimScanner/icons/actionStop.png</iconset>
-   </property>
-   <property name="text">
-    <string>Stop</string>
-   </property>
-  </action>
   <action name="actionHelp_content">
    <property name="icon">
     <iconset>
@@ -387,25 +236,6 @@
    </property>
    <property name="text">
     <string>Help content</string>
-   </property>
-  </action>
-  <action name="actionScan_mode">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Scan mode</string>
-   </property>
-  </action>
-  <action name="actionEdit_mode">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Edit mode</string>
    </property>
   </action>
  </widget>

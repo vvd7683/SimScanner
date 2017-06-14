@@ -4,18 +4,13 @@
 #include <QDialog>
 #include <QPushButton>
 
-#include <opennn.h>
-#include <tinyxml2.h>
-
 #include "scanmodel.h"
 #include "fpropsdialog.h"
 #include "qpefile.h"
 #include "qpefilemenu.h"
 #include "selectedsampleitem.h"
 #include "ss_defs.h"
-#include "entropynn.h"
 #include "nnitem.h"
-#include "trojandescriptoritem.h"
 
 namespace Ui {
 class addNewDialog;

@@ -3,20 +3,12 @@
 
 #include <QObject>
 #include <QTreeWidgetItem>
-#include <opennn.h>
-#include <tinyxml2.h>
-
-#include "entropynn.h"
 
 class NNItem : public QTreeWidgetItem
 {
 public:
-    explicit NNItem(SimScanNN &init_nn,
-                    QTreeWidgetItem *parent = 0);
-    SimScanNN::ssNNState getState() { return nn.getState(); }
-    SimScanNN::ssNNType getType() { return nn.getNnType(); }
+    explicit NNItem(QTreeWidgetItem *parent = 0);
 protected:
-    SimScanNN &nn;
     bool b_trained;
 };
 
