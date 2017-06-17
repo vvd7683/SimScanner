@@ -2,7 +2,7 @@
 #define ENTROPYFLOWWINDOW_H
 
 /*
- * Flow window class calculating entropy and extremum density
+ * Класс "скользящего окна", в котором рассчитывается энтропия
  */
 #include <QObject>
 #include <QVector>
@@ -17,7 +17,6 @@ public:
                                size_t AreaSz,
                                size_t WindowSz = cDefaultWindowSz,
                                QObject *parent = 0);
-
     EntropyDiagram get_points();
 signals:
 
